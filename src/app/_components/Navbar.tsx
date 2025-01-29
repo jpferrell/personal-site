@@ -6,8 +6,9 @@ export default function Navbar() {
         <div className="flex row-start-3 items-center justify-center gap-6 min-w-full flex-wrap text-xl">
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineHome></AiOutlineHome>
+                {/* I broke all of the linking stuff :( */}
                 <Link
-                    href="/"
+                    href="./src/app/"
                 >
                     Home
                 </Link>
@@ -15,7 +16,7 @@ export default function Navbar() {
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineFile></AiOutlineFile>
                 <Link
-                    href="resume"
+                    href="./src/app/resume"
                 >
                     Resume
                 </Link>
@@ -23,7 +24,7 @@ export default function Navbar() {
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineUser></AiOutlineUser>
                 <Link
-                    href="AboutMe"
+                    href="./src/app/AboutMe"
                 >
                     About Me
                 </Link>
@@ -31,7 +32,7 @@ export default function Navbar() {
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineLaptop></AiOutlineLaptop>
                 <Link
-                    href="Projects"
+                    href="./src/app/Projects"
                 >
                     Projects
                 </Link>
