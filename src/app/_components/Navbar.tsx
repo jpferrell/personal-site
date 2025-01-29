@@ -8,7 +8,7 @@ export default function Navbar() {
                 <AiOutlineHome></AiOutlineHome>
                 {/* I broke all of the linking stuff :( */}
                 <Link
-                    href="./src/app/"
+                    href="/"
                 >
                     Home
                 </Link>
@@ -16,7 +16,7 @@ export default function Navbar() {
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineFile></AiOutlineFile>
                 <Link
-                    href="./src/app/resume"
+                    href="/resume"
                 >
                     Resume
                 </Link>
@@ -24,7 +24,7 @@ export default function Navbar() {
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineUser></AiOutlineUser>
                 <Link
-                    href="./src/app/AboutMe"
+                    href="/AboutMe"
                 >
                     About Me
                 </Link>
@@ -32,7 +32,7 @@ export default function Navbar() {
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineLaptop></AiOutlineLaptop>
                 <Link
-                    href="./src/app/Projects"
+                    href="/Projects"
                 >
                     Projects
                 </Link>
