@@ -1,10 +1,10 @@
 "use client"
 
 import { useState } from "react";
-import SigMfGlobal from "@/app/_components/SigMfGlobal";
-import SigMfCapture from "@/app/_components/SigMfCapture";
+import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
+import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import Select from "react-select";
-import SigMfAnnotation from "@/app/_components/SigMfAnnotation";
+import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 
 const capArr = [{}, {}];
 const annotArr = [{}];
