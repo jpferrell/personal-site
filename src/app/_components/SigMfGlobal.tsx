@@ -1,7 +1,10 @@
 import SigMfInput from "@/app/_components/SigMfInput";
 import SigMfGeoInput from "./SigMfGeoInput";
+import { useState } from "react";
 
 export default function SigMfGlobal() {
+
+    const [isMetaOnly, setIsMetaOnly] = useState(false);
 
     return (
         <div>
@@ -13,7 +16,7 @@ export default function SigMfGlobal() {
             <SigMfInput label="Description" id="description-input" type="text" placeholder="Description" />
             <SigMfInput label="Hardware" id="hw-input" type="text" placeholder="Hardware" />
             <SigMfInput label="License" id="license-input" type="text" placeholder="license" />
-            <SigMfInput label="Metadata Only?" id="metadata-only-input" type="checkbox" />
+            <SigMfInput label="Metadata Only?" id="metadata-only-input" type="checkbox" changeFunction={setIsMetaOnly}/>
             <SigMfInput label="Meta DOI" id="meta-doi-input" type="text" placeholder="meta doi" />
             <SigMfInput label="Number of Channels" id="num-channels-input" type="number" placeholder="1" />
             <SigMfInput label="Offset" id="offset-input" type="number" placeholder="0" />

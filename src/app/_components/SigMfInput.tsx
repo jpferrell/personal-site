@@ -2,17 +2,17 @@ export interface SigMfInputProps {
     label: string,
     id: string,
     type: string,
-    changeFuction?: Function,
+    changeFunction?: Function,
     placeholder?: string,
     required?: boolean,
     hidden?: boolean
 };
 
-export default function SigMfInput( {label, id, type, changeFuction, placeholder, required, hidden}: SigMfInputProps) {
+export default function SigMfInput( {label, id, type, changeFunction, placeholder, required, hidden}: SigMfInputProps) {
 
     const handleChange = (e) => {
         if (e.target.type === 'checkbox') {
-            changeFuction(e.target.checked);
+            changeFunction(e.target.checked);
         }
     }
 
