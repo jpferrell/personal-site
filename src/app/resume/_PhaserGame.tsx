@@ -1,5 +1,6 @@
-import { forwardRef, useRef } from "react";
+import { forwardRef, useEffect, useLayoutEffect, useRef } from "react";
 import { EventBus } from "./_EventBus";
+import StartGame from "./_GameConfig";
 
 export interface IRefPhaserGame {
     game: Phaser.Game | null;
@@ -13,6 +14,40 @@ interface IProps {
 const PhaserGame = forwardRef<IRefPhaserGame, IProps>(function PhaserGame({ currentActiveScene }, ref) {
 
     const game = useRef<Phaser.Game | null>(null!);
+
+    useLayoutEffect(() => {
+
+        if (game.current === undefined) {
+            game.current = StartGame("resume-phaser-game-container");
+
+            if (ref !== null) {
+                ref.current = { game: game.current, scene: null };
+            }
+        }
+
+        return () => {
+            if (game.current) {
+                game.current.destroy(true);
+                game.current = null;
+            }
+        }
+
+    }, [ref]);
+
+    useEffect(() => {
+
+        EventBus.on('current-scene-ready', (currentScene) => {
+            if (currentActiveScene instanceof Function) {
+                currentActiveScene(currentScene);
+            }
+            ref.current.scene = currentScene;
+        });
+
+        return () => {
+            EventBus.removeListener('current-scene-ready');
+        }
+
+    }, [currentActiveScene, ref]);
 
     return (
         <div id="resume-phaser-game-container"></div>

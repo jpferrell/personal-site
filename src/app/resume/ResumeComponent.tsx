@@ -1,5 +1,6 @@
 import { useRef } from "react";
-import { IRefPhaserGame, PhaserGame } from "./_PhaserGame";
+import { IRefPhaserGame } from "./_PhaserGame";
+import PhaserGame from "./_PhaserGame";
 
 export default function ResumeComponent() {
 
