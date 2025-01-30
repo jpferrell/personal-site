@@ -14,10 +14,14 @@ interface IProps {
 const PhaserGame = forwardRef<IRefPhaserGame, IProps>(function PhaserGame({ currentActiveScene }, ref) {
 
     const game = useRef<Phaser.Game | null>(null!);
+    console.log("in phaser game...");
+    console.log(game);
+    console.log(ref);
 
     useLayoutEffect(() => {
 
-        if (game.current === undefined) {
+        if (game.current === null) {
+            console.log("in game.current === null");
             game.current = StartGame("resume-phaser-game-container");
 
             if (ref !== null) {
