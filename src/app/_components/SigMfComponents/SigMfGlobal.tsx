@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
@@ -27,6 +27,10 @@ export default function SigMfGlobal() {
     const [trailBytes, setTrailBytes] = useState<integer|null>(null);
     const [version, setVersion] = useState<string|null>(null);
     const [geo, setGeo] = useState<SigMfGeoType|null>(null);
+
+    useEffect(() => {
+        console.log("Sample rate: " + sr);
+    }, [sr]);
 
     return (
         <div>
