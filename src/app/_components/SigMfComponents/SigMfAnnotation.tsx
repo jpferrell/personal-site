@@ -8,7 +8,7 @@ import SigMfTextInput from "./Inputs/SigMfTextInput"
 import { CaptureDetailsAnnotations } from "./Extensions/CaptureDetails";
 import { SigMfCapDetsAnnotType, SigMfGeoType } from "./SigMfInterfaces";
 
-export default function SigMfAnnotation() {
+export default function SigMfAnnotation( { isHidden }: { isHidden: boolean } ) {
 
     const [sampStart, setSampStart] = useState<number|null>(null);
     const [sampCnt, setSampCnt] = useState<number|null>(null);
@@ -23,17 +23,17 @@ export default function SigMfAnnotation() {
 
     return (
         <div>
-            <SigMfNumberInput label="Sample Start" id="annot-sample-start-input" placeholder="0" changeFunction={setSampStart} required />
-            <SigMfNumberInput label="Sample Count" id="annot-sample-cnt-input" placeholder="0" changeFunction={setSampCnt} />
-            <SigMfNumberInput label="Frequency Lower Edge" id="annot-freq-lower-edge-input" placeholder="0.0" changeFunction={setFreqLowEdge} />
-            <SigMfNumberInput label="Frequency Upper Edge" id="annot-freq-upper-edge-input" placeholder="0.0" changeFunction={setFreqHighEdge} />
-            <SigMfTextInput label="Label" id="annot-label-input" placeholder="label" changeFunction={setLabel} />
-            <SigMfTextInput label="Comment" id="annot-comment-input" placeholder="comment" changeFunction={setComment} />
-            <SigMfTextInput label="Generator" id="annot-generator-input" placeholder="generator" changeFunction={setGenerator} />
-            <SigMfTextInput label="UUID" id="annot-uuid-input" placeholder="uuid" changeFunction={setUuid} />
-            <SigMfGeoInput idPart="annot" />
-            <CaptureDetailsAnnotations />
-            <button id="add-annot-button" className="rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500">Add Annotation</button>
+            <SigMfNumberInput label="Sample Start" id="annot-sample-start-input" placeholder="0" changeFunction={setSampStart} required hidden={isHidden} />
+            <SigMfNumberInput label="Sample Count" id="annot-sample-cnt-input" placeholder="0" changeFunction={setSampCnt} hidden={isHidden} />
+            <SigMfNumberInput label="Frequency Lower Edge" id="annot-freq-lower-edge-input" placeholder="0.0" changeFunction={setFreqLowEdge} hidden={isHidden} />
+            <SigMfNumberInput label="Frequency Upper Edge" id="annot-freq-upper-edge-input" placeholder="0.0" changeFunction={setFreqHighEdge} hidden={isHidden} />
+            <SigMfTextInput label="Label" id="annot-label-input" placeholder="label" changeFunction={setLabel} hidden={isHidden} />
+            <SigMfTextInput label="Comment" id="annot-comment-input" placeholder="comment" changeFunction={setComment} hidden={isHidden} />
+            <SigMfTextInput label="Generator" id="annot-generator-input" placeholder="generator" changeFunction={setGenerator} hidden={isHidden} />
+            <SigMfTextInput label="UUID" id="annot-uuid-input" placeholder="uuid" changeFunction={setUuid} hidden={isHidden} />
+            <SigMfGeoInput idPart="annot" isHidden={isHidden} changeFunction={setGeo} />
+            <CaptureDetailsAnnotations isHidden={isHidden} changeFunction={setCapDets} />
+            <button id="add-annot-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""}`}>Add Annotation</button>
         </div>
     );
 }

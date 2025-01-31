@@ -26,7 +26,10 @@ export default function SigMFEditor() {
                 <div className="grid grid-cols-1 gap-2">
                     <h2>Editor</h2>
                     <Select options={options} onChange={setSelectedOpt} value={selectedOpt}/>
-                    {selectedOpt.value === 'global' ? <SigMfGlobal /> : selectedOpt.value === 'captures' ? <SigMfCapture /> : <SigMfAnnotation />}
+                    {/*selectedOpt.value === 'global' ? <SigMfGlobal /> : selectedOpt.value === 'captures' ? <SigMfCapture /> : <SigMfAnnotation /> */}
+                    <SigMfGlobal isHidden={selectedOpt.value !== 'global'} />
+                    <SigMfCapture isHidden={selectedOpt.value !== 'captures'} />
+                    <SigMfAnnotation isHidden={selectedOpt.value !== 'annotations'} />
                     <button className="rounded block bg-slate-300 dark:bg-slate-300 hover:slate-700 dark:hover:bg-slate-500 text-indigo-500">Create</button>
                 </div>
                 <div className="grid grid-cols-2">

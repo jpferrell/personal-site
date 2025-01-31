@@ -8,23 +8,33 @@ export interface SigMfInputProps {
 }
 
 export interface SigMfGeoType {
-    point: string,
-    lat: number,
-    lon: number,
-    alt?: number
+    type: string|null,
+    lat: number|null,
+    lon: number|null,
+    alt?: number|null
+}
+
+export interface SigMfCaptureType {
+    sampStart: number|null,
+    datetime: string|null,
+    freq: number|null,
+    globalIdx: number|null,
+    headerBytes: number|null,
+    capDets: SigMfCapDetsCapType|null
 }
 
 export interface SigMfCapDetsCapType {
-    acqScaleFactor: number,
-    attenuation: number,
-    acqBw: number,
-    startCap: string,
-    stopCap: string,
-    srcFile: string,
-    gain?: number
+    acqScaleFactor: number|null,
+    attenuation: number|null,
+    acqBw: number|null,
+    startCap: string|null,
+    stopCap: string|null,
+    srcFile: string|null,
+    gain?: number|null
 }
 
 export interface SigMfCapDetsAnnotType {
-    snr: number,
-    sigRefNum: number
+    enabled: boolean,
+    snr: number|null,
+    sigRefNum: number|null
 }

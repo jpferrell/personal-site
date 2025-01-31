@@ -1,12 +1,13 @@
 "use client"
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import SigMfNumberInput from "./Inputs/SigMfTextInput";
 import SigMfCheckboxInput from "./Inputs/SigMfCheckboxInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
+import { SigMfGeoType } from "./SigMfInterfaces";
 
-export default function SigMfGeoInput( { idPart }: {idPart: string} ) {
+export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {idPart: string, isHidden: boolean, changeFunction: Function} ) {
 
     const [isGeoEnabled, setIsGeoEnabled] = useState<boolean>(false);
     const [geoType, setGeoType] = useState<string>('Point');
@@ -14,13 +15,33 @@ export default function SigMfGeoInput( { idPart }: {idPart: string} ) {
     const [lon, setLon] = useState<number|null>(null);
     const [alt, setAlt] = useState<number|null>(null);
 
+    const [geoData, setGeoData] = useState<SigMfGeoType>({
+        type: 'Point',
+        lat: null,
+        lon: null,
+        alt: null
+    });
+
+    useEffect(()=> {
+        setGeoData({
+            type: geoType,
+            lat: lat,
+            lon: lon,
+            alt: alt
+        });
+    }, [geoType, lat, lon, alt]);
+
+    useEffect(() => {
+        changeFunction(geoData);
+    }, [geoData])
+
     return (
         <div>
-            <SigMfCheckboxInput label="Geolocation" id={`${idPart}-geo-enabled-input`} changeFunction={setIsGeoEnabled} />
-            <SigMfTextInput label="Type" id={`${idPart}-geo-type-input`} placeholder="Point" changeFunction={setGeoType} hidden={!isGeoEnabled} required />
-            <SigMfNumberInput label="Latitude" id={`${idPart}-geo-lat-input`} placeholder="0.0" hidden={!isGeoEnabled} changeFunction={setLat} required />
-            <SigMfNumberInput label="Longitude" id={`${idPart}-geo-lon-input`} placeholder="0.0" hidden={!isGeoEnabled} changeFunction={setLon}  required/>
-            <SigMfNumberInput label="Altitude" id={`${idPart}-geo-alt-input`} placeholder="0.0" hidden={!isGeoEnabled} changeFunction={setAlt} />
+            <SigMfCheckboxInput label="Geolocation" id={`${idPart}-geo-enabled-input`} changeFunction={setIsGeoEnabled} hidden={isHidden} />
+            <SigMfTextInput label="Type" id={`${idPart}-geo-type-input`} placeholder="Point" changeFunction={setGeoType} hidden={!isGeoEnabled || isHidden} required />
+            <SigMfNumberInput label="Latitude" id={`${idPart}-geo-lat-input`} placeholder="0.0" hidden={!isGeoEnabled || isHidden} changeFunction={setLat} required />
+            <SigMfNumberInput label="Longitude" id={`${idPart}-geo-lon-input`} placeholder="0.0" hidden={!isGeoEnabled || isHidden} changeFunction={setLon}  required/>
+            <SigMfNumberInput label="Altitude" id={`${idPart}-geo-alt-input`} placeholder="0.0" hidden={!isGeoEnabled || isHidden} changeFunction={setAlt} />
         </div>
     );
 }

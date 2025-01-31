@@ -6,6 +6,11 @@ export default function SigMfNumberInput({ label, id, changeFunction, placeholde
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
+        let retVal = null;
+        if (e.target.value !== "") {
+            retVal = e.target.value;
+        }
+        changeFunction(retVal);
     }
 
     return (
