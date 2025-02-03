@@ -10,12 +10,37 @@ export interface SigMfInputProps {
     hidden?: boolean
 }
 
+export interface SigMfSelectInputProps extends SigMfInputProps {
+    values: string[]
+}
+
 export interface SigMfGeoType {
     enabled: boolean,
     type: string|null,
     lat: number|null,
     lon: number|null,
     alt?: number|null
+}
+
+export interface SigMfGlobalType {
+    datatype: string|null,
+    sampRate: number| null,
+    author: string|null,
+    collection: string|null,
+    dataset: string|null,
+    dataDoi: string|null,
+    desc: string|null,
+    hw: string|null,
+    license: string|null,
+    metaOnly: boolean|null,
+    metaDoi: string|null,
+    numChans: number|null,
+    offset: number|null,
+    recorder: string|null,
+    sha512: string|null,
+    trailingBytes: number|null,
+    version: string|null,
+    geo: SigMfGeoType|null
 }
 
 export interface SigMfCaptureType {

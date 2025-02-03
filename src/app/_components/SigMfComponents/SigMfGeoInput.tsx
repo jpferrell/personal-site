@@ -16,6 +16,7 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
     const [alt, setAlt] = useState<number|null>(null);
 
     const [geoData, setGeoData] = useState<SigMfGeoType>({
+        enabled: false,
         type: 'Point',
         lat: null,
         lon: null,
@@ -24,6 +25,7 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
 
     useEffect(()=> {
         setGeoData({
+            enabled: isGeoEnabled,
             type: geoType,
             lat: lat,
             lon: lon,
@@ -32,7 +34,11 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
     }, [geoType, lat, lon, alt]);
 
     useEffect(() => {
-        changeFunction(geoData);
+        let retVal = null;
+        if (geoData.enabled) {
+            retVal = geoData;
+        }
+        changeFunction(retVal);
     }, [geoData])
 
     return (

@@ -6,10 +6,15 @@ import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
 import SigMfCheckboxInput from "./Inputs/SigMfCheckboxInput";
 import SigMfGeoInput from "./SigMfGeoInput";
-import { SigMfGeoType } from "./SigMfInterfaces";
+import { SigMfGeoType, SigMfGlobalType } from "./SigMfInterfaces";
+import SigMfSelectInput from "./Inputs/SigMfSelectInput";
 
-export default function SigMfGlobal( {isHidden}: {isHidden: boolean} ) {
+export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: Function} ) {
 
+    const [realCplx, setRealCplx] = useState<string|null>(null);
+    const [leBe, setLeBe] = useState<string|null>(null);
+    const [datatype, setDatatype] = useState<string|null>(null);
+    const [sigmfDatatype, setSigmfDatatype] = useState<string|null>(null);
     const [sr, setSr] = useState<number|null>(null);
     const [author, setAuthor] = useState<string|null>(null);
     const [collection, setCollection] = useState<string|null>(null);
@@ -28,12 +33,69 @@ export default function SigMfGlobal( {isHidden}: {isHidden: boolean} ) {
     const [version, setVersion] = useState<string|null>(null);
     const [geo, setGeo] = useState<SigMfGeoType|null>(null);
 
+    const [globalData, setGlobalData] = useState<SigMfGlobalType>({
+        datatype: null,
+        sampRate: null,
+        author: null,
+        collection: null,
+        dataset: null,
+        dataDoi: null,
+        desc: null,
+        hw: null,
+        license: null,
+        metaOnly: isMetaOnly,
+        metaDoi: null,
+        numChans: null,
+        offset: null,
+        recorder: null,
+        sha512: null,
+        trailingBytes: null,
+        version: null,
+        geo: null
+    });
+
     useEffect(() => {
-        console.log("Sample rate: " + sr);
-    }, [sr]);
+        (realCplx !== null && datatype !== null) ? setSigmfDatatype(realCplx + datatype + "_" + leBe): null;
+    }, [realCplx, leBe, datatype]);
+
+    useEffect(() => {
+        setGlobalData({
+            datatype: sigmfDatatype,
+            sampRate: sr,
+            author: author,
+            collection: collection,
+            dataset: dataset,
+            dataDoi: dataDoi,
+            desc: desc,
+            hw: hw,
+            license: license,
+            metaOnly: isMetaOnly,
+            metaDoi: metaDoi,
+            numChans: numChans,
+            offset: offset,
+            recorder: recorder,
+            sha512: sha,
+            trailingBytes: trailBytes,
+            version: version,
+            geo: geo
+        })
+    }, [sigmfDatatype, sr, author, collection, dataset, dataDoi, desc, hw, license, isMetaOnly, metaDoi, numChans, offset, recorder, sha, trailBytes, version, geo]);
+
+    function verifyData(obj: SigMfGlobalType) {
+
+    }
+
+    useEffect(() => {
+        transferData(globalData);
+    }, [globalData])
 
     return (
         <div>
+            <SigMfSelectInput label="Real or Complex?" id="real-cplx-input" required hidden={isHidden} changeFunction={setRealCplx} values={["r", "c"]}/>
+            <SigMfSelectInput label="Little-endian or Big-endian?" id="le-be-input" required hidden={isHidden} changeFunction={setLeBe} values={["le", "be"]}/>
+            <SigMfSelectInput label="Data Type" id="data-type-input" required hidden={isHidden} changeFunction={setDatatype} values={[
+                "f32", "f64", "i32", "i16", "u32", "u16", "i8", "u8"
+            ]} />
             <SigMfNumberInput label="Sample Rate" id="sample-rate-input" placeholder="0.0" changeFunction={setSr} hidden={isHidden} />
             <SigMfTextInput label="Author" id="author-input" placeholder="Enter author name" changeFunction={setAuthor} hidden={isHidden} />
             <SigMfTextInput label="Collection" id="collection-input" placeholder="collection" changeFunction={setCollection} hidden={isHidden} />

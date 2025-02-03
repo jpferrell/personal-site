@@ -21,7 +21,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/home/*": ["./src/app/*"],
-      "@/AboutMe/*": ["./src/app/AboutMe/*"]
+      "@/AboutMe/*": ["./src/app/AboutMe/*"],
+      "@/SigMfComponents": ["./src/app/_components/SigMfComponents/*"]
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
