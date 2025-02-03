@@ -39,10 +39,6 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
         });
     }, [sampStart, datetime, freq, globalIdx, headerBytes, capDets]);
 
-    {/*useEffect(() => {
-        addCapture();
-    }, [capData]);*/}
-
     return (
         <div>
             <SigMfNumberInput label="Sample Start" id="capt-sample-start-input" placeholder="0" required changeFunction={setSampStart} hidden={isHidden}/>

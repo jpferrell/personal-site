@@ -27,6 +27,19 @@ export interface SigMfCaptureType {
     capDets: SigMfCapDetsCapType|null
 }
 
+export interface SigMfAnnotationType {
+    sampStart: number|null,
+    sampCnt: number|null,
+    freqLowEdge: number|null,
+    freqHighEdge: number|null,
+    label: string|null,
+    comment: string|null,
+    generator: string|null,
+    uuid: string|null,
+    geo: SigMfGeoType|null,
+    capDets: SigMfCapDetsAnnotType|null
+}
+
 export interface SigMfCapDetsCapType {
     enabled: boolean,
     acqScaleFactor: number|null,
