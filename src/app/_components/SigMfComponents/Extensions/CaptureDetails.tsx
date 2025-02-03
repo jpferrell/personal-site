@@ -19,6 +19,7 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
     const [gain, setGain] = useState<number|null>(null);
 
     const [capDetCapData, setCapDetCapData] = useState<SigMfCapDetsCapType>({
+        enabled: false,
         acqScaleFactor: null,
         attenuation: null,
         acqBw: null,
@@ -30,6 +31,7 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
 
     useEffect(() => {
         setCapDetCapData({
+            enabled: isCapEnabled,
             acqScaleFactor: acqScaleFactor,
             attenuation: attn,
             acqBw: acqBw,
@@ -39,7 +41,6 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
             gain: gain
         });
 
-        console.log("attenuation: " + capDetCapData.attenuation);
     }, [acqScaleFactor, attn, acqBw, startCap, stopCap, srcFile, gain]);
 
     useEffect(() => {

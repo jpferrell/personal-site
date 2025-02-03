@@ -5,9 +5,10 @@ import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import Select from "react-select";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
+import { SigMfCaptureType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
 
-const capArr = [{}, {}];
-const annotArr = [{}];
+const capArr = [];
+const annotArr = [];
 
 const options = [
     {value: 'global', label: 'Global'},
@@ -19,6 +20,18 @@ export default function SigMFEditor() {
 
     const [selectedOpt, setSelectedOpt] = useState({value: 'global', label: 'Global'});
 
+    function addCapture(capture: SigMfCaptureType) {
+        console.log(capture);
+        capArr.push(capture);
+        const tmp = document.getElementById("capture-grid");
+        tmp.innerHTML = ``;
+        capArr.forEach((capture, idx) => {
+           const parEl = document.createElement("p");
+           parEl.textContent = `Capture ${idx}`;
+            tmp.innerHTML += `<p>Capture ${idx}</p>`;
+        });
+    }
+
     return (
         <div className="min-h-screen min-w-full justify-items-center text-center p-4">
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
@@ -28,18 +41,18 @@ export default function SigMFEditor() {
                     <Select options={options} onChange={setSelectedOpt} value={selectedOpt}/>
                     {/*selectedOpt.value === 'global' ? <SigMfGlobal /> : selectedOpt.value === 'captures' ? <SigMfCapture /> : <SigMfAnnotation /> */}
                     <SigMfGlobal isHidden={selectedOpt.value !== 'global'} />
-                    <SigMfCapture isHidden={selectedOpt.value !== 'captures'} />
+                    <SigMfCapture isHidden={selectedOpt.value !== 'captures'} transferCapData={addCapture} />
                     <SigMfAnnotation isHidden={selectedOpt.value !== 'annotations'} />
                     <button className="rounded block bg-slate-300 dark:bg-slate-300 hover:slate-700 dark:hover:bg-slate-500 text-indigo-500">Create</button>
                 </div>
                 <div className="grid grid-cols-2">
                     <h2>Captures ({capArr.length})</h2>
-                    <div className="grid grid-cols-1">
-                    {capArr.map((capture, idx) => (
+                    <div className="grid grid-cols-1" id="capture-grid">
+                    {/*capArr.map((capture, idx) => (
                         <div key={`caparr-${idx}`}>
                             <p>Capture {idx}</p>
                         </div>
-                    ))}
+                    ))*/}
                     </div>
                     <h2>Annotations ({annotArr.length})</h2>
                     <div className="grid grid-cols-1">

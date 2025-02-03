@@ -1,3 +1,6 @@
+import { SetStateAction } from "react"
+import { Dispatch } from "react"
+
 export interface SigMfInputProps {
     label: string,
     id: string,
@@ -8,6 +11,7 @@ export interface SigMfInputProps {
 }
 
 export interface SigMfGeoType {
+    enabled: boolean,
     type: string|null,
     lat: number|null,
     lon: number|null,
@@ -24,6 +28,7 @@ export interface SigMfCaptureType {
 }
 
 export interface SigMfCapDetsCapType {
+    enabled: boolean,
     acqScaleFactor: number|null,
     attenuation: number|null,
     acqBw: number|null,
