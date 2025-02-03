@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
+import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureDisplay";
 import Select from "react-select";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
@@ -11,6 +12,8 @@ export default function SigMFEditor() {
 
     const capArr: SigMfCaptureType[] = [];
     const annotArr: SigMfAnnotationType[] = [];
+
+    const capChildren: React.Component[] = [];
 
     const options = [
         {value: 'global', label: 'Global'},
@@ -43,6 +46,9 @@ export default function SigMFEditor() {
     const [isCreateEnabled, setIsCreateEnabled] = useState<boolean>(false);
 
     function addCapture(capture: SigMfCaptureType) {
+
+        capChildren.push(<SigMfCaptureDisplay inData={capture} idx={capChildren.length} />);
+        console.log(capChildren);
         console.log(capture);
         capArr.push(capture);
         const tmp: HTMLElement|null = document.getElementById("capture-grid");
@@ -52,8 +58,9 @@ export default function SigMFEditor() {
         }
         tmp.innerHTML = ``;
         capArr.forEach((cap, idx) => {
-           const parEl = document.createElement("p");
-            tmp.innerHTML += `<div id="capture-element-${idx}"><p>Capture ${idx}</p></div>`;
+            //const parEl = document.createElement("p");
+            //tmp.innerHTML += `<div id="capture-element-${idx}"><p>Capture ${idx}</p></div>`;
+            tmp.append()
         });
     }
 
@@ -110,9 +117,8 @@ export default function SigMFEditor() {
     return (
         <div className="min-h-screen min-w-full justify-items-center text-center p-4">
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
-            <div className="grid grid-cols-2 pt-4 h-screen">
-                <div className="grid grid-cols-1 gap-2 overflow-auto">
-                    <h2>Editor</h2>
+            <div className="grid grid-cols-2 pt-4 max-h-[calc(90vh)]">
+                <div className="grid grid-cols-1 overflow-auto">
                     <Select options={options} onChange={setSelectedOpt} value={selectedOpt}/>
                     <SigMfGlobal isHidden={selectedOpt.value !== 'global'} transferData={setGlobalObj}/>
                     <SigMfCapture isHidden={selectedOpt.value !== 'captures'} transferCapData={addCapture} />
@@ -120,9 +126,12 @@ export default function SigMFEditor() {
                     <button className="rounded block bg-slate-300 dark:bg-slate-300 hover:slate-700 dark:hover:bg-slate-500 text-indigo-500 max-h-8 min-w-20" onClick={createSigMfFile} disabled={!isCreateEnabled}>Create</button>
                 </div>
                 <div className="grid grid-cols-2 h-screen">
-                    <div className="h-screen">
-                        <h2>Captures ({capArr.length})</h2>
-                        <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)]" id="capture-grid"></div>
+                    <div className="h-screen" id="captures-section">
+                        <h2>{`Captures (${capArr.length})`}</h2>
+                        <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="capture-grid">
+                            <SigMfCaptureDisplay inData={{sampStart: 5}} idx={0} />
+                            <SigMfCaptureDisplay inData={{sampStart: 16}} idx={1} />
+                        </div>
                     </div>
                     <div>
                         <h2>Annotations ({annotArr.length})</h2>

@@ -31,12 +31,20 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
             lon: lon,
             alt: alt
         });
-    }, [geoType, lat, lon, alt]);
+    }, [isGeoEnabled, geoType, lat, lon, alt]);
 
     useEffect(() => {
         let retVal = null;
-        if (geoData.enabled) {
-            retVal = geoData;
+        if (geoData.enabled && geoData.type !== null && geoData.lat !== null && geoData.lon !== null) {
+            if (geoData.alt === null) {
+                retVal = {
+                    type: geoData.type,
+                    lat: geoData.lat,
+                    lon: geoData.lon
+                };
+            } else {
+                retVal = geoData;
+            }
         }
         changeFunction(retVal);
     }, [geoData])
