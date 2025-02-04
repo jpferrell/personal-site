@@ -7,10 +7,9 @@ import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureD
 import Select from "react-select";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
+import SigMfAnnotationDisplay from "@/app/_components/SigMfComponents/SigMfAnnotationDisplay";
 
 export default function SigMFEditor() {
-
-    const annotArr: SigMfAnnotationType[] = [];
 
     const options = [
         {value: 'global', label: 'Global'},
@@ -42,6 +41,7 @@ export default function SigMFEditor() {
     const [selectedOpt, setSelectedOpt] = useState({value: 'global', label: 'Global'});
     const [isCreateEnabled, setIsCreateEnabled] = useState<boolean>(false);
     const [capCompArr, setCapCompArr] = useState<React.ComponentType []>([]);
+    const [annotCompArr, setAnnotCompArr] = useState<React.ComponentType []>([]);
 
     function addCapture(capture: SigMfCaptureType) {
 
@@ -52,22 +52,12 @@ export default function SigMFEditor() {
         ]);
     }
 
-    useEffect(() => {
-        console.log(capCompArr);
-    }, [capCompArr]);
-
     function addAnnotation(annotation: SigMfAnnotationType) {
-        console.log(annotation);
-        annotArr.push(annotation);
-        const tmp: HTMLElement|null = document.getElementById("annotation-grid");
-        if (tmp === null) {
-            console.log("annotation-grid not found");
-            return;
-        }
-        tmp.innerHTML = ``;
-        annotArr.forEach((annot, idx) => {
-            tmp.innerHTML += `<p>Annotation ${idx}</p>`;
-        });
+        let len = annotCompArr.length;
+        setAnnotCompArr([
+            ...annotCompArr,
+            <SigMfAnnotationDisplay inData={annotation} idx={len} key={`annot-disp-${len}`} />
+        ]);
     }
 
     useEffect(() => {
@@ -124,8 +114,10 @@ export default function SigMFEditor() {
                         </div>
                     </div>
                     <div>
-                        <h2>Annotations ({annotArr.length})</h2>
-                        <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)]" id="annotation-grid"></div>
+                        <h2>Annotations</h2>
+                        <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="annotation-grid">
+                            {annotCompArr}
+                        </div>
                     </div>
                 </div>
             </div>
