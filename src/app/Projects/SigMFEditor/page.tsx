@@ -10,10 +10,7 @@ import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_c
 
 export default function SigMFEditor() {
 
-    const capArr: SigMfCaptureType[] = [];
     const annotArr: SigMfAnnotationType[] = [];
-
-    const capChildren: React.Component[] = [];
 
     const options = [
         {value: 'global', label: 'Global'},
@@ -44,25 +41,20 @@ export default function SigMFEditor() {
 
     const [selectedOpt, setSelectedOpt] = useState({value: 'global', label: 'Global'});
     const [isCreateEnabled, setIsCreateEnabled] = useState<boolean>(false);
+    const [capCompArr, setCapCompArr] = useState<React.ComponentType []>([]);
 
     function addCapture(capture: SigMfCaptureType) {
 
-        capChildren.push(<SigMfCaptureDisplay inData={capture} idx={capChildren.length} />);
-        console.log(capChildren);
-        console.log(capture);
-        capArr.push(capture);
-        const tmp: HTMLElement|null = document.getElementById("capture-grid");
-        if (tmp === null) {
-            console.log("capture-grid not found");
-            return;
-        }
-        tmp.innerHTML = ``;
-        capArr.forEach((cap, idx) => {
-            //const parEl = document.createElement("p");
-            //tmp.innerHTML += `<div id="capture-element-${idx}"><p>Capture ${idx}</p></div>`;
-            tmp.append()
-        });
+        let len = capCompArr.length;
+        setCapCompArr([
+            ...capCompArr,
+            <SigMfCaptureDisplay inData={capture} idx={len} key={`cap-disp-${len}`} />
+        ]);
     }
+
+    useEffect(() => {
+        console.log(capCompArr);
+    }, [capCompArr]);
 
     function addAnnotation(annotation: SigMfAnnotationType) {
         console.log(annotation);
@@ -74,7 +66,6 @@ export default function SigMFEditor() {
         }
         tmp.innerHTML = ``;
         annotArr.forEach((annot, idx) => {
-           const parEl = document.createElement("p");
             tmp.innerHTML += `<p>Annotation ${idx}</p>`;
         });
     }
@@ -127,10 +118,9 @@ export default function SigMFEditor() {
                 </div>
                 <div className="grid grid-cols-2 h-screen">
                     <div className="h-screen" id="captures-section">
-                        <h2>{`Captures (${capArr.length})`}</h2>
+                        <h2>{`Captures`}</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="capture-grid">
-                            <SigMfCaptureDisplay inData={{sampStart: 5}} idx={0} />
-                            <SigMfCaptureDisplay inData={{sampStart: 16}} idx={1} />
+                            {capCompArr}
                         </div>
                     </div>
                     <div>
