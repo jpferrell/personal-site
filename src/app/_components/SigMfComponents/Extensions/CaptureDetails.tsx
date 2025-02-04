@@ -69,20 +69,38 @@ export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidd
 
     const [capDetsAnnotData, setCapDetsAnnotData] = useState<SigMfCapDetsAnnotType>({
         enabled: false,
-        'capture_details:SNRdB': null,
-        'capture_details:signal_reference_number': null
     });
 
     useEffect(() => {
-        setCapDetsAnnotData({
-            enabled: isCapEnabled,
-            'capture_details:SNRdB': snr,
-            'capture_details:signal_reference_number': sigRefNum
-        });
-    }, [isCapEnabled, snr, sigRefNum]);
+        setCapDetsAnnotData({...capDetsAnnotData, enabled: isCapEnabled});
+    }, [isCapEnabled]);
 
     useEffect(() => {
-        changeFunction(capDetsAnnotData);
+        if (snr !== null) {
+            setCapDetsAnnotData({...capDetsAnnotData, 'capture_details:SNRdB': snr});
+        } else if (Object.hasOwn(capDetsAnnotData, 'capture_details:SNRdB')) {
+            const tmpObj = {...capDetsAnnotData};
+            delete tmpObj['capture_details:SNRdB'];
+            setCapDetsAnnotData(tmpObj);
+        }
+    }, [snr]);
+
+    useEffect(() => {
+        if (sigRefNum !== null) {
+            setCapDetsAnnotData({...capDetsAnnotData, 'capture_details:signal_reference_number': sigRefNum});
+        } else if (Object.hasOwn(capDetsAnnotData, 'capture_details:signal_reference_number')) {
+            const tmpObj = {...capDetsAnnotData};
+            delete tmpObj['capture_details:signal_reference_number'];
+            setCapDetsAnnotData(tmpObj);
+        }
+    }, [sigRefNum]);
+
+    useEffect(() => {
+        if (capDetsAnnotData.enabled) {
+            const retObj: SigMfCapDetsAnnotType = {...capDetsAnnotData};
+            delete retObj.enabled;
+            changeFunction(retObj);
+        }
     }, [capDetsAnnotData]);
 
     return (

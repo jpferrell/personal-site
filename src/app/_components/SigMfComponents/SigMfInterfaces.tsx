@@ -75,9 +75,9 @@ export interface SigMfCapDetsCapType {
 }
 
 export interface SigMfCapDetsAnnotType {
-    enabled: boolean,
-    'capture_details:SNRdB': number|null,
-    'capture_details:signal_reference_number': number|null
+    enabled?: boolean,
+    'capture_details:SNRdB'?: number|null,
+    'capture_details:signal_reference_number'?: number|null
 }
 
 export interface SigMfCapComponent {
