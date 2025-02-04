@@ -6,7 +6,6 @@ export default function SigMfNumberInput({ label, id, changeFunction, placeholde
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
         const inVal = e.target.value;
-        console.log(inVal);
         const regex: RegExp = /^[0-9]+$/;
         let retVal = null;
         if (regex.test(inVal)) {

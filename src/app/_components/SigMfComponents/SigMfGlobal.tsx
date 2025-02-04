@@ -34,24 +34,24 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     const [geo, setGeo] = useState<SigMfGeoType|null>(null);
 
     const [globalData, setGlobalData] = useState<SigMfGlobalType>({
-        datatype: null,
-        sampRate: null,
-        author: null,
-        collection: null,
-        dataset: null,
-        dataDoi: null,
-        desc: null,
-        hw: null,
-        license: null,
-        metaOnly: isMetaOnly,
-        metaDoi: null,
-        numChans: null,
-        offset: null,
-        recorder: null,
-        sha512: null,
-        trailingBytes: null,
-        version: null,
-        geo: null
+        'core:datatype': null,
+        'core:sample_rate': null,
+        'core:author': null,
+        'core:collection': null,
+        'core:dataset': null,
+        'core:data_doi': null,
+        'core:description': null,
+        'core:hw': null,
+        'core:license': null,
+        'core:metadata_only': isMetaOnly,
+        'core:meta_doi': null,
+        'core:num_channels': null,
+        'core:offset': null,
+        'core:recorder': null,
+        'core:sha512': null,
+        'core:trailing_bytes': null,
+        'core:version': null,
+        'core:geolocation': null
     });
 
     useEffect(() => {
@@ -60,24 +60,24 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
 
     useEffect(() => {
         setGlobalData({
-            datatype: sigmfDatatype,
-            sampRate: sr,
-            author: author,
-            collection: collection,
-            dataset: dataset,
-            dataDoi: dataDoi,
-            desc: desc,
-            hw: hw,
-            license: license,
-            metaOnly: isMetaOnly,
-            metaDoi: metaDoi,
-            numChans: numChans,
-            offset: offset,
-            recorder: recorder,
-            sha512: sha,
-            trailingBytes: trailBytes,
-            version: version,
-            geo: geo
+            'core:datatype': sigmfDatatype,
+            'core:sample_rate': sr,
+            'core:author': author,
+            'core:collection': collection,
+            'core:dataset': dataset,
+            'core:data_doi': dataDoi,
+            'core:description': desc,
+            'core:hw': hw,
+            'core:license': license,
+            'core:metadata_only': isMetaOnly,
+            'core:meta_doi': metaDoi,
+            'core:num_channels': numChans,
+            'core:offset': offset,
+            'core:recorder': recorder,
+            'core:sha512': sha,
+            'core:trailing_bytes': trailBytes,
+            'core:version': version,
+            'core:geolocation': geo
         })
     }, [sigmfDatatype, sr, author, collection, dataset, dataDoi, desc, hw, license, isMetaOnly, metaDoi, numChans, offset, recorder, sha, trailBytes, version, geo]);
 
@@ -85,8 +85,19 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
 
     }
 
+    function cleanData(dirtyData: SigMfGlobalType) {
+        const retObj = {};
+       for (const [key, value] of Object.entries(dirtyData)) {
+        if (value !== null) {
+            retObj[key] = value;
+        }
+       }
+        return retObj;
+    }
+
     useEffect(() => {
-        transferData(globalData);
+        const retData = cleanData(globalData);
+        transferData(retData);
     }, [globalData])
 
     return (

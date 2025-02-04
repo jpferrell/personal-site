@@ -39,11 +39,13 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
             if (geoData.alt === null) {
                 retVal = {
                     type: geoData.type,
-                    lat: geoData.lat,
-                    lon: geoData.lon
+                    coordinates: [geoData.lat, geoData.lon],
                 };
             } else {
-                retVal = geoData;
+                retVal = {
+                    type: geoData.type,
+                    coordinates: [geoData.lat, geoData.lon, geoData.alt]
+                };
             }
         }
         changeFunction(retVal);

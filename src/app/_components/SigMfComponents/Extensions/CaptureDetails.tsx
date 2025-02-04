@@ -20,31 +20,30 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
 
     const [capDetCapData, setCapDetCapData] = useState<SigMfCapDetsCapType>({
         enabled: false,
-        acqScaleFactor: null,
-        attenuation: null,
-        acqBw: null,
-        startCap: null,
-        stopCap: null,
-        srcFile: null,
-        gain: null
+        'capture_details:acq_scale_factor': null,
+        'capture_details:attenuation': null,
+        'capture_details:acquisition_bandwidth': null,
+        'capture_details:start_capture': null,
+        'capture_details:stop_capture': null,
+        'capture_details:source_file': null,
+        'capture_details:gain': null
     });
 
     useEffect(() => {
         setCapDetCapData({
             enabled: isCapEnabled,
-            acqScaleFactor: acqScaleFactor,
-            attenuation: attn,
-            acqBw: acqBw,
-            startCap: startCap,
-            stopCap: stopCap,
-            srcFile: srcFile,
-            gain: gain
+            'capture_details:acq_scale_factor': acqScaleFactor,
+            'capture_details:attenuation': attn,
+            'capture_details:acquisition_bandwidth': acqBw,
+            'capture_details:start_capture': startCap,
+            'capture_details:stop_capture': stopCap,
+            'capture_details:source_file': srcFile,
+            'capture_details:gain': gain
         });
 
     }, [acqScaleFactor, attn, acqBw, startCap, stopCap, srcFile, gain]);
 
     useEffect(() => {
-        console.log("srcFile: " + capDetCapData.srcFile);
         changeFunction(capDetCapData);
     }, [capDetCapData]);
 
@@ -70,15 +69,15 @@ export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidd
 
     const [capDetsAnnotData, setCapDetsAnnotData] = useState<SigMfCapDetsAnnotType>({
         enabled: false,
-        snr: null,
-        sigRefNum: null
+        'capture_details:SNRdB': null,
+        'capture_details:signal_reference_number': null
     });
 
     useEffect(() => {
         setCapDetsAnnotData({
             enabled: isCapEnabled,
-            snr: snr,
-            sigRefNum: sigRefNum
+            'capture_details:SNRdB': snr,
+            'capture_details:signal_reference_number': sigRefNum
         });
     }, [isCapEnabled, snr, sigRefNum]);
 

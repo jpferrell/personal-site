@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureDisplay";
@@ -17,38 +17,18 @@ export default function SigMFEditor() {
         {value: 'annotations', label: 'Annotations'}
     ];
 
-    const [globalObj, setGlobalObj] = useState<SigMfGlobalType>({
-        datatype: null,
-        sampRate: null,
-        author: null,
-        collection: null,
-        dataset: null,
-        dataDoi: null,
-        desc: null,
-        hw: null,
-        license: null,
-        metaOnly: null,
-        metaDoi: null,
-        numChans: null,
-        offset: null,
-        recorder: null,
-        sha512: null,
-        trailingBytes: null,
-        version: null,
-        geo: null
-    });
+    const [globalObj, setGlobalObj] = useState<Object>({});
 
     const [selectedOpt, setSelectedOpt] = useState({value: 'global', label: 'Global'});
     const [isCreateEnabled, setIsCreateEnabled] = useState<boolean>(false);
-    const [capCompArr, setCapCompArr] = useState<React.ComponentType []>([]);
-    const [annotCompArr, setAnnotCompArr] = useState<React.ComponentType []>([]);
+    const [capCompArr, setCapCompArr] = useState<Object []>([]);
+    const [annotCompArr, setAnnotCompArr] = useState<Object []>([]);
 
     function addCapture(capture: SigMfCaptureType) {
-
         let len = capCompArr.length;
         setCapCompArr([
             ...capCompArr,
-            <SigMfCaptureDisplay inData={capture} idx={len} key={`cap-disp-${len}`} />
+            {component: <SigMfCaptureDisplay inData={capture} idx={len} key={`cap-disp-${len}`} dataGetter={getCapture}/>, data: capture}
         ]);
     }
 
@@ -56,38 +36,59 @@ export default function SigMFEditor() {
         let len = annotCompArr.length;
         setAnnotCompArr([
             ...annotCompArr,
-            <SigMfAnnotationDisplay inData={annotation} idx={len} key={`annot-disp-${len}`} />
+            {component: <SigMfAnnotationDisplay inData={annotation} idx={len} key={`annot-disp-${len}`} />, data: annotation}
         ]);
     }
 
     useEffect(() => {
-        let btnEnabled = false;
-        if (globalObj.version !== null && globalObj.datatype !== null) {
-            if (globalObj.geo?.enabled) {
-                if (globalObj.geo.lat !== null && globalObj.geo.lon !== null && globalObj.geo.type !== null) {
+        let btnEnabled = true;
+        //if (globalObj['core:version'] !== null && globalObj['core:datatype'] !== null) {
+        /*
+        if (('core:version' in globalObj) && ('core:datatype' in globalObj)) {
+            if (('core:geolocation' in globalObj)) {
+            //if (globalObj['core:geolocation']?.enabled) {
+                if (globalObj['core:geolocation'].lat !== null && globalObj['core:geolocation'].lon !== null && globalObj['core:geolocation'].type !== null) {
                     btnEnabled = true;
                 }
             } else {
                 btnEnabled = true;
             }
         }
+            */
         setIsCreateEnabled(btnEnabled);
     }, [globalObj]);
 
-    function cleanObj() {
-        const newObj = {};
-        Object.keys(globalObj).forEach(key => {
-            if (globalObj[key] !== null) {
-                newObj[key] = globalObj[key];
+    function cleanObj(obj: Object) {
+        const retObj = {};
+        Object.keys(obj).forEach(key => {
+            if (obj[key] !== null) {
+                retObj[key] = obj[key];
             }
         });
 
-        return newObj;
+        return retObj;
+    }
+
+    function getCapture(data: SigMfCaptureType) {
+        return data;
+    }
+
+    function getCaptureArray() {
+        return capCompArr.map(cap => cap.data);
+    }
+
+    function getAnnotationArray() {
+        return annotCompArr.map(annot => annot.data);
     }
 
     function createSigMfFile() {
         const el = document.createElement("a");
-        const outObj = cleanObj();
+        const capArr = getCaptureArray();
+        const annotArr = getAnnotationArray();
+        let outObj: Object = {};
+        outObj["global"] = globalObj;
+        outObj["captures"] = capArr;
+        outObj["annotations"] = annotArr;
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
         el.download = "test.json";
@@ -110,13 +111,13 @@ export default function SigMFEditor() {
                     <div className="h-screen" id="captures-section">
                         <h2>{`Captures`}</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="capture-grid">
-                            {capCompArr}
+                            {capCompArr.map(capture => capture.component)}
                         </div>
                     </div>
                     <div>
                         <h2>Annotations</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="annotation-grid">
-                            {annotCompArr}
+                            {annotCompArr.map(annotation => annotation.component)}
                         </div>
                     </div>
                 </div>

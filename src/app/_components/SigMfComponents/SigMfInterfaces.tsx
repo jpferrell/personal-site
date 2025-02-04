@@ -1,6 +1,3 @@
-import { SetStateAction } from "react"
-import { Dispatch } from "react"
-
 export interface SigMfInputProps {
     label: string,
     id: string,
@@ -23,61 +20,66 @@ export interface SigMfGeoType {
 }
 
 export interface SigMfGlobalType {
-    datatype: string|null,
-    sampRate: number| null,
-    author: string|null,
-    collection: string|null,
-    dataset: string|null,
-    dataDoi: string|null,
-    desc: string|null,
-    hw: string|null,
-    license: string|null,
-    metaOnly: boolean|null,
-    metaDoi: string|null,
-    numChans: number|null,
-    offset: number|null,
-    recorder: string|null,
-    sha512: string|null,
-    trailingBytes: number|null,
-    version: string|null,
-    geo: SigMfGeoType|null
+    'core:datatype': string|null,
+    'core:sample_rate'?: number| null,
+    'core:author'?: string|null,
+    'core:collection'?: string|null,
+    'core:dataset'?: string|null,
+    'core:data_doi'?: string|null,
+    'core:description'?: string|null,
+    'core:hw'?: string|null,
+    'core:license'?: string|null,
+    'core:metadata_only'?: boolean|null,
+    'core:meta_doi'?: string|null,
+    'core:num_channels'?: number|null,
+    'core:offset'?: number|null,
+    'core:recorder'?: string|null,
+    'core:sha512'?: string|null,
+    'core:trailing_bytes'?: number|null,
+    'core:version': string|null,
+    'core:geolocation'?: SigMfGeoType|null
 }
 
 export interface SigMfCaptureType {
-    sampStart: number|null,
-    datetime: string|null,
-    freq: number|null,
-    globalIdx: number|null,
-    headerBytes: number|null,
-    capDets: SigMfCapDetsCapType|null
+    'core:sample_start': number|null,
+    'core:datetime': string|null,
+    'core:frequency': number|null,
+    'core:global_index': number|null,
+    'core:header_bytes': number|null,
+    'core:geolocation': SigMfGeoType|null,
+    capture_details: SigMfCapDetsCapType|null
 }
 
 export interface SigMfAnnotationType {
-    sampStart: number|null,
-    sampCnt: number|null,
-    freqLowEdge: number|null,
-    freqHighEdge: number|null,
-    label: string|null,
-    comment: string|null,
-    generator: string|null,
-    uuid: string|null,
-    geo: SigMfGeoType|null,
-    capDets: SigMfCapDetsAnnotType|null
+    'core:sample_start': number|null,
+    'core:sample_count': number|null,
+    'core:freq_lower_edge': number|null,
+    'core:freq_upper_edge': number|null,
+    'core:label': string|null,
+    'core:comment': string|null,
+    'core:generator': string|null,
+    'core:uuid': string|null,
+    capture_details: SigMfCapDetsAnnotType|null
 }
 
 export interface SigMfCapDetsCapType {
     enabled: boolean,
-    acqScaleFactor: number|null,
-    attenuation: number|null,
-    acqBw: number|null,
-    startCap: string|null,
-    stopCap: string|null,
-    srcFile: string|null,
-    gain?: number|null
+    'capture_details:acq_scale_factor': number|null,
+    'capture_details:attenuation': number|null,
+    'capture_details:acquisition_bandwidth': number|null,
+    'capture_details:start_capture': string|null,
+    'capture_details:stop_capture': string|null,
+    'capture_details:source_file': string|null,
+    'capture_details:gain'?: number|null
 }
 
 export interface SigMfCapDetsAnnotType {
     enabled: boolean,
-    snr: number|null,
-    sigRefNum: number|null
+    'capture_details:SNRdB': number|null,
+    'capture_details:signal_reference_number': number|null
+}
+
+export interface SigMfCapComponent {
+    component: Element,
+    data: SigMfCaptureType
 }
