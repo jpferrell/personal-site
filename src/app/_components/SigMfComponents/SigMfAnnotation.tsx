@@ -2,11 +2,10 @@
 
 import { useEffect, useState } from "react";
 
-import SigMfGeoInput from "./SigMfGeoInput";
 import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput"
 import { CaptureDetailsAnnotations } from "./Extensions/CaptureDetails";
-import { SigMfAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType } from "./SigMfInterfaces";
+import { SigMfAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType, SigMfSignalType } from "./SigMfInterfaces";
 import { SignalAnnotation } from "./Extensions/SignalAnnotation";
 
 export default function SigMfAnnotation( { isHidden, transferData }: { isHidden: boolean, transferData: Function } ) {
@@ -20,35 +19,107 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     const [generator, setGenerator] = useState<string|null>(null);
     const [uuid, setUuid] = useState<string|null>(null);
     const [capDets, setCapDets] = useState<SigMfCapDetsAnnotType|null>(null);
-    const [sigAnnot, setSigAnnot] = useState(null);
+    const [sigAnnot, setSigAnnot] = useState<SigMfSignalType|null>(null);
 
     const [annotData, setAnnotData] = useState<SigMfAnnotationType>({
         'core:sample_start': null,
-        'core:sample_count': null,
-        'core:freq_lower_edge': null,
-        'core:freq_upper_edge': null,
-        'core:label': null,
-        'core:comment': null,
-        'core:generator': null,
-        'core:uuid': null,
-        capture_details: null
     });
 
     const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
 
     useEffect(() => {
-        setAnnotData({
-            'core:sample_start': sampStart,
-            'core:sample_count': sampCnt,
-            'core:freq_lower_edge': freqLowEdge,
-            'core:freq_upper_edge': freqHighEdge,
-            'core:label': label,
-            'core:comment': comment,
-            'core:generator': generator,
-            'core:uuid': uuid,
-            capture_details: capDets
-        });
-    }, [sampStart, sampCnt, freqLowEdge, freqHighEdge, label, comment, generator, uuid, capDets]);
+        setAnnotData({...annotData, "core:sample_start": sampStart});
+    }, [sampStart]);
+
+    useEffect(() => {
+        if (sampCnt !== null) {
+            setAnnotData({...annotData, "core:sample_count": sampCnt});
+        } else if (Object.hasOwn(annotData, 'core:sample_count')) {
+            const tmpObj = {...annotData};
+            delete tmpObj['core:sample_count'];
+            setAnnotData(tmpObj);
+        }
+    }, [sampCnt]);
+
+    useEffect(() => {
+        if (freqLowEdge !== null) {
+            setAnnotData({...annotData, "core:freq_lower_edge": freqLowEdge});
+        } else if (Object.hasOwn(annotData, 'core:freq_lower_edge')) {
+            const tmpObj = {...annotData};
+            delete tmpObj['core:freq_lower_edge'];
+            setAnnotData(tmpObj);
+        }
+    }, [freqLowEdge]);
+
+    useEffect(() => {
+        if (freqHighEdge !== null) {
+            setAnnotData({...annotData, "core:freq_upper_edge": freqHighEdge});
+        } else if (Object.hasOwn(annotData, 'core:freq_upper_edge')) {
+            const tmpObj = {...annotData};
+            delete tmpObj['core:freq_upper_edge'];
+            setAnnotData(tmpObj);
+        }
+    }, [freqHighEdge]);
+
+    useEffect(() => {
+        if (label !== null && label !== "") {
+            setAnnotData({...annotData, "core:label": label});
+        } else if (Object.hasOwn(annotData, 'core:label')) {
+            const tmpObj = {...annotData};
+            delete tmpObj['core:label'];
+            setAnnotData(tmpObj);
+        }
+    }, [label]);
+
+    useEffect(() => {
+        if (comment !== null && comment !== "") {
+            setAnnotData({...annotData, "core:comment": comment});
+        } else if (Object.hasOwn(annotData, 'core:comment')) {
+            const tmpObj = {...annotData};
+            delete tmpObj['core:comment'];
+            setAnnotData(tmpObj);
+        }
+    }, [comment]);
+
+    useEffect(() => {
+        if (generator !== null && generator !== "") {
+            setAnnotData({...annotData, "core:generator": generator});
+        } else if (Object.hasOwn(annotData, 'core:generator')) {
+            const tmpObj = {...annotData};
+            delete tmpObj['core:generator'];
+            setAnnotData(tmpObj);
+        }
+    }, [generator]);
+
+    useEffect(() => {
+        if (uuid !== null && uuid !== "") {
+            setAnnotData({...annotData, "core:uuid": uuid});
+        } else if (Object.hasOwn(annotData, 'core:uuid')) {
+            const tmpObj = {...annotData};
+            delete tmpObj['core:uuid'];
+            setAnnotData(tmpObj);
+        }
+    }, [uuid]);
+
+    useEffect(() => {
+        if (capDets !== null) {
+            setAnnotData({...annotData, "capture_details": capDets});
+        } else if (Object.hasOwn(annotData, 'capture_details')) {
+            const tmpObj = {...annotData};
+            delete tmpObj.capture_details;
+            setAnnotData(tmpObj);
+        }
+    }, [capDets]);
+
+    useEffect(() => {
+        if (sigAnnot !== null) {
+            setAnnotData({...annotData, "signal": sigAnnot});
+        } else if (Object.hasOwn(annotData, 'signal')) {
+            const tmpObj = {...annotData};
+            delete tmpObj.signal;
+            setAnnotData(tmpObj);
+        }
+    }, [sigAnnot]);
 
     useEffect(() => {
         let btnEnabled: boolean = false;
@@ -58,30 +129,8 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
         setIsButtonEnabled(btnEnabled);
     }, [annotData]);
 
-    function cleanData(dirtyData: SigMfAnnotationType) {
-        const retObj = {};
-        for (const [key, value] of Object.entries(dirtyData)) {
-            if (key === 'capture_details') {
-                if (dirtyData[key]?.enabled) {
-                    for (const [innerKey, innerVal] of Object.entries(dirtyData[key])) {
-                        if (innerVal !== null && innerKey !== 'enabled') {
-                            retObj[innerKey] = innerVal;
-                        }
-                    }
-                }
-            } else {
-                if (value !== null) {
-                    retObj[key] = value;
-                }
-            }
-        }
-
-        return retObj;
-    }
-
     function addAnnotation() {
-        const retData = cleanData(annotData);
-        transferData(retData);
+        transferData(annotData);
     }
 
     return (

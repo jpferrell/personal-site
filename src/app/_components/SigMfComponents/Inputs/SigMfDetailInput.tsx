@@ -161,25 +161,25 @@ export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: 
 
     return (
         <div id={`${idPart}-detail-inputs-container`}>
-            <SigMfSelectInput label="Type" id={`${idPart}-detail-type-input`} hidden={isHidden} changeFunction={setType} values={["", "analog", "digital"]} />
+            <SigMfSelectInput label="Type" id={`${idPart}-detail-type-input`} hidden={isHidden} changeFunction={setType} values={["analog", "digital"]} />
             <SigMfSelectInput label="Modulation Class" id={`${idPart}-detail-mod-class-input`} hidden={isHidden} changeFunction={setModClass} values={[
-                "", "am", "fm", "pm", "ssb", "dsb", "vsb", "ask", "fsk", "psk", "qam", "ook", "cpm", "msk"
+                "am", "fm", "pm", "ssb", "dsb", "vsb", "ask", "fsk", "psk", "qam", "ook", "cpm", "msk"
             ]} />
             <SigMfTextInput label="Standard" id={`${idPart}-detail-standard-input`} hidden={isHidden} changeFunction={setStandard} placeholder="e.g. 802.11ac" />
             <SigMfSelectInput label="Carrier Variant" id={`${idPart}-detail-carrier-var-input`} hidden={isHidden} changeFunction={setCarVar} values={[
-                "", "with_carrier", "suppressed_carrier", "reduced_carrier", "single_carrier", "multi_carrier"
+                "with_carrier", "suppressed_carrier", "reduced_carrier", "single_carrier", "multi_carrier"
             ]} />
-            <SigMfSelectInput label="Symbol Variant" id={`${idPart}-detail-symbol-var-input`} hidden={isHidden} changeFunction={setSymVar} values={["", "differential", "offset"]} />
+            <SigMfSelectInput label="Symbol Variant" id={`${idPart}-detail-symbol-var-input`} hidden={isHidden} changeFunction={setSymVar} values={["differential", "offset"]} />
             <SigMfNumberInput label="Order" id={`${idPart}-detail-order-input`} placeholder="0" hidden={isHidden} changeFunction={setOrder} />
-            <SigMfSelectInput label="Duplexing" id={`${idPart}-detail-duplex-input`} hidden={isHidden} changeFunction={setDuplex} values={["", "tdd", "fdd"]} />
+            <SigMfSelectInput label="Duplexing" id={`${idPart}-detail-duplex-input`} hidden={isHidden} changeFunction={setDuplex} values={["tdd", "fdd"]} />
             <SigMfSelectInput label="Multiplexing" id={`${idPart}-detail-multiplex-input`} hidden={isHidden} changeFunction={setMultiplex} values={[
-                "", "tdm", "fdm", "cdm", "ofdm", "sdm", "pdm"
+                "tdm", "fdm", "cdm", "ofdm", "sdm", "pdm"
             ]} />
             <SigMfSelectInput label="Mulitple Access" id={`${idPart}-detail-mult-acc-input`} hidden={isHidden} changeFunction={setMultAcc} values={[
-                "", "fdma", "ofdma", "tdma" , "cdma", "sdma", "pdma"
+                "fdma", "ofdma", "tdma" , "cdma", "sdma", "pdma"
             ]} />
             <SigMfSelectInput label="Spreading" id={`${idPart}-detail-spreading-input`} hidden={isHidden} changeFunction={setSpreading} values={[
-                "", "fhss", "thss", "dsss", "css"
+                "fhss", "thss", "dsss", "css"
             ]} />
             <SigMfNumberInput label="Bandwidth" id={`${idPart}-detail-bw-input`} hidden={isHidden} changeFunction={setBw} placeholder="0.0" />
             <SigMfNumberInput label="Channel" id={`${idPart}-detail-channel-input`} hidden={isHidden} placeholder="0" changeFunction={setChannel} />

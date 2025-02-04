@@ -52,14 +52,15 @@ export interface SigMfCaptureType {
 
 export interface SigMfAnnotationType {
     'core:sample_start': number|null,
-    'core:sample_count': number|null,
-    'core:freq_lower_edge': number|null,
-    'core:freq_upper_edge': number|null,
-    'core:label': string|null,
-    'core:comment': string|null,
-    'core:generator': string|null,
-    'core:uuid': string|null,
-    capture_details: SigMfCapDetsAnnotType|null
+    'core:sample_count'?: number|null,
+    'core:freq_lower_edge'?: number|null,
+    'core:freq_upper_edge'?: number|null,
+    'core:label'?: string|null,
+    'core:comment'?: string|null,
+    'core:generator'?: string|null,
+    'core:uuid'?: string|null,
+    capture_details?: SigMfCapDetsAnnotType|null,
+    signal?: SigMfSignalType|null
 }
 
 export interface SigMfCapDetsCapType {
@@ -106,4 +107,10 @@ export interface SigMfSignalEmitterType {
     power_tx?: number|null,
     power_eirp?: number|null,
     geolocation?: SigMfGeoType|null
+}
+
+export interface SigMfSignalType {
+    enabled?: boolean,
+    'signal:detail'?: SigMfSignalDetailType,
+    'signal:emitter'?: SigMfSignalEmitterType
 }
