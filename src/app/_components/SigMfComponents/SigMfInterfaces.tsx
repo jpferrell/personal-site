@@ -83,3 +83,27 @@ export interface SigMfCapComponent {
     component: Element,
     data: SigMfCaptureType
 }
+
+export interface SigMfSignalDetailType {
+    type?: string|null,
+    mod_class?: string|null,
+    standard?: string|null,
+    carrier_variant?: string|null,
+    symbol_variant?: string|null,
+    order?: number|null,
+    duplexing?: string|null,
+    multiplexing?: string|null,
+    multiple_access?: string|null,
+    spreading?: string|null,
+    channel_bw?: number|null,
+    channel?: number|null,
+    class_variant?: string|null
+}
+
+export interface SigMfSignalEmitterType {
+    seid?: number|null,
+    manufacturer?: string|null,
+    power_tx?: number|null,
+    power_eirp?: number|null,
+    geolocation?: SigMfGeoType|null
+}

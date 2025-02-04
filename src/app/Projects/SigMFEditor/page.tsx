@@ -41,33 +41,14 @@ export default function SigMFEditor() {
     }
 
     useEffect(() => {
-        let btnEnabled = true;
-        //if (globalObj['core:version'] !== null && globalObj['core:datatype'] !== null) {
-        /*
-        if (('core:version' in globalObj) && ('core:datatype' in globalObj)) {
-            if (('core:geolocation' in globalObj)) {
-            //if (globalObj['core:geolocation']?.enabled) {
-                if (globalObj['core:geolocation'].lat !== null && globalObj['core:geolocation'].lon !== null && globalObj['core:geolocation'].type !== null) {
-                    btnEnabled = true;
-                }
-            } else {
+        let btnEnabled = false;
+        if (Object.hasOwn(globalObj, 'core:datatype') && Object.hasOwn(globalObj, 'core:version')) {
                 btnEnabled = true;
-            }
         }
-            */
+
+
         setIsCreateEnabled(btnEnabled);
     }, [globalObj]);
-
-    function cleanObj(obj: Object) {
-        const retObj = {};
-        Object.keys(obj).forEach(key => {
-            if (obj[key] !== null) {
-                retObj[key] = obj[key];
-            }
-        });
-
-        return retObj;
-    }
 
     function getCapture(data: SigMfCaptureType) {
         return data;
@@ -85,7 +66,7 @@ export default function SigMFEditor() {
         const el = document.createElement("a");
         const capArr = getCaptureArray();
         const annotArr = getAnnotationArray();
-        let outObj: Object = {};
+        let outObj: {global?: {}, captures?: {}, annotations?: {}} = {};
         outObj["global"] = globalObj;
         outObj["captures"] = capArr;
         outObj["annotations"] = annotArr;

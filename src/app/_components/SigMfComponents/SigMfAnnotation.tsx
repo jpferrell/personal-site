@@ -7,6 +7,7 @@ import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput"
 import { CaptureDetailsAnnotations } from "./Extensions/CaptureDetails";
 import { SigMfAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType } from "./SigMfInterfaces";
+import { SignalAnnotation } from "./Extensions/SignalAnnotation";
 
 export default function SigMfAnnotation( { isHidden, transferData }: { isHidden: boolean, transferData: Function } ) {
 
@@ -19,6 +20,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     const [generator, setGenerator] = useState<string|null>(null);
     const [uuid, setUuid] = useState<string|null>(null);
     const [capDets, setCapDets] = useState<SigMfCapDetsAnnotType|null>(null);
+    const [sigAnnot, setSigAnnot] = useState(null);
 
     const [annotData, setAnnotData] = useState<SigMfAnnotationType>({
         'core:sample_start': null,
@@ -93,6 +95,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
             <SigMfTextInput label="Generator" id="annot-generator-input" placeholder="generator" changeFunction={setGenerator} hidden={isHidden} />
             <SigMfTextInput label="UUID" id="annot-uuid-input" placeholder="uuid" changeFunction={setUuid} hidden={isHidden} />
             <CaptureDetailsAnnotations isHidden={isHidden} changeFunction={setCapDets} />
+            <SignalAnnotation idPart="annot" isHidden={isHidden} changeFunction={setSigAnnot} />
             <button id="add-annot-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""} disabled:bg-slate-700 disabled:hover:bg-slate-700 disabled:hover:text-indigo-400`} disabled={!isButtonEnabled} onClick={addAnnotation} >Add Annotation</button>
         </div>
     );
