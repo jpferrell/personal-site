@@ -4,7 +4,6 @@ import { ReactNode, useEffect, useState } from "react";
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureDisplay";
-import Select from "react-select";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
 import SigMfAnnotationDisplay from "@/app/_components/SigMfComponents/SigMfAnnotationDisplay";
@@ -77,12 +76,24 @@ export default function SigMFEditor() {
         el.click();
     }
 
+    function handleSelectionChange(e: React.ChangeEvent<HTMLSelectElement>) {
+        let retVal: string = "";
+        if (e.target.value !== "") {
+            retVal = e.target.value;
+        }
+        setSelectedOpt({value: retVal, label: retVal});
+    }
+
     return (
         <div className="min-h-screen min-w-full justify-items-center text-center p-4">
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
             <div className="grid grid-cols-2 pt-4 max-h-[calc(90vh)]">
                 <div className="grid grid-cols-1 overflow-auto">
-                    <Select options={options} onChange={setSelectedOpt} value={selectedOpt}/>
+                    <select id="selector" className={`dark:bg-slate-600 text-center max-h-6`} onChange={handleSelectionChange}>
+                        <option id="selector-global-opt" value={"global"}>Global</option>
+                        <option id="selector-capture-opt" value={"captures"}>Captures</option>
+                        <option id="selector-annot-opt" value={"annotations"}>Annotations</option>
+                    </select>
                     <SigMfGlobal isHidden={selectedOpt.value !== 'global'} transferData={setGlobalObj}/>
                     <SigMfCapture isHidden={selectedOpt.value !== 'captures'} transferCapData={addCapture} />
                     <SigMfAnnotation isHidden={selectedOpt.value !== 'annotations'} transferData={addAnnotation} />

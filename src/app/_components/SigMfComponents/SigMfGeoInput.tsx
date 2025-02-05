@@ -52,7 +52,7 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
     }, [geoData])
 
     return (
-        <div>
+        <div hidden={isHidden}>
             <SigMfCheckboxInput label="Geolocation" id={`${idPart}-geo-enabled-input`} changeFunction={setIsGeoEnabled} hidden={isHidden} />
             <SigMfTextInput label="Type" id={`${idPart}-geo-type-input`} placeholder="Point" changeFunction={setGeoType} hidden={!isGeoEnabled || isHidden} required />
             <SigMfNumberInput label="Latitude" id={`${idPart}-geo-lat-input`} placeholder="0.0" hidden={!isGeoEnabled || isHidden} changeFunction={setLat} required />

@@ -13,7 +13,7 @@ export default function SigMfSelectInput({ label, id, changeFunction, placeholde
     }
 
     return (
-        <div className="grid grid-cols-3 p-1">
+        <div className={`grid grid-cols-3 p-1 ${hidden ? "hidden" : ""}`}>
             <label htmlFor={`${id}`} className={`col-span-2 ${required ? "text-orange-400" : ""} capitalize font-semibold ${hidden ? "hidden" : ""}`}>{label}</label>
             <select id={`${id}`} className={`dark:bg-slate-600 text-center ${hidden ? "hidden" : ""}`} onChange={handleChange}>
                 <option id={`${label}-empty-opt`} value={""}></option>
