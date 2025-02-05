@@ -8,6 +8,7 @@ import SigMfCheckboxInput from "./Inputs/SigMfCheckboxInput";
 import SigMfGeoInput from "./SigMfGeoInput";
 import { SigMfGeoType, SigMfGlobalType } from "./SigMfInterfaces";
 import SigMfSelectInput from "./Inputs/SigMfSelectInput";
+import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
 
 export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: Function} ) {
 
@@ -35,23 +36,8 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
 
     const [globalData, setGlobalData] = useState<SigMfGlobalType>({
         'core:datatype': null,
-        'core:sample_rate': null,
-        'core:author': null,
-        'core:collection': null,
-        'core:dataset': null,
-        'core:data_doi': null,
-        'core:description': null,
-        'core:hw': null,
-        'core:license': null,
         'core:metadata_only': isMetaOnly,
-        'core:meta_doi': null,
-        'core:num_channels': null,
-        'core:offset': null,
-        'core:recorder': null,
-        'core:sha512': null,
-        'core:trailing_bytes': null,
         'core:version': null,
-        'core:geolocation': null
     });
 
     useEffect(() => {
@@ -59,45 +45,79 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [realCplx, leBe, datatype]);
 
     useEffect(() => {
-        setGlobalData({
-            'core:datatype': sigmfDatatype,
-            'core:sample_rate': sr,
-            'core:author': author,
-            'core:collection': collection,
-            'core:dataset': dataset,
-            'core:data_doi': dataDoi,
-            'core:description': desc,
-            'core:hw': hw,
-            'core:license': license,
-            'core:metadata_only': isMetaOnly,
-            'core:meta_doi': metaDoi,
-            'core:num_channels': numChans,
-            'core:offset': offset,
-            'core:recorder': recorder,
-            'core:sha512': sha,
-            'core:trailing_bytes': trailBytes,
-            'core:version': version,
-            'core:geolocation': geo
-        })
-    }, [sigmfDatatype, sr, author, collection, dataset, dataDoi, desc, hw, license, isMetaOnly, metaDoi, numChans, offset, recorder, sha, trailBytes, version, geo]);
-
-    function verifyData(obj: SigMfGlobalType) {
-
-    }
-
-    function cleanData(dirtyData: SigMfGlobalType) {
-        const retObj = {};
-       for (const [key, value] of Object.entries(dirtyData)) {
-        if (value !== null) {
-            retObj[key] = value;
-        }
-       }
-        return retObj;
-    }
+        setGlobalData({...globalData, 'core:datatype': sigmfDatatype});
+    }, [sigmfDatatype]);
 
     useEffect(() => {
-        const retData = cleanData(globalData);
-        transferData(retData);
+        changeStateInput(globalData, sr, 'core:sample_rate', setGlobalData);
+    }, [sr]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, author, 'core:author', setGlobalData);
+    }, [author]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, collection, 'core:collection', setGlobalData);
+    }, [collection]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, dataset, 'core:dataset', setGlobalData);
+    }, [dataset]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, dataDoi, 'core:data_doi', setGlobalData);
+    }, [dataDoi]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, desc, 'core:description', setGlobalData);
+    }, [desc]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, hw, 'core:hw', setGlobalData);
+    }, [hw]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, license, 'core:license', setGlobalData);
+    }, [license]);
+
+    useEffect(() => {
+        changeStateInput(globalData, isMetaOnly, 'core:metadata_only', setGlobalData);
+    }, [isMetaOnly]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, metaDoi, 'core:meta_doi', setGlobalData);
+    }, [metaDoi]);
+
+    useEffect(() => {
+        changeStateInput(globalData, numChans, 'core:num_channels', setGlobalData);
+    }, [numChans]);
+
+    useEffect(() => {
+        changeStateInput(globalData, offset, 'core:offset', setGlobalData);
+    }, [offset]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, recorder, 'core:recorder', setGlobalData);
+    }, [recorder]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, sha, 'core:sha512', setGlobalData);
+    }, [sha]);
+
+    useEffect(() => {
+        changeStateInput(globalData, trailBytes, 'core:trailing_bytes', setGlobalData);
+    }, [trailBytes]);
+
+    useEffect(() => {
+        changeStateTextInput(globalData, version, 'core:version', setGlobalData);
+    }, [version]);
+
+    useEffect(() => {
+        changeStateInput(globalData, geo, 'core:geolocation', setGlobalData);
+    }, [geo]);
+
+    useEffect(() => {
+        transferData(globalData);
     }, [globalData])
 
     return (

@@ -7,6 +7,7 @@ import SigMfTextInput from "./Inputs/SigMfTextInput"
 import { CaptureDetailsAnnotations } from "./Extensions/CaptureDetails";
 import { SigMfAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType, SigMfSignalType } from "./SigMfInterfaces";
 import { SignalAnnotation } from "./Extensions/SignalAnnotation";
+import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
 
 export default function SigMfAnnotation( { isHidden, transferData }: { isHidden: boolean, transferData: Function } ) {
 
@@ -32,98 +33,44 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     }, [sampStart]);
 
     useEffect(() => {
-        if (sampCnt !== null) {
-            setAnnotData({...annotData, "core:sample_count": sampCnt});
-        } else if (Object.hasOwn(annotData, 'core:sample_count')) {
-            const tmpObj = {...annotData};
-            delete tmpObj['core:sample_count'];
-            setAnnotData(tmpObj);
-        }
+        changeStateInput(annotData, sampCnt, 'core:sample_count', setAnnotData);
     }, [sampCnt]);
 
     useEffect(() => {
-        if (freqLowEdge !== null) {
-            setAnnotData({...annotData, "core:freq_lower_edge": freqLowEdge});
-        } else if (Object.hasOwn(annotData, 'core:freq_lower_edge')) {
-            const tmpObj = {...annotData};
-            delete tmpObj['core:freq_lower_edge'];
-            setAnnotData(tmpObj);
-        }
+        changeStateInput(annotData, freqLowEdge, 'core:freq_lower_edge', setAnnotData);
     }, [freqLowEdge]);
 
     useEffect(() => {
-        if (freqHighEdge !== null) {
-            setAnnotData({...annotData, "core:freq_upper_edge": freqHighEdge});
-        } else if (Object.hasOwn(annotData, 'core:freq_upper_edge')) {
-            const tmpObj = {...annotData};
-            delete tmpObj['core:freq_upper_edge'];
-            setAnnotData(tmpObj);
-        }
+        changeStateInput(annotData, freqHighEdge, 'core:freq_upper_edge', setAnnotData);
     }, [freqHighEdge]);
 
     useEffect(() => {
-        if (label !== null && label !== "") {
-            setAnnotData({...annotData, "core:label": label});
-        } else if (Object.hasOwn(annotData, 'core:label')) {
-            const tmpObj = {...annotData};
-            delete tmpObj['core:label'];
-            setAnnotData(tmpObj);
-        }
+        changeStateTextInput(annotData, label, 'core:label', setAnnotData);
     }, [label]);
 
     useEffect(() => {
-        if (comment !== null && comment !== "") {
-            setAnnotData({...annotData, "core:comment": comment});
-        } else if (Object.hasOwn(annotData, 'core:comment')) {
-            const tmpObj = {...annotData};
-            delete tmpObj['core:comment'];
-            setAnnotData(tmpObj);
-        }
+        changeStateTextInput(annotData, comment, 'core:comment', setAnnotData);
     }, [comment]);
 
     useEffect(() => {
-        if (generator !== null && generator !== "") {
-            setAnnotData({...annotData, "core:generator": generator});
-        } else if (Object.hasOwn(annotData, 'core:generator')) {
-            const tmpObj = {...annotData};
-            delete tmpObj['core:generator'];
-            setAnnotData(tmpObj);
-        }
+        changeStateTextInput(annotData, generator, 'core:generator', setAnnotData);
     }, [generator]);
 
     useEffect(() => {
-        if (uuid !== null && uuid !== "") {
-            setAnnotData({...annotData, "core:uuid": uuid});
-        } else if (Object.hasOwn(annotData, 'core:uuid')) {
-            const tmpObj = {...annotData};
-            delete tmpObj['core:uuid'];
-            setAnnotData(tmpObj);
-        }
+        changeStateTextInput(annotData, uuid, 'core:uuid', setAnnotData);
     }, [uuid]);
 
     useEffect(() => {
-        if (capDets !== null) {
-            setAnnotData({...annotData, "capture_details": capDets});
-        } else if (Object.hasOwn(annotData, 'capture_details')) {
-            const tmpObj = {...annotData};
-            delete tmpObj.capture_details;
-            setAnnotData(tmpObj);
-        }
+        changeStateInput(annotData, capDets, 'capture_details', setAnnotData);
     }, [capDets]);
 
     useEffect(() => {
-        if (sigAnnot !== null) {
-            setAnnotData({...annotData, "signal": sigAnnot});
-        } else if (Object.hasOwn(annotData, 'signal')) {
-            const tmpObj = {...annotData};
-            delete tmpObj.signal;
-            setAnnotData(tmpObj);
-        }
+        changeStateInput(annotData, sigAnnot, 'signal', setAnnotData);
     }, [sigAnnot]);
 
     useEffect(() => {
         let btnEnabled: boolean = false;
-        if (annotData['core:sample_start'] !== null) {
+        if (!Object.values(annotData).includes(null)) {
             btnEnabled = true;
         }
         setIsButtonEnabled(btnEnabled);

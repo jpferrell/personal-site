@@ -6,6 +6,7 @@ import SigMfTextInput from "./SigMfTextInput"
 import SigMfNumberInput from "./SigMfNumberInput"
 import SigMfGeoInput from "../SigMfGeoInput"
 import { SigMfGeoType, SigMfSignalEmitterType } from "../SigMfInterfaces"
+import { changeStateInput, changeStateTextInput } from "../SigMfFunctions"
 
 export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function})
 {
@@ -17,54 +18,24 @@ export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }:
 
     const [sigEmit, setSigEmit] = useState<SigMfSignalEmitterType>({});
 
-    function changeTextInput(variable: string|null, keyName: keyof typeof sigEmit) {
-        if (variable !== null && variable !== "") {
-            setSigEmit({...sigEmit, [keyName]: variable});
-        } else if (Object.hasOwn(sigEmit, keyName)) {
-            const tmpObj: SigMfSignalEmitterType = {...sigEmit};
-            delete tmpObj[keyName];
-            setSigEmit(tmpObj);
-        }
-    }
-
-    function changeNumberInput(variable: number|null, keyName: keyof typeof sigEmit) {
-        if (variable !== null) {
-            setSigEmit({...sigEmit, [keyName]: variable});
-        } else if (Object.hasOwn(sigEmit, keyName)) {
-            const tmpObj: SigMfSignalEmitterType = {...sigEmit};
-            delete tmpObj[keyName];
-            setSigEmit(tmpObj);
-        }
-    }
-
-    function changeGeoInput(variable: SigMfGeoType|null, keyName: keyof typeof sigEmit) {
-        if (variable !== null) {
-            setSigEmit({...sigEmit, [keyName]: variable});
-        } else if (Object.hasOwn(sigEmit, keyName)) {
-            const tmpObj = {...sigEmit};
-            delete tmpObj[keyName];
-            setSigEmit(tmpObj);
-        }
-    }
-
     useEffect(() => {
-        changeNumberInput(seid, 'seid');
+        changeStateInput(sigEmit, seid, 'seid', setSigEmit);
     }, [seid]);
 
     useEffect(() => {
-        changeTextInput(manu, 'manufacturer');
+        changeStateTextInput(sigEmit, manu, 'manufacturer', setSigEmit);
     }, [manu]);
 
     useEffect(() => {
-        changeNumberInput(txPwr, 'power_tx');
+        changeStateInput(sigEmit, txPwr, 'power_tx', setSigEmit);
     }, [txPwr]);
 
     useEffect(() => {
-        changeNumberInput(eirpPwr, 'power_eirp');
+        changeStateInput(sigEmit, eirpPwr, 'power_eirp', setSigEmit);
     }, [eirpPwr]);
 
     useEffect(() => {
-        changeGeoInput(geo, 'geolocation');
+        changeStateInput(sigEmit, geo, 'geolocation', setSigEmit);
     }, [geo]);
 
     useEffect(() => {

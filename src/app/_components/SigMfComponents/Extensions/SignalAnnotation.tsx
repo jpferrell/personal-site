@@ -5,6 +5,7 @@ import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 import SigMfEmitterInput from "../Inputs/SigMfEmitterInput";
 import SigMfDetailInput from "../Inputs/SigMfDetailInput";
 import { SigMfSignalDetailType, SigMfSignalEmitterType, SigMfSignalType } from "../SigMfInterfaces";
+import { changeStateInput } from "../SigMfFunctions";
 
 export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
@@ -21,23 +22,11 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
     }, [isEnabled]);
 
     useEffect(() => {
-        if (sigDet !== null) {
-            setSig({...sig, "signal:detail": sigDet});
-        } else if (Object.hasOwn(sig, 'signal:detail')) {
-            const tmpObj = {...sig};
-            delete tmpObj["signal:detail"];
-            setSig(tmpObj);
-        }
+        changeStateInput(sig, sigDet, 'signal:detail', setSig);
     }, [sigDet]);
 
     useEffect(() => {
-        if (sigEmit !== null) {
-            setSig({...sig, "signal:emitter": sigEmit});
-        } else if (Object.hasOwn(sig, 'signal:emitter')) {
-            const tmpObj = {...sig};
-            delete tmpObj["signal:emitter"];
-            setSig(tmpObj);
-        }
+        changeStateInput(sig, sigEmit, 'signal:emitter', setSig);
     }, [sigEmit]);
 
     useEffect(() => {

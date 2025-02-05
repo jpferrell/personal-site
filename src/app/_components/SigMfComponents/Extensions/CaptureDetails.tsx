@@ -6,6 +6,7 @@ import SigMfTextInput from "../Inputs/SigMfTextInput";
 import SigMfNumberInput from "../Inputs/SigMfTextInput";
 import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 import { SigMfCapDetsAnnotType, SigMfCapDetsCapType } from "../SigMfInterfaces";
+import { changeStateInput } from "../SigMfFunctions";
 
 export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function } ) {
 
@@ -26,25 +27,48 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
         'capture_details:start_capture': null,
         'capture_details:stop_capture': null,
         'capture_details:source_file': null,
-        'capture_details:gain': null
     });
 
     useEffect(() => {
-        setCapDetCapData({
-            enabled: isCapEnabled,
-            'capture_details:acq_scale_factor': acqScaleFactor,
-            'capture_details:attenuation': attn,
-            'capture_details:acquisition_bandwidth': acqBw,
-            'capture_details:start_capture': startCap,
-            'capture_details:stop_capture': stopCap,
-            'capture_details:source_file': srcFile,
-            'capture_details:gain': gain
-        });
-
-    }, [acqScaleFactor, attn, acqBw, startCap, stopCap, srcFile, gain]);
+        setCapDetCapData({...capDetCapData, enabled: isCapEnabled});
+    }, [isCapEnabled]);
 
     useEffect(() => {
-        changeFunction(capDetCapData);
+        setCapDetCapData({...capDetCapData, 'capture_details:acq_scale_factor': acqScaleFactor});
+    }, [acqScaleFactor]);
+
+    useEffect(() => {
+        setCapDetCapData({...capDetCapData, 'capture_details:attenuation': attn});
+    }, [attn]);
+
+    useEffect(() => {
+        setCapDetCapData({...capDetCapData, 'capture_details:acquisition_bandwidth': acqBw});
+    }, [acqBw]);
+
+    useEffect(() => {
+        setCapDetCapData({...capDetCapData, 'capture_details:start_capture': startCap});
+    }, [startCap]);
+
+    useEffect(() => {
+        setCapDetCapData({...capDetCapData, 'capture_details:stop_capture': stopCap});
+    }, [stopCap]);
+
+    useEffect(() => {
+        setCapDetCapData({...capDetCapData, 'capture_details:source_file': srcFile});
+    }, [srcFile]);
+
+    useEffect(() => {
+        changeStateInput(capDetCapData, gain, 'capture_details:gain', setCapDetCapData);
+    }, [gain]);
+
+    useEffect(() => {
+        if (capDetCapData.enabled && !Object.values(capDetCapData).includes(null)) {
+            const retObj: SigMfCapDetsCapType = {...capDetCapData};
+            delete retObj.enabled;
+            changeFunction(retObj);
+        } else if (capDetCapData.enabled && Object.values(capDetCapData).includes(null)) {
+            changeFunction(null);
+        }
     }, [capDetCapData]);
 
     return (
@@ -75,29 +99,21 @@ export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidd
         setCapDetsAnnotData({...capDetsAnnotData, enabled: isCapEnabled});
     }, [isCapEnabled]);
 
-    function changeNumberInput(variable: number|null, keyName: keyof typeof capDetsAnnotData) {
-        if (variable !== null) {
-            setCapDetsAnnotData({...capDetsAnnotData, [keyName]: variable});
-        } else if (Object.hasOwn(capDetsAnnotData, keyName)) {
-            const tmpObj: SigMfCapDetsAnnotType = {...capDetsAnnotData};
-            delete tmpObj[keyName];
-            setCapDetsAnnotData(tmpObj);
-        }
-    }
-
     useEffect(() => {
-        changeNumberInput(snr, 'capture_details:SNRdB');
+        changeStateInput(capDetsAnnotData, snr, 'capture_details:SNRdB', setCapDetsAnnotData);
     }, [snr]);
 
     useEffect(() => {
-        changeNumberInput(sigRefNum, 'capture_details:signal_reference_number');
+        changeStateInput(capDetsAnnotData, sigRefNum, 'capture_details:signal_reference_number', setCapDetsAnnotData);
     }, [sigRefNum]);
 
     useEffect(() => {
-        if (capDetsAnnotData.enabled) {
+        if (capDetsAnnotData.enabled && !Object.values(capDetsAnnotData).includes(null)) {
             const retObj: SigMfCapDetsAnnotType = {...capDetsAnnotData};
             delete retObj.enabled;
             changeFunction(retObj);
+        } else if (capDetsAnnotData.enabled && Object.values(capDetsAnnotData).includes(null)) {
+            changeFunction(null);
         }
     }, [capDetsAnnotData]);
 

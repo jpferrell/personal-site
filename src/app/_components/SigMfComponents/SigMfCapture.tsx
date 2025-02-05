@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import SigMfDateInput from "./Inputs/SigMfDateInput";
 import { SigMfCapDetsCapType, SigMfCaptureType, SigMfGeoType } from "./SigMfInterfaces";
 import SigMfGeoInput from "./SigMfGeoInput";
+import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
 
 export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: boolean, transferCapData: Function }) {
 
@@ -17,53 +18,53 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
     const [geo, setGeo] = useState<SigMfGeoType|null>(null);
     const [capDets, setCapDets] = useState<SigMfCapDetsCapType|null>(null);
 
+    const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
+
     const [capData, setCapData] = useState<SigMfCaptureType>({
         'core:sample_start': null,
-        'core:datetime': null,
-        'core:frequency': null,
-        'core:global_index': null,
-        'core:header_bytes': null,
-        'core:geolocation': null,
-        capture_details: null
     });
 
-    function cleanData(dirtyData: SigMfCaptureType) {
-        const retObj = {};
-        for (const [key, value] of Object.entries(dirtyData)) {
-            if (key === 'capture_details') {
-                if (dirtyData[key]?.enabled) {
-                    for (const [innerKey, innerVal] of Object.entries(dirtyData[key])) {
-                        if (innerVal !== null && innerKey !== 'enabled') {
-                            retObj[innerKey] = innerVal;
-                        }
-                    }
-                }
-            } else {
-                if (value !== null) {
-                    retObj[key] = value;
-                }
-            }
-        }
-
-        return retObj;
-    }
-
-    function addCapture() {
-        const retData = cleanData(capData);
-        transferCapData(retData);
-    }
+    useEffect(() => {
+        setCapData({...capData, 'core:sample_start': sampStart});
+    }, [sampStart]);
 
     useEffect(() => {
-        setCapData({
-            'core:sample_start': sampStart,
-            'core:datetime': datetime,
-            'core:frequency': freq,
-            'core:global_index': globalIdx,
-            'core:header_bytes': headerBytes,
-            'core:geolocation': geo,
-            capture_details: capDets
-        });
-    }, [sampStart, datetime, freq, globalIdx, headerBytes, capDets]);
+        changeStateTextInput(capData, datetime, 'core:datetime', setCapData);
+    }, [datetime]);
+
+    useEffect(() => {
+        changeStateInput(capData, freq, 'core:frequency', setCapData);
+    }, [freq]);
+
+    useEffect(() => {
+        changeStateInput(capData, globalIdx, 'core:global_index', setCapData);
+    }, [globalIdx]);
+
+    useEffect(() => {
+        changeStateInput(capData, headerBytes, 'core:header_bytes', setCapData);
+    }, [headerBytes]);
+
+    useEffect(() => {
+        changeStateInput(capData, geo, 'core:geolocation', setCapData);
+    }, [geo]);
+
+    useEffect(() => {
+        changeStateInput(capData, capDets, 'capture_details', setCapData);
+    }, [capDets]);
+
+    useEffect(() => {
+        let btnEnabled: boolean = false;
+        if (!Object.values(capData).includes(null)) {
+            btnEnabled = true;
+        }
+        setIsButtonEnabled(btnEnabled);
+    }, [capData]);
+
+    function addCapture() {
+        if (capData["core:sample_start"] !== null) {
+            transferCapData(capData);
+        }
+    }
 
     return (
         <div>
@@ -74,7 +75,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
             <SigMfNumberInput label="Header Bytes" id="capt-head-bytes-input" placeholder="0" changeFunction={setHeaderBytes} hidden={isHidden} />
             <SigMfGeoInput idPart="annot" isHidden={isHidden} changeFunction={setGeo} />
             <CaptureDetailsCaptures isHidden={isHidden} changeFunction={setCapDets}/>
-            <button id="add-cap-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""}`} onClick={addCapture}>Add Capture</button>
+            <button id="add-cap-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""}`} disabled={!isButtonEnabled} onClick={addCapture}>Add Capture</button>
         </div>
     );
 }

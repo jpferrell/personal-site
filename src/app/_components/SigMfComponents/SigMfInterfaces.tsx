@@ -42,12 +42,12 @@ export interface SigMfGlobalType {
 
 export interface SigMfCaptureType {
     'core:sample_start': number|null,
-    'core:datetime': string|null,
-    'core:frequency': number|null,
-    'core:global_index': number|null,
-    'core:header_bytes': number|null,
-    'core:geolocation': SigMfGeoType|null,
-    capture_details: SigMfCapDetsCapType|null
+    'core:datetime'?: string|null,
+    'core:frequency'?: number|null,
+    'core:global_index'?: number|null,
+    'core:header_bytes'?: number|null,
+    'core:geolocation'?: SigMfGeoType|null,
+    capture_details?: SigMfCapDetsCapType|null
 }
 
 export interface SigMfAnnotationType {
@@ -64,7 +64,7 @@ export interface SigMfAnnotationType {
 }
 
 export interface SigMfCapDetsCapType {
-    enabled: boolean,
+    enabled?: boolean,
     'capture_details:acq_scale_factor': number|null,
     'capture_details:attenuation': number|null,
     'capture_details:acquisition_bandwidth': number|null,

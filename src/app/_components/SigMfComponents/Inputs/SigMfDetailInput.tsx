@@ -6,6 +6,7 @@ import SigMfSelectInput from "./SigMfSelectInput"
 import SigMfTextInput from "./SigMfTextInput"
 import SigMfNumberInput from "./SigMfNumberInput";
 import { SigMfSignalDetailType } from "../SigMfInterfaces";
+import { changeStateInput, changeStateTextInput } from "../SigMfFunctions";
 
 export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function})
 {
@@ -25,76 +26,56 @@ export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: 
 
     const [sigDet, setSigDet] = useState<SigMfSignalDetailType>({});
 
-    function changeTextInput(variable: string|null, keyName: keyof typeof sigDet) {
-        if (variable !== null && variable !== "") {
-            setSigDet({...sigDet, [keyName]: variable});
-        } else if (Object.hasOwn(sigDet, keyName)) {
-            const tmpObj: SigMfSignalDetailType = {...sigDet};
-            delete tmpObj[keyName];
-            setSigDet(tmpObj);
-        }
-    }
-
-    function changeNumberInput(variable: number|null, keyName: keyof typeof sigDet) {
-        if (variable !== null) {
-            setSigDet({...sigDet, [keyName]: variable});
-        } else if (Object.hasOwn(sigDet, keyName)) {
-            const tmpObj: SigMfSignalDetailType = {...sigDet};
-            delete tmpObj[keyName];
-            setSigDet(tmpObj);
-        }
-    }
-
     useEffect(() => {
-       changeTextInput(type, 'type');
+       changeStateTextInput(sigDet, type, 'type', setSigDet);
     }, [type]);
 
     useEffect(() => {
-        changeTextInput(modClass, 'mod_class');
+        changeStateTextInput(sigDet, modClass, 'mod_class', setSigDet);
     }, [modClass]);
 
     useEffect(() => {
-        changeTextInput(standard, 'standard');
+        changeStateTextInput(sigDet, standard, 'standard', setSigDet);
     }, [standard]);
 
     useEffect(() => {
-        changeTextInput(carVar, 'carrier_variant');
+        changeStateTextInput(sigDet, carVar, 'carrier_variant', setSigDet);
     }, [carVar]);
 
     useEffect(() => {
-        changeTextInput(symVar, 'symbol_variant');
+        changeStateTextInput(sigDet, symVar, 'symbol_variant', setSigDet);
     }, [symVar]);
 
     useEffect(() => {
-        changeNumberInput(order, 'order');
+        changeStateInput(sigDet, order, 'order', setSigDet);
     }, [order]);
 
     useEffect(() => {
-        changeTextInput(duplex, 'duplexing');
+        changeStateTextInput(sigDet, duplex, 'duplexing', setSigDet);
     }, [duplex]);
 
     useEffect(() => {
-        changeTextInput(multiplex, 'multiplexing');
+        changeStateTextInput(sigDet, multiplex, 'multiplexing', setSigDet);
     }, [multiplex]);
 
     useEffect(() => {
-        changeTextInput(multAcc, 'multiple_access');
+        changeStateTextInput(sigDet, multAcc, 'multiple_access', setSigDet);
     }, [multAcc]);
 
     useEffect(() => {
-        changeTextInput(spreading, 'spreading');
+        changeStateTextInput(sigDet, spreading, 'spreading', setSigDet);
     }, [spreading]);
 
     useEffect(() => {
-        changeNumberInput(bw, 'channel_bw');
+        changeStateInput(sigDet, bw, 'channel_bw', setSigDet);
     }, [bw]);
 
     useEffect(() => {
-        changeNumberInput(channel, 'channel');
+        changeStateInput(sigDet, channel, 'channel', setSigDet);
     }, [channel]);
 
     useEffect(() => {
-        changeTextInput(classVar, 'class_variant');
+        changeStateTextInput(sigDet, classVar, 'class_variant', setSigDet);
     }, [classVar]);
 
     useEffect(() => {
