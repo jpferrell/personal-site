@@ -114,3 +114,28 @@ export interface SigMfSignalType {
     'signal:detail'?: SigMfSignalDetailType,
     'signal:emitter'?: SigMfSignalEmitterType
 }
+
+export interface SigMfDataChangeType {
+    'author'?: string|null,
+    'datetime': string|null
+}
+
+export interface SigMfOriginType {
+    'account'?: string|null,
+    'container'?: string|null,
+    'file_path': string|null
+}
+
+export interface SigMfTraceabilityGlobalType {
+    enabled?: boolean,
+    'traceability:last_modified'?: SigMfDataChangeType|null,
+    'traceability:last_reviewed'?: SigMfDataChangeType|null,
+    'traceability:revision'?: number|null,
+    'traceability:orgiin'?: SigMfOriginType
+}
+
+export interface SigMfTraceabilityAnnotationType {
+    enabled?: boolean,
+    'traceability:last_modified'?: SigMfDataChangeType|null,
+    'traceability:last_reviewed'?: SigMfDataChangeType|null
+}
