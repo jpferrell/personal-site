@@ -25,134 +25,76 @@ export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: 
 
     const [sigDet, setSigDet] = useState<SigMfSignalDetailType>({});
 
-    useEffect(() => {
-        if (type !== null && type !== "") {
-            setSigDet({...sigDet, type: type});
-        } else if (Object.hasOwn(sigDet, 'type')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.type;
+    function changeTextInput(variable: string|null, keyName: keyof typeof sigDet) {
+        if (variable !== null && variable !== "") {
+            setSigDet({...sigDet, [keyName]: variable});
+        } else if (Object.hasOwn(sigDet, keyName)) {
+            const tmpObj: SigMfSignalDetailType = {...sigDet};
+            delete tmpObj[keyName];
             setSigDet(tmpObj);
         }
+    }
+
+    function changeNumberInput(variable: number|null, keyName: keyof typeof sigDet) {
+        if (variable !== null) {
+            setSigDet({...sigDet, [keyName]: variable});
+        } else if (Object.hasOwn(sigDet, keyName)) {
+            const tmpObj: SigMfSignalDetailType = {...sigDet};
+            delete tmpObj[keyName];
+            setSigDet(tmpObj);
+        }
+    }
+
+    useEffect(() => {
+       changeTextInput(type, 'type');
     }, [type]);
 
     useEffect(() => {
-        if (modClass !== null && modClass !== "") {
-            setSigDet({...sigDet, mod_class: modClass});
-        } else if (Object.hasOwn(sigDet, 'mod_class')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.mod_class;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(modClass, 'mod_class');
     }, [modClass]);
 
     useEffect(() => {
-        if (standard !== null && standard !== "") {
-            setSigDet({...sigDet, standard: standard});
-        } else if (Object.hasOwn(sigDet, 'standard')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.standard;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(standard, 'standard');
     }, [standard]);
 
     useEffect(() => {
-        if (carVar !== null && carVar !== "") {
-            setSigDet({...sigDet, carrier_variant: carVar});
-        } else if (Object.hasOwn(sigDet, 'carrier_variant')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.carrier_variant;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(carVar, 'carrier_variant');
     }, [carVar]);
 
     useEffect(() => {
-        if (symVar !== null && symVar !== "") {
-            setSigDet({...sigDet, symbol_variant: symVar});
-        } else if (Object.hasOwn(sigDet, 'symbol_variant')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.symbol_variant;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(symVar, 'symbol_variant');
     }, [symVar]);
 
     useEffect(() => {
-        if (order !== null) {
-            setSigDet({...sigDet, order: order});
-        } else if (Object.hasOwn(sigDet, 'order')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.order;
-            setSigDet(tmpObj);
-        }
+        changeNumberInput(order, 'order');
     }, [order]);
 
     useEffect(() => {
-        if (duplex !== null && duplex !== "") {
-            setSigDet({...sigDet, duplexing: duplex});
-        } else if (Object.hasOwn(sigDet, 'duplexing')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.duplexing;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(duplex, 'duplexing');
     }, [duplex]);
 
     useEffect(() => {
-        if (multiplex !== null && multiplex !== "") {
-            setSigDet({...sigDet, multiplexing: multiplex});
-        } else if (Object.hasOwn(sigDet, 'multiplexing')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.multiplexing;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(multiplex, 'multiplexing');
     }, [multiplex]);
 
     useEffect(() => {
-        if (multAcc !== null && multAcc !== "") {
-            setSigDet({...sigDet, multiple_access: multAcc});
-        } else if (Object.hasOwn(sigDet, 'multiple_access')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.multiple_access;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(multAcc, 'multiple_access');
     }, [multAcc]);
 
     useEffect(() => {
-        if (spreading !== null && spreading !== "") {
-            setSigDet({...sigDet, spreading: spreading});
-        } else if (Object.hasOwn(sigDet, 'spreading')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.spreading;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(spreading, 'spreading');
     }, [spreading]);
 
     useEffect(() => {
-        if (bw !== null) {
-            setSigDet({...sigDet, channel_bw: bw});
-        } else if (Object.hasOwn(sigDet, 'channel_bw')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.channel_bw;
-            setSigDet(tmpObj);
-        }
+        changeNumberInput(bw, 'channel_bw');
     }, [bw]);
 
     useEffect(() => {
-        if (channel !== null) {
-            setSigDet({...sigDet, channel: channel});
-        } else if (Object.hasOwn(sigDet, 'channel')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.channel;
-            setSigDet(tmpObj);
-        }
+        changeNumberInput(channel, 'channel');
     }, [channel]);
 
     useEffect(() => {
-        if (classVar !== null && classVar !== "") {
-            setSigDet({...sigDet, class_variant: classVar});
-        } else if (Object.hasOwn(sigDet, 'class_variant')) {
-            const tmpObj = {...sigDet};
-            delete tmpObj.class_variant;
-            setSigDet(tmpObj);
-        }
+        changeTextInput(classVar, 'class_variant');
     }, [classVar]);
 
     useEffect(() => {

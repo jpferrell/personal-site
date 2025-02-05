@@ -17,54 +17,54 @@ export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }:
 
     const [sigEmit, setSigEmit] = useState<SigMfSignalEmitterType>({});
 
-    useEffect(() => {
-        if (seid !== null) {
-            setSigEmit({...sigEmit, seid: seid});
-        } else if (Object.hasOwn(sigEmit, 'seid')) {
-            const tmpObj = {...sigEmit};
-            delete tmpObj.seid;
+    function changeTextInput(variable: string|null, keyName: keyof typeof sigEmit) {
+        if (variable !== null && variable !== "") {
+            setSigEmit({...sigEmit, [keyName]: variable});
+        } else if (Object.hasOwn(sigEmit, keyName)) {
+            const tmpObj: SigMfSignalEmitterType = {...sigEmit};
+            delete tmpObj[keyName];
             setSigEmit(tmpObj);
         }
+    }
+
+    function changeNumberInput(variable: number|null, keyName: keyof typeof sigEmit) {
+        if (variable !== null) {
+            setSigEmit({...sigEmit, [keyName]: variable});
+        } else if (Object.hasOwn(sigEmit, keyName)) {
+            const tmpObj: SigMfSignalEmitterType = {...sigEmit};
+            delete tmpObj[keyName];
+            setSigEmit(tmpObj);
+        }
+    }
+
+    function changeGeoInput(variable: SigMfGeoType|null, keyName: keyof typeof sigEmit) {
+        if (variable !== null) {
+            setSigEmit({...sigEmit, [keyName]: variable});
+        } else if (Object.hasOwn(sigEmit, keyName)) {
+            const tmpObj = {...sigEmit};
+            delete tmpObj[keyName];
+            setSigEmit(tmpObj);
+        }
+    }
+
+    useEffect(() => {
+        changeNumberInput(seid, 'seid');
     }, [seid]);
 
     useEffect(() => {
-        if (manu !== null && manu !== "") {
-            setSigEmit({...sigEmit, manufacturer: manu});
-        } else if (Object.hasOwn(sigEmit, 'manufacturer')) {
-            const tmpObj = {...sigEmit};
-            delete tmpObj.manufacturer;
-            setSigEmit(tmpObj);
-        }
+        changeTextInput(manu, 'manufacturer');
     }, [manu]);
 
     useEffect(() => {
-        if (txPwr !== null) {
-            setSigEmit({...sigEmit, power_tx: txPwr});
-        } else if (Object.hasOwn(sigEmit, 'power_tx')) {
-            const tmpObj = {...sigEmit};
-            delete tmpObj.power_tx;
-            setSigEmit(tmpObj);
-        }
+        changeNumberInput(txPwr, 'power_tx');
     }, [txPwr]);
 
     useEffect(() => {
-        if (eirpPwr !== null) {
-            setSigEmit({...sigEmit, power_eirp: eirpPwr});
-        } else if (Object.hasOwn(sigEmit, 'power_eirp')) {
-            const tmpObj = {...sigEmit};
-            delete tmpObj.power_eirp;
-            setSigEmit(tmpObj);
-        }
+        changeNumberInput(eirpPwr, 'power_eirp');
     }, [eirpPwr]);
 
     useEffect(() => {
-        if (geo !== null) {
-            setSigEmit({...sigEmit, geolocation: geo});
-        } else if (Object.hasOwn(sigEmit, 'geolocation')) {
-            const tmpObj = {...sigEmit};
-            delete tmpObj.geolocation;
-            setSigEmit(tmpObj);
-        }
+        changeGeoInput(geo, 'geolocation');
     }, [geo]);
 
     useEffect(() => {
