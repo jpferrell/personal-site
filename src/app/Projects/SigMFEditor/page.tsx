@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureDisplay";
@@ -16,15 +16,15 @@ export default function SigMFEditor() {
         {value: 'annotations', label: 'Annotations'}
     ];
 
-    const [globalObj, setGlobalObj] = useState<Object>({});
+    const [globalObj, setGlobalObj] = useState<object>({});
 
     const [selectedOpt, setSelectedOpt] = useState({value: 'global', label: 'Global'});
     const [isCreateEnabled, setIsCreateEnabled] = useState<boolean>(false);
-    const [capCompArr, setCapCompArr] = useState<Object []>([]);
-    const [annotCompArr, setAnnotCompArr] = useState<Object []>([]);
+    const [capCompArr, setCapCompArr] = useState<object []>([]);
+    const [annotCompArr, setAnnotCompArr] = useState<object []>([]);
 
     function addCapture(capture: SigMfCaptureType) {
-        let len = capCompArr.length;
+        const len = capCompArr.length;
         setCapCompArr([
             ...capCompArr,
             {component: <SigMfCaptureDisplay inData={capture} idx={len} key={`cap-disp-${len}`} dataGetter={getCapture}/>, data: capture}
@@ -32,7 +32,7 @@ export default function SigMFEditor() {
     }
 
     function addAnnotation(annotation: SigMfAnnotationType) {
-        let len = annotCompArr.length;
+        const len = annotCompArr.length;
         setAnnotCompArr([
             ...annotCompArr,
             {component: <SigMfAnnotationDisplay inData={annotation} idx={len} key={`annot-disp-${len}`} />, data: annotation}
@@ -65,7 +65,7 @@ export default function SigMFEditor() {
         const el = document.createElement("a");
         const capArr = getCaptureArray();
         const annotArr = getAnnotationArray();
-        let outObj: {global?: {}, captures?: {}, annotations?: {}} = {};
+        const outObj: {global?: {}, captures?: {}, annotations?: {}} = {};
         outObj["global"] = globalObj;
         outObj["captures"] = capArr;
         outObj["annotations"] = annotArr;

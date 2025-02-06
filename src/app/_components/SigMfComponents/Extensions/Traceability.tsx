@@ -1,8 +1,8 @@
 
 
-export function TraceabilityGlobal() {
+export function TraceabilityGlobal( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function}) {
     return (
-        <div id="traceability-global-container">
+        <div id="traceability-global-container" hidden={isHidden}>
 
         </div>
     );
