@@ -171,3 +171,21 @@ export interface SigMfAntennaAnnotationType {
     'antenna:elevation_angle'?: number|null,
     'antenna:polarization'?: string|null
 }
+
+export interface SigMfBearingType {
+    enabled?: boolean,
+    azimuth?: number|null,
+    elevation?: number|null,
+    range?: number|null,
+    range_rate?: number|null,
+    az_error?: number|null,
+    el_error?: number|null,
+    range_error?: number|null,
+    range_rate_error?: number|null
+}
+
+export interface SigMfCartesianPointType {
+    enabled?: boolean,
+    point?: number[]|null,
+    unknown?: boolean
+}

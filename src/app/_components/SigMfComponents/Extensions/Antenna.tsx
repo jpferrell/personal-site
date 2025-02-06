@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from "react";
 import { SigMfAntennaAnnotationType, SigMfAntennaGlobalType } from "../SigMfInterfaces";
 import SigMfTextInput from "../Inputs/SigMfTextInput";

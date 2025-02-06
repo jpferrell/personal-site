@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from "react";
 import { SigMfDataChangeType, SigMfOriginType, SigMfTraceabilityAnnotationType, SigMfTraceabilityGlobalType } from "../SigMfInterfaces";
 import SigMfDataChangeInput from "../Inputs/SigMfDataChangeInput";
