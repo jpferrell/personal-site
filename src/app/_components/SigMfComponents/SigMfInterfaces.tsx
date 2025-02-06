@@ -189,3 +189,9 @@ export interface SigMfCartesianPointType {
     point?: number[]|null,
     unknown?: boolean
 }
+
+export interface SigMfSpatialGlobalType {
+    enabled?: boolean,
+    num_elements: number|null,
+    channel_index: number|null
+}
