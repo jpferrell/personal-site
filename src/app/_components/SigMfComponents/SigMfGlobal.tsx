@@ -6,10 +6,11 @@ import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
 import SigMfCheckboxInput from "./Inputs/SigMfCheckboxInput";
 import SigMfGeoInput from "./SigMfGeoInput";
-import { SigMfGeoType, SigMfGlobalType, SigMfTraceabilityGlobalType } from "./SigMfInterfaces";
+import { SigMfAntennaGlobalType, SigMfGeoType, SigMfGlobalType, SigMfTraceabilityGlobalType } from "./SigMfInterfaces";
 import SigMfSelectInput from "./Inputs/SigMfSelectInput";
 import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
 import { TraceabilityGlobal } from "./Extensions/Traceability";
+import { AntennaGlobal } from "./Extensions/Antenna";
 
 export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: Function} ) {
 
@@ -35,6 +36,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     const [version, setVersion] = useState<string|null>(null);
     const [geo, setGeo] = useState<SigMfGeoType|null>(null);
     const [trace, setTrace] = useState<SigMfTraceabilityGlobalType|null>(null);
+    const [ant, setAnt] = useState<SigMfAntennaGlobalType|null>(null);
 
     const [globalData, setGlobalData] = useState<SigMfGlobalType>({
         'core:datatype': null,
@@ -123,11 +125,21 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [trace]);
 
     useEffect(() => {
+        changeStateInput(globalData, ant, 'antenna', setGlobalData);
+    }, [ant]);
+
+    useEffect(() => {
         const retObj: SigMfGlobalType = {...globalData};
         if (Object.hasOwn(retObj, 'traceability')) {
             delete retObj.traceability;
             Object.keys(globalData.traceability || {}).forEach(key => {
                 retObj[key] = globalData.traceability[key];
+            });
+        }
+        if (Object.hasOwn(retObj, 'antenna')) {
+            delete retObj.antenna;
+            Object.keys(globalData.antenna || {}).forEach(key => {
+                retObj[key] = globalData.antenna[key];
             });
         }
         transferData(retObj);
@@ -158,6 +170,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
             <SigMfTextInput label="Version" id="version-input" placeholder="0.0.0" required changeFunction={setVersion} hidden={isHidden} />
             <SigMfGeoInput idPart="global" isHidden={isHidden} changeFunction={setGeo} />
             <TraceabilityGlobal isHidden={isHidden} changeFunction={setTrace} />
+            <AntennaGlobal isHidden={isHidden} changeFunction={setAnt} />
             {/*<h4 hidden={isHidden}>Extensions</h4>*/}
         </div>
     );

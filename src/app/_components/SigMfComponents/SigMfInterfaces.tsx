@@ -38,7 +38,8 @@ export interface SigMfGlobalType {
     'core:trailing_bytes'?: number|null,
     'core:version': string|null,
     'core:geolocation'?: SigMfGeoType|null,
-    traceability?: SigMfTraceabilityGlobalType|null
+    traceability?: SigMfTraceabilityGlobalType|null,
+    antenna?: SigMfAntennaGlobalType|null
 }
 
 export interface SigMfCaptureType {
@@ -62,7 +63,8 @@ export interface SigMfAnnotationType {
     'core:uuid'?: string|null,
     capture_details?: SigMfCapDetsAnnotType|null,
     signal?: SigMfSignalType|null,
-    traceability?: SigMfTraceabilityAnnotationType|null
+    traceability?: SigMfTraceabilityAnnotationType|null,
+    antenna?: SigMfAntennaAnnotationType|null
 }
 
 export interface SigMfCapDetsCapType {
@@ -142,4 +144,30 @@ export interface SigMfTraceabilityAnnotationType {
     enabled?: boolean,
     'traceability:last_modified'?: SigMfDataChangeType|null,
     'traceability:last_reviewed'?: SigMfDataChangeType|null
+}
+
+export interface SigMfAntennaGlobalType {
+    enabled?: boolean,
+    'antenna:model': string|null,
+    'antenna:type'?: string|null,
+    'antenna:low_frequency'?: number|null,
+    'antenna:high_frequency'?: number|null,
+    'antenna:gain'?: number|null,
+    'antenna:horizontal_gain_pattern'?: number[]|null,
+    'antenna:vertical_gain_pattern'?: number[]|null,
+    'antenna:horizontal_beam_width'?: number|null,
+    'antenna:vertical_beam_width'?: number|null,
+    'antenna:cross_polar_discrimination'?: number|null,
+    'antenna:voltage_standing_wave_ratio'?: number|null,
+    'antenna:cable_loss'?: number|null,
+    'antenna:steerable'?: boolean|null,
+    'antenna:mobile'?: boolean|null,
+    'antenna:hagl'?: number|null
+}
+
+export interface SigMfAntennaAnnotationType {
+    enabled?: boolean,
+    'antenna:azimuth_angle'?: number|null,
+    'antenna:elevation_angle'?: number|null,
+    'antenna:polarization'?: string|null
 }

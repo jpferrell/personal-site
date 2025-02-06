@@ -2,7 +2,7 @@
 
 import { SigMfInputProps } from "../SigMfInterfaces"
 
-export default function SigMfNumberInput({ label, id, changeFunction, placeholder, required, hidden }: SigMfInputProps) {
+export default function SigMfTextInput({ label, id, changeFunction, placeholder, required, hidden }: SigMfInputProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
