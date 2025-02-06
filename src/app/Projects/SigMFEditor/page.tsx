@@ -87,8 +87,8 @@ export default function SigMFEditor() {
     return (
         <div className="min-h-screen min-w-full justify-items-center text-center p-4">
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
-            <div className="grid grid-cols-2 pt-4 max-h-[calc(90vh)]">
-                <div className="grid grid-cols-1 overflow-auto">
+            <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
+                <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto">
                     <select id="selector" className={`dark:bg-slate-600 text-center max-h-6`} onChange={handleSelectionChange}>
                         <option id="selector-global-opt" value={"global"}>Global</option>
                         <option id="selector-capture-opt" value={"captures"}>Captures</option>

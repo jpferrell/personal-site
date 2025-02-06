@@ -5,9 +5,10 @@ import { useEffect, useState } from "react";
 import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput"
 import { CaptureDetailsAnnotations } from "./Extensions/CaptureDetails";
-import { SigMfAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType, SigMfSignalType } from "./SigMfInterfaces";
+import { SigMfAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType, SigMfSignalType, SigMfTraceabilityAnnotationType } from "./SigMfInterfaces";
 import { SignalAnnotation } from "./Extensions/SignalAnnotation";
 import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
+import { TraceabilityAnnotation } from "./Extensions/Traceability";
 
 export default function SigMfAnnotation( { isHidden, transferData }: { isHidden: boolean, transferData: Function } ) {
 
@@ -21,6 +22,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     const [uuid, setUuid] = useState<string|null>(null);
     const [capDets, setCapDets] = useState<SigMfCapDetsAnnotType|null>(null);
     const [sigAnnot, setSigAnnot] = useState<SigMfSignalType|null>(null);
+    const [trace, setTrace] = useState<SigMfTraceabilityAnnotationType|null>(null);
 
     const [annotData, setAnnotData] = useState<SigMfAnnotationType>({
         'core:sample_start': null,
@@ -69,6 +71,10 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     }, [sigAnnot]);
 
     useEffect(() => {
+        changeStateInput(annotData, trace, 'traceability', setAnnotData);
+    }, [trace]);
+
+    useEffect(() => {
         let btnEnabled: boolean = false;
         if (!Object.values(annotData).includes(null)) {
             btnEnabled = true;
@@ -77,7 +83,27 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     }, [annotData]);
 
     function addAnnotation() {
-        transferData(annotData);
+        const retObj: SigMfAnnotationType = {...annotData};
+        if (Object.hasOwn(retObj, 'capture_details')) {
+            delete retObj.capture_details;
+            Object.keys(annotData.capture_details || {}).forEach(key => {
+                retObj[key] = annotData.capture_details[key];
+            });
+        }
+
+        if (Object.hasOwn(retObj, 'signal')) {
+            delete retObj.signal;
+            Object.keys(annotData.signal || {}).forEach(key => {
+                retObj[key] = annotData.signal[key];
+            });
+        }
+        if (Object.hasOwn(retObj, 'traceability')) {
+            delete retObj.traceability;
+            Object.keys(annotData.traceability || {}).forEach(key => {
+                retObj[key] = annotData.traceability[key];
+            });
+        }
+        transferData(retObj);
     }
 
     return (
@@ -92,6 +118,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
             <SigMfTextInput label="UUID" id="annot-uuid-input" placeholder="uuid" changeFunction={setUuid} hidden={isHidden} />
             <CaptureDetailsAnnotations isHidden={isHidden} changeFunction={setCapDets} />
             <SignalAnnotation idPart="annot" isHidden={isHidden} changeFunction={setSigAnnot} />
+            <TraceabilityAnnotation changeFunction={setTrace} isHidden={isHidden} />
             <button id="add-annot-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""} disabled:bg-slate-700 disabled:hover:bg-slate-700 disabled:hover:text-indigo-400`} disabled={!isButtonEnabled} onClick={addAnnotation} >Add Annotation</button>
         </div>
     );

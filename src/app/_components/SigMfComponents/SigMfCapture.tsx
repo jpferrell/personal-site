@@ -62,7 +62,14 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
 
     function addCapture() {
         if (capData["core:sample_start"] !== null) {
-            transferCapData(capData);
+            const retObj: SigMfCaptureType = {...capData};
+            if (Object.hasOwn(retObj, 'capture_details')) {
+                delete retObj.capture_details;
+                Object.keys(capData.capture_details || {}).forEach(key => {
+                    retObj[key] = capData.capture_details[key];
+                });
+            }
+            transferCapData(retObj);
         }
     }
 

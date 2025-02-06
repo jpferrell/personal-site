@@ -37,7 +37,8 @@ export interface SigMfGlobalType {
     'core:sha512'?: string|null,
     'core:trailing_bytes'?: number|null,
     'core:version': string|null,
-    'core:geolocation'?: SigMfGeoType|null
+    'core:geolocation'?: SigMfGeoType|null,
+    traceability?: SigMfTraceabilityGlobalType|null
 }
 
 export interface SigMfCaptureType {
@@ -60,7 +61,8 @@ export interface SigMfAnnotationType {
     'core:generator'?: string|null,
     'core:uuid'?: string|null,
     capture_details?: SigMfCapDetsAnnotType|null,
-    signal?: SigMfSignalType|null
+    signal?: SigMfSignalType|null,
+    traceability?: SigMfTraceabilityAnnotationType|null
 }
 
 export interface SigMfCapDetsCapType {
@@ -116,11 +118,13 @@ export interface SigMfSignalType {
 }
 
 export interface SigMfDataChangeType {
+    enabled?: boolean,
     'author'?: string|null,
     'datetime': string|null
 }
 
 export interface SigMfOriginType {
+    enabled?: boolean,
     'account'?: string|null,
     'container'?: string|null,
     'file_path': string|null
@@ -131,7 +135,7 @@ export interface SigMfTraceabilityGlobalType {
     'traceability:last_modified'?: SigMfDataChangeType|null,
     'traceability:last_reviewed'?: SigMfDataChangeType|null,
     'traceability:revision'?: number|null,
-    'traceability:orgiin'?: SigMfOriginType
+    'traceability:origin'?: SigMfOriginType
 }
 
 export interface SigMfTraceabilityAnnotationType {

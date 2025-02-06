@@ -6,9 +6,10 @@ import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
 import SigMfCheckboxInput from "./Inputs/SigMfCheckboxInput";
 import SigMfGeoInput from "./SigMfGeoInput";
-import { SigMfGeoType, SigMfGlobalType } from "./SigMfInterfaces";
+import { SigMfGeoType, SigMfGlobalType, SigMfTraceabilityGlobalType } from "./SigMfInterfaces";
 import SigMfSelectInput from "./Inputs/SigMfSelectInput";
 import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
+import { TraceabilityGlobal } from "./Extensions/Traceability";
 
 export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: Function} ) {
 
@@ -33,6 +34,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     const [trailBytes, setTrailBytes] = useState<integer|null>(null);
     const [version, setVersion] = useState<string|null>(null);
     const [geo, setGeo] = useState<SigMfGeoType|null>(null);
+    const [trace, setTrace] = useState<SigMfTraceabilityGlobalType|null>(null);
 
     const [globalData, setGlobalData] = useState<SigMfGlobalType>({
         'core:datatype': null,
@@ -117,7 +119,18 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [geo]);
 
     useEffect(() => {
-        transferData(globalData);
+        changeStateInput(globalData, trace, 'traceability', setGlobalData);
+    }, [trace]);
+
+    useEffect(() => {
+        const retObj: SigMfGlobalType = {...globalData};
+        if (Object.hasOwn(retObj, 'traceability')) {
+            delete retObj.traceability;
+            Object.keys(globalData.traceability || {}).forEach(key => {
+                retObj[key] = globalData.traceability[key];
+            });
+        }
+        transferData(retObj);
     }, [globalData])
 
     return (
@@ -144,6 +157,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
             <SigMfNumberInput label="Trailing Bytes" id="trail-bytes-input" placeholder="0" changeFunction={setTrailBytes} hidden={isHidden} />
             <SigMfTextInput label="Version" id="version-input" placeholder="0.0.0" required changeFunction={setVersion} hidden={isHidden} />
             <SigMfGeoInput idPart="global" isHidden={isHidden} changeFunction={setGeo} />
+            <TraceabilityGlobal isHidden={isHidden} changeFunction={setTrace} />
             {/*<h4 hidden={isHidden}>Extensions</h4>*/}
         </div>
     );
