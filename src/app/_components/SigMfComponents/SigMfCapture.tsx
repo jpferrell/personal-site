@@ -55,7 +55,6 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
     }, [capDets]);
 
     useEffect(() => {
-        console.log("space variable has changed");
         changeStateInput(capData, space, 'spatial', setCapData);
     }, [space]);
 

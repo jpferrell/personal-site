@@ -71,7 +71,7 @@ export default function SigMFEditor() {
         outObj["annotations"] = annotArr;
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
-        el.download = "test.json";
+        el.download = "test.sigmf-meta";
         document.body.appendChild(el);
         el.click();
     }
@@ -84,11 +84,52 @@ export default function SigMFEditor() {
         setSelectedOpt({value: retVal, label: retVal});
     }
 
+    function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
+        //console.log(e);
+        const file: File = e.target.files[0];
+        if (file === null) {
+            console.error('No file was selected');
+        } else {
+            const reader: FileReader = new FileReader();
+            reader.readAsArrayBuffer(file);
+            reader.onload = () => {
+                console.log(reader.result);
+                if (reader.result) {
+                    /*
+                    crypto.subtle.digest("SHA-512", reader.result).then(buf => {
+                        console.log(buf);
+                        const view = new DataView(buf);
+                        //view.setUint8()
+                        const newArr = new Uint8Array(buf);
+                        newArr.forEach(x => console.log(x.toString(16)));
+                        console.log(newArr);
+                    });
+                    */
+                    sha512Encrypt(reader.result).then(rsp => {
+                        console.log("sha512 has returned");
+                        console.log("sha512 response: " + rsp);
+                    });
+                }
+            }
+        }
+    }
+
+    async function sha512Encrypt(inMsg: ArrayBuffer) {
+        console.log("sha512 called");
+        crypto.subtle.digest("SHA-512", inMsg).then(buf => {
+            console.log("digest called");
+            const hashHex = Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
+            console.log(hashHex)
+            return hashHex;
+        });
+    }
+
     return (
         <div className="min-h-screen min-w-full justify-items-center text-center p-4">
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
             <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
                 <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto">
+                    <span><label htmlFor="sigmf-data-file-input">{"Input .sigmf-data File  "}</label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
                     <select id="selector" className={`dark:bg-slate-600 text-center max-h-6`} onChange={handleSelectionChange}>
                         <option id="selector-global-opt" value={"global"}>Global</option>
                         <option id="selector-capture-opt" value={"captures"}>Captures</option>

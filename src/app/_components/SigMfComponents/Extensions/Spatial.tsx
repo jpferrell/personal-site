@@ -44,7 +44,7 @@ export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: s
     }, [spatial]);
 
     return (
-        <div id="spatial-global-container" hidden={isHidden} className="border dark:border-slate-200">
+        <div id="spatial-global-container" hidden={isHidden} className="border-4 dark:border-slate-200">
             <SigMfCheckboxInput label="Spatial" id="spatial-global-enable-input" changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfNumberInput id={`${idPart}-spatial-global-num-els-input`} label="Number Elements" hidden={isHidden || !isEnabled} changeFunction={setNumEl} required />
             <SigMfNumberInput id={`${idPart}-spatial-global-chan-idx-input`} label="Channel Index" hidden={isHidden || !isEnabled} changeFunction={setChanIdx} required />
@@ -101,7 +101,6 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
 
     useEffect(() => {
         if (space.enabled) {
-            console.log(space);
             const retObj: SigMfSpatialCaptureType = {...space};
             delete retObj.enabled;
             changeFunction(retObj);
@@ -111,7 +110,7 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
     }, [space])
 
     return (
-        <div id="spatial-annotation-container" hidden={isHidden} className="border dark:border-slate-200">
+        <div id="spatial-annotation-container" hidden={isHidden} className="border-4 dark:border-slate-200">
             <SigMfCheckboxInput label="Spatial" id={`${idPart}-spatial-cap-enable-input`} changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfNumberInput label="Aperture Azimuth (deg)" id={`${idPart}-spatial-cap-aperture-az-input`} changeFunction={setApAz} hidden={isHidden || !isEnabled} />
             <SigMfBearingInput labelPart="Aperture Bearing" idPart={`${idPart}-spatial-cap-aperture`} changeFunction={setApBear} isHidden={isHidden || !isEnabled} />
@@ -162,7 +161,7 @@ export function SpatialAnnotation( { idPart, isHidden, changeFunction }: { idPar
     }, [space]);
 
     return (
-        <div id="spatial-annotation-container" hidden={isHidden} className="border dark:border-slate-200">
+        <div id="spatial-annotation-container" hidden={isHidden} className="border-4 dark:border-slate-200">
             <SigMfCheckboxInput label="Spatial" id={`${idPart}-spatial-annot-enable-input`} changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfNumberInput label="Signal Azimuth (deg)" id={`${idPart}-spatial-annot-signal-az-input`} changeFunction={setAz} hidden={isHidden || !isEnabled} />
             <SigMfBearingInput labelPart="Signal" idPart={`${idPart}-spatial-annot`} changeFunction={setBearing} isHidden={isHidden || !isEnabled} />

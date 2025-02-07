@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "Jack Ferrell",
-  description: "Jack Ferrell's Personal site",  
+  description: "Jack Ferrell's Personal site",
 };
 
 /*

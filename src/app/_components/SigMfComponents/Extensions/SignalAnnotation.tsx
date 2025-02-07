@@ -38,7 +38,7 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
     }, [sig]);
 
     return (
-        <div id="annotation-sig-ext-container" hidden={isHidden} className="border dark:border-slate-200">
+        <div id="annotation-sig-ext-container" hidden={isHidden} className="border-4 dark:border-slate-200">
             <SigMfCheckboxInput label="Signal" id={`${idPart}-sig-enabled-input`} changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfDetailInput idPart={idPart} isHidden={isHidden || !isEnabled} changeFunction={setSigDet} />
             <SigMfEmitterInput idPart={idPart} isHidden={isHidden || !isEnabled} changeFunction={setSigEmit} />

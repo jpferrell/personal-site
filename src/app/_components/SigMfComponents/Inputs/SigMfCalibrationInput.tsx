@@ -49,9 +49,9 @@ export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, c
 
     return (
         <div id={`${idPart}-calibration-input-container`} hidden={isHidden}>
-            <SigMfSelectInput id={`${idPart}-calibration-cal-type`} label="Calibration Type" hidden={isHidden || !isEnabled} values={calTypes} changeFunction={setCalType} />
-            <SigMfBearingInput idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} isHidden={isHidden || !isEnabled} changeFunction={setBearing} />
-            <SigMfCartesianPoint idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} changeFunction={setCalGeo} isHidden={isHidden || !isEnabled} />
+            <SigMfSelectInput id={`${idPart}-calibration-cal-type`} label="Calibration Type" hidden={isHidden} values={calTypes} changeFunction={setCalType} />
+            <SigMfBearingInput idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} isHidden={isHidden} changeFunction={setBearing} />
+            <SigMfCartesianPoint idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} changeFunction={setCalGeo} isHidden={isHidden} />
         </div>
     );
 }

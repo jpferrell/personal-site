@@ -20,6 +20,7 @@ export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, chan
     }, [isEnabled]);
 
     useEffect(() => {
+        /** Putting this as a changeStateInput had an exceeded max depth error */
         setCartPnt({...cartPnt, unknown: isUnk});
     }, [isUnk]);
 
@@ -34,10 +35,10 @@ export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, chan
     }, [cartPnt]);
 
     return (
-        <div id={`${idPart}-cart-point-container`}>
-            <SigMfCheckboxInput label={`${labelPart} Cartesian Point`} id={`${idPart}-cart-point-enable-input`} changeFunction={setIsEnabled} />
+        <div id={`${idPart}-cart-point-container`} hidden={isHidden}>
+            <SigMfCheckboxInput label={`${labelPart} Cartesian Point`} id={`${idPart}-cart-point-enable-input`} changeFunction={setIsEnabled} hidden={isHidden} />
             {/*<SigMfCheckboxInput label={`${labelPart} Point`} id={`${idPart}-point-enabled-input`} changeFunction={}*/}
-            <SigMfCheckboxInput label={`${labelPart} Point Unknown`} id={`${idPart}-point-unknown-enabled-input`} changeFunction={setIsUnk} />
+            <SigMfCheckboxInput label={`${labelPart} Point Unknown`} id={`${idPart}-point-unknown-enabled-input`} changeFunction={setIsUnk} hidden={isHidden || !isEnabled} />
         </div>
     );
 }

@@ -69,16 +69,16 @@ export default function SigMfBearingInput( { idPart, labelPart, isHidden, change
     }, [bearing]);
 
     return (
-        <div id={`${idPart}-bearing-container`} hidden={isHidden}>
-            <SigMfCheckboxInput id={`${idPart}-bearing-enabled-input`} label={`${labelPart} Bearing`} changeFunction={setIsEnabled} />
-            <SigMfNumberInput id={`${idPart}-bearing-azimuth-input`} label={`${labelPart} Azimuth`} placeholder="0.0" changeFunction={setAzimuth} />
-            <SigMfNumberInput id={`${idPart}-bearing-elevation-input`} label={`${labelPart} Elevation`} placeholder="0.0" changeFunction={setEl} />
-            <SigMfNumberInput id={`${idPart}-bearing-range-input`} label={`${labelPart} Range`} placeholder="0.0" changeFunction={setRange} />
-            <SigMfNumberInput id={`${idPart}-bearing-range-rate-input`} label={`${labelPart} Range Rate`} placeholder="0.0" changeFunction={setRangeRate} />
-            <SigMfNumberInput id={`${idPart}-bearing-azimuth-err-input`} label={`${labelPart} Azimuth Error`} placeholder="0.0" changeFunction={setAzErr} />
-            <SigMfNumberInput id={`${idPart}-bearing-elevation-err-input`} label={`${labelPart} Elevation Error`} placeholder="0.0" changeFunction={setElErr} />
-            <SigMfNumberInput id={`${idPart}-bearing-range-error-input`} label={`${labelPart} Range Error`} placeholder="0.0" changeFunction={setRangeErr} />
-            <SigMfNumberInput id={`${idPart}-bearing-range-rate-err-input`} label={`${labelPart} Range Rate Error`} placeholder="0.0" changeFunction={setRangeRateErr} />
+        <div id={`${idPart}-bearing-container`} hidden={isHidden} className="border border-slate-200">
+            <SigMfCheckboxInput id={`${idPart}-bearing-enabled-input`} label={`${labelPart} Bearing`} changeFunction={setIsEnabled} hidden={isHidden} />
+            <SigMfNumberInput id={`${idPart}-bearing-azimuth-input`} label={`${labelPart} Azimuth`} placeholder="0.0" changeFunction={setAzimuth} hidden={isHidden || !isEnabled}/>
+            <SigMfNumberInput id={`${idPart}-bearing-elevation-input`} label={`${labelPart} Elevation`} placeholder="0.0" changeFunction={setEl} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput id={`${idPart}-bearing-range-input`} label={`${labelPart} Range`} placeholder="0.0" changeFunction={setRange} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput id={`${idPart}-bearing-range-rate-input`} label={`${labelPart} Range Rate`} placeholder="0.0" changeFunction={setRangeRate} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput id={`${idPart}-bearing-azimuth-err-input`} label={`${labelPart} Azimuth Error`} placeholder="0.0" changeFunction={setAzErr} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput id={`${idPart}-bearing-elevation-err-input`} label={`${labelPart} Elevation Error`} placeholder="0.0" changeFunction={setElErr} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput id={`${idPart}-bearing-range-error-input`} label={`${labelPart} Range Error`} placeholder="0.0" changeFunction={setRangeErr} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput id={`${idPart}-bearing-range-rate-err-input`} label={`${labelPart} Range Rate Error`} placeholder="0.0" changeFunction={setRangeRateErr} hidden={isHidden || !isEnabled} />
         </div>
     );
 }

@@ -99,7 +99,7 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
     }, [antData]);
 
     return (
-        <div id="antenna-global-container" className="border border-slate-200" hidden={isHidden}>
+        <div id="antenna-global-container" className="border-4 border-slate-200" hidden={isHidden}>
             <SigMfCheckboxInput label="Antenna" id="antenna-global-enabled-input" hidden={isHidden} changeFunction={setIsEnabled} />
             <SigMfTextInput label="Model" id="antenna-global-model-input" placeholder="Antenna make and model number" hidden={isHidden || !isEnabled} required changeFunction={setModel} />
             <SigMfTextInput label="Type" id="antenna-global-type" placeholder="Antenna type" changeFunction={setType} hidden={isHidden || !isEnabled} />
@@ -157,7 +157,7 @@ export function AntennaAnnotation({ isHidden, changeFunction }: { isHidden: bool
     }, [antData]);
 
     return (
-        <div id="antenna-annotation-container" hidden={isHidden} className="border dark:border-slate-200">
+        <div id="antenna-annotation-container" hidden={isHidden} className="border-4 dark:border-slate-200">
             <SigMfCheckboxInput label="Antenna" id="antenna-annot-enabled-input" changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfNumberInput label="Azimuth Angle" id="antenna-annot-az-angle-input" placeholder="0.0" changeFunction={setAzAngle} hidden={isHidden || !isEnabled} />
             <SigMfNumberInput label="Elevation Angle" id="antenna-annot-el-angle-input" placeholder="0.0" changeFunction={setElAngle} hidden={isHidden || !isEnabled} />
