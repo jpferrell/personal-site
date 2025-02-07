@@ -72,7 +72,7 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
     }, [capDetCapData]);
 
     return (
-        <div>
+        <div id="cap-dets-capture-container" hidden={isHidden} className="border dark:border-slate-200">
             <SigMfCheckboxInput label="Capture Details" id="cap-cap-dets-enabled-input" changeFunction={setIsCapEnabled} hidden={isHidden} />
             <SigMfNumberInput label="Acquisition Scale Factor" id="cap-cap-dets-acq-scale-factor-input" required placeholder="0.0" hidden={!isCapEnabled || isHidden} changeFunction={setAcqScaleFactor} />
             <SigMfNumberInput label="Attenuation" id="cap-cap-dets-atten-input" placeholder="0.0" hidden={!isCapEnabled || isHidden} required changeFunction={setAttn} />
@@ -118,7 +118,7 @@ export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidd
     }, [capDetsAnnotData]);
 
     return (
-        <div>
+        <div id="cap-dets-annotation-container" hidden={isHidden} className="border dark:border-slate-200">
             <SigMfCheckboxInput label="Capture Details" id="annot-cap-dets-enabled-input" changeFunction={setIsCapEnabled} hidden={isHidden} />
             <SigMfNumberInput label="SNR (dB)" id="annot-cap-dets-snr-db-input" placeholder="0.0" hidden={!isCapEnabled || isHidden} required changeFunction={setSnr} />
             <SigMfNumberInput label="Signal Reference Number" id="annot-cap-dets-sig-ref-num" placeholder="number" hidden={!isCapEnabled || isHidden} required changeFunction={setSigRefNum} />

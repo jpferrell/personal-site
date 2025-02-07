@@ -52,7 +52,7 @@ export function TraceabilityGlobal( { isHidden, changeFunction }: { isHidden: bo
     }, [traceData]);
 
     return (
-        <div id="traceability-global-container" hidden={isHidden}>
+        <div id="traceability-global-container" hidden={isHidden} className="border dark:border-slate-200">
             <SigMfCheckboxInput label="Traceability" id="trace-global-enabled-input" changeFunction={setIsEnabled} />
             <SigMfDataChangeInput idPart="trace-global-last-mod" labelPart="Last Modified" isHidden={isHidden || !isEnabled} changeFunction={setLastMod} />
             <SigMfDataChangeInput idPart="trace-global-last-rev" labelPart="Last Revision" isHidden={isHidden || !isEnabled} changeFunction={setLastRev} />
@@ -95,7 +95,7 @@ export function TraceabilityAnnotation({ isHidden, changeFunction }: { isHidden:
     }, [traceData]);
 
     return (
-        <div id="traceability-annot-container" hidden={isHidden}>
+        <div id="traceability-annot-container" hidden={isHidden} className="border dark:border-slate-200">
             <SigMfCheckboxInput label="Traceability" id="trace-global-enabled-input" changeFunction={setIsEnabled} />
             <SigMfDataChangeInput idPart="trace-annot-last-mod" labelPart="Last Modified" isHidden={isHidden || !isEnabled} changeFunction={setLastMod} />
             <SigMfDataChangeInput idPart="trace-annot-last-rev" labelPart="Last Revision" isHidden={isHidden || !isEnabled} changeFunction={setLastRev} />
