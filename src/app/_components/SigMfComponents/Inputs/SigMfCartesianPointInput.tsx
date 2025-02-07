@@ -20,7 +20,7 @@ export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, chan
     }, [isEnabled]);
 
     useEffect(() => {
-        changeStateInput(cartPnt, isUnk, 'unknown', setIsUnk);
+        setCartPnt({...cartPnt, unknown: isUnk});
     }, [isUnk]);
 
     useEffect(() => {

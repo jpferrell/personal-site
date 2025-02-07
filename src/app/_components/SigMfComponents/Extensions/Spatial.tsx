@@ -7,6 +7,7 @@ import SigMfNumberInput from "../Inputs/SigMfNumberInput";
 import SigMfBearingInput from "../Inputs/SigMfBearingInput";
 import { changeStateInput } from "../SigMfFunctions";
 import SigMfGeoInput from "../SigMfGeoInput";
+import SigMfCalibrationInput from "../Inputs/SigMfCalibrationInput";
 
 export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
@@ -118,7 +119,7 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
             <SigMfBearingInput labelPart="Emitter Bearing" idPart={`${idPart}-spatial-cap-emitter`} changeFunction={setEmitBear} isHidden={isHidden || !isEnabled} />
             {/** TODO: Add in the element geometry input somehow */}
             <SigMfNumberInput label="Phase Offset (deg)" id={`${idPart}-spatial-cap-phase-offset-input`} changeFunction={setPhaseOff} hidden={isHidden || !isEnabled} />
-            {/** TODO: Add in calibration input */}
+            <SigMfCalibrationInput idPart={`${idPart}`} labelPart="Spatial" isHidden={isHidden || !isEnabled} changeFunction={setCal} />
         </div>
     );
 }
