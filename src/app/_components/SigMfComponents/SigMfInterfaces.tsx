@@ -39,7 +39,8 @@ export interface SigMfGlobalType {
     'core:version': string|null,
     'core:geolocation'?: SigMfGeoType|null,
     traceability?: SigMfTraceabilityGlobalType|null,
-    antenna?: SigMfAntennaGlobalType|null
+    antenna?: SigMfAntennaGlobalType|null,
+    spatial?: SigMfSpatialGlobalType|null
 }
 
 export interface SigMfCaptureType {
@@ -49,7 +50,8 @@ export interface SigMfCaptureType {
     'core:global_index'?: number|null,
     'core:header_bytes'?: number|null,
     'core:geolocation'?: SigMfGeoType|null,
-    capture_details?: SigMfCapDetsCapType|null
+    capture_details?: SigMfCapDetsCapType|null,
+    spatial?: SigMfSpatialCaptureType|null
 }
 
 export interface SigMfAnnotationType {
@@ -65,6 +67,7 @@ export interface SigMfAnnotationType {
     signal?: SigMfSignalType|null,
     traceability?: SigMfTraceabilityAnnotationType|null,
     antenna?: SigMfAntennaAnnotationType|null
+    spatial?: SigMfSpatialAnnotationType|null
 }
 
 export interface SigMfCapDetsCapType {
@@ -192,6 +195,31 @@ export interface SigMfCartesianPointType {
 
 export interface SigMfSpatialGlobalType {
     enabled?: boolean,
-    num_elements: number|null,
-    channel_index: number|null
+    'spatial:num_elements': number|null,
+    'spatial:channel_index': number|null
+}
+
+export interface SigMfCalibrationType {
+    enabled?: boolean,
+    caltype: string|null,
+    bearing?: SigMfBearingType|null,
+    cal_geometry?: SigMfCartesianPointType|null
+}
+
+export interface SigMfSpatialCaptureType {
+    enabled?: boolean,
+    'spatial:aperture_azimuth'?: number|null,
+    'spatial:aperture_bearing'?: SigMfBearingType|null,
+    'spatial:aperture_rotation'?: number|null,
+    'spatial:emitter_bearing'?: SigMfBearingType|null,
+    'spatial:element_geometry'?: SigMfCartesianPointType[]|null,
+    'spatial:phase_offset'?: number|null,
+    'spatial:calibration'?: SigMfCalibrationType|null
+}
+
+export interface SigMfSpatialAnnotationType {
+    enabled?: boolean,
+    'spatial:signal_azimuth'?: number|null,
+    'spatial:bearing'?: SigMfBearingType|null,
+    'spatial:emitter_location'?: SigMfGeoType|null
 }

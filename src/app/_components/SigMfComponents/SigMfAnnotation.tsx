@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput"
 import { CaptureDetailsAnnotations } from "./Extensions/CaptureDetails";
-import { SigMfAnnotationType, SigMfAntennaAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType, SigMfSignalType, SigMfTraceabilityAnnotationType } from "./SigMfInterfaces";
+import { SigMfAnnotationType, SigMfAntennaAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType, SigMfSignalType, SigMfSpatialAnnotationType, SigMfTraceabilityAnnotationType } from "./SigMfInterfaces";
 import { SignalAnnotation } from "./Extensions/SignalAnnotation";
 import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
 import { TraceabilityAnnotation } from "./Extensions/Traceability";
 import { AntennaAnnotation } from "./Extensions/Antenna";
+import { SpatialAnnotation } from "./Extensions/Spatial";
 
 export default function SigMfAnnotation( { isHidden, transferData }: { isHidden: boolean, transferData: Function } ) {
 
@@ -25,6 +26,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     const [sigAnnot, setSigAnnot] = useState<SigMfSignalType|null>(null);
     const [trace, setTrace] = useState<SigMfTraceabilityAnnotationType|null>(null);
     const [ant, setAnt] = useState<SigMfAntennaAnnotationType|null>(null);
+    const [space, setSpace] = useState<SigMfSpatialAnnotationType|null>(null);
 
     const [annotData, setAnnotData] = useState<SigMfAnnotationType>({
         'core:sample_start': null,
@@ -77,9 +79,12 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     }, [trace]);
 
     useEffect(() => {
-        console.log(ant);
         changeStateInput(annotData, ant, 'antenna', setAnnotData);
     }, [ant]);
+
+    useEffect(() => {
+        changeStateInput(annotData, space, 'spatial', setAnnotData);
+    }, [space]);
 
     useEffect(() => {
         let btnEnabled: boolean = false;
@@ -111,10 +116,15 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
             });
         }
         if (Object.hasOwn(retObj, 'antenna')) {
-            console.log(retObj);
             delete retObj.antenna;
             Object.keys(annotData.antenna || {}).forEach(key => {
                 retObj[key] = annotData.antenna[key];
+            });
+        }
+        if (Object.hasOwn(retObj, 'spatial')) {
+            delete retObj.spatial;
+            Object.keys(annotData.spatial || {}).forEach(key => {
+                retObj[key] = annotData.spatial[key];
             });
         }
         transferData(retObj);
@@ -134,6 +144,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
             <SignalAnnotation idPart="annot" isHidden={isHidden} changeFunction={setSigAnnot} />
             <TraceabilityAnnotation changeFunction={setTrace} isHidden={isHidden} />
             <AntennaAnnotation changeFunction={setAnt} isHidden={isHidden} />
+            <SpatialAnnotation idPart="annot-spatial" changeFunction={setSpace} isHidden={isHidden} />
             <button id="add-annot-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""} disabled:bg-slate-700 disabled:hover:bg-slate-700 disabled:hover:text-indigo-400`} disabled={!isButtonEnabled} onClick={addAnnotation} >Add Annotation</button>
         </div>
     );

@@ -4,9 +4,10 @@ import { CaptureDetailsCaptures } from "./Extensions/CaptureDetails";
 import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import { useEffect, useState } from "react";
 import SigMfDateInput from "./Inputs/SigMfDateInput";
-import { SigMfCapDetsCapType, SigMfCaptureType, SigMfGeoType } from "./SigMfInterfaces";
+import { SigMfCapDetsCapType, SigMfCaptureType, SigMfGeoType, SigMfSpatialCaptureType } from "./SigMfInterfaces";
 import SigMfGeoInput from "./SigMfGeoInput";
 import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
+import { SpatialCapture } from "./Extensions/Spatial";
 
 export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: boolean, transferCapData: Function }) {
 
@@ -17,6 +18,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
     const [headerBytes, setHeaderBytes] = useState<number|null>(null);
     const [geo, setGeo] = useState<SigMfGeoType|null>(null);
     const [capDets, setCapDets] = useState<SigMfCapDetsCapType|null>(null);
+    const [space, setSpace] = useState<SigMfSpatialCaptureType|null>(null);
 
     const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
 
@@ -53,6 +55,11 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
     }, [capDets]);
 
     useEffect(() => {
+        console.log("space variable has changed");
+        changeStateInput(capData, space, 'spatial', setCapData);
+    }, [space]);
+
+    useEffect(() => {
         let btnEnabled: boolean = false;
         if (!Object.values(capData).includes(null)) {
             btnEnabled = true;
@@ -69,6 +76,12 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
                     retObj[key] = capData.capture_details[key];
                 });
             }
+            if (Object.hasOwn(retObj, 'spatial')) {
+                delete retObj.spatial;
+                Object.keys(capData.spatial || {}).forEach(key => {
+                    retObj[key] = capData.spatial[key];
+                });
+            }
             transferCapData(retObj);
         }
     }
@@ -82,6 +95,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
             <SigMfNumberInput label="Header Bytes" id="capt-head-bytes-input" placeholder="0" changeFunction={setHeaderBytes} hidden={isHidden} />
             <SigMfGeoInput idPart="annot" isHidden={isHidden} changeFunction={setGeo} />
             <CaptureDetailsCaptures isHidden={isHidden} changeFunction={setCapDets}/>
+            <SpatialCapture idPart="annot" isHidden={isHidden} changeFunction={setSpace} />
             <button id="add-cap-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""}`} disabled={!isButtonEnabled} onClick={addCapture}>Add Capture</button>
         </div>
     );
