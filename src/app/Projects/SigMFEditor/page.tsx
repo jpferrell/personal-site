@@ -99,11 +99,18 @@ export default function SigMFEditor() {
             const reader: FileReader = new FileReader();
             reader.readAsArrayBuffer(file);
             reader.onload = () => {
-                console.log(reader.result);
+                //console.log(reader.result);
                 if (reader.result) {
                     sha512Encrypt(reader.result).then(rsp => {
-                        console.log("sha512 has returned");
-                        console.log("sha512 response: " + rsp);
+                        //console.log("sha512 has returned");
+                        //console.log("sha512 response: " + rsp);
+                        const el = document.getElementById("sha-512-input");
+                        //document.getElementById("sha-512-input").value = rsp;
+                        // Trigger the change event after setting the SHA-512 input element value
+                        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                        nativeInputValueSetter?.call(el, rsp);
+                        const event = new Event('input', { bubbles: true });
+                        el?.dispatchEvent(event);
                     });
                 }
             }
