@@ -7,6 +7,7 @@ import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureD
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
 import SigMfAnnotationDisplay from "@/app/_components/SigMfComponents/SigMfAnnotationDisplay";
+import SigMfTextInput from "@/app/_components/SigMfComponents/Inputs/SigMfTextInput";
 
 export default function SigMFEditor() {
 
@@ -22,6 +23,8 @@ export default function SigMFEditor() {
     const [isCreateEnabled, setIsCreateEnabled] = useState<boolean>(false);
     const [capCompArr, setCapCompArr] = useState<object []>([]);
     const [annotCompArr, setAnnotCompArr] = useState<object []>([]);
+    const [filename, setFilename] = useState<string|null>(null);
+    //const [sha512, setSha512] = useState<string|null>(null);
 
     function addCapture(capture: SigMfCaptureType) {
         const len = capCompArr.length;
@@ -85,8 +88,11 @@ export default function SigMFEditor() {
     }
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-        //console.log(e);
         const file: File = e.target.files[0];
+        console.log(file);
+        setFilename(file.name);
+        document.getElementById("filename-input").value = file.name;
+        //console.log(el);
         if (file === null) {
             console.error('No file was selected');
         } else {
@@ -95,16 +101,6 @@ export default function SigMFEditor() {
             reader.onload = () => {
                 console.log(reader.result);
                 if (reader.result) {
-                    /*
-                    crypto.subtle.digest("SHA-512", reader.result).then(buf => {
-                        console.log(buf);
-                        const view = new DataView(buf);
-                        //view.setUint8()
-                        const newArr = new Uint8Array(buf);
-                        newArr.forEach(x => console.log(x.toString(16)));
-                        console.log(newArr);
-                    });
-                    */
                     sha512Encrypt(reader.result).then(rsp => {
                         console.log("sha512 has returned");
                         console.log("sha512 response: " + rsp);
@@ -115,13 +111,9 @@ export default function SigMFEditor() {
     }
 
     async function sha512Encrypt(inMsg: ArrayBuffer) {
-        console.log("sha512 called");
-        crypto.subtle.digest("SHA-512", inMsg).then(buf => {
-            console.log("digest called");
-            const hashHex = Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
-            console.log(hashHex)
-            return hashHex;
-        });
+       const buf: ArrayBuffer = await crypto.subtle.digest("SHA-512", inMsg);
+       const hashHex = Array.from(new Uint8Array(buf)).map(x => x.toString(16).padStart(2, "0")).join("");
+       return hashHex;
     }
 
     return (
@@ -130,6 +122,7 @@ export default function SigMFEditor() {
             <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
                 <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto">
                     <span><label htmlFor="sigmf-data-file-input">{"Input .sigmf-data File  "}</label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
+                    <SigMfTextInput label="Filename" id="filename-input" changeFunction={setFilename}/>
                     <select id="selector" className={`dark:bg-slate-600 text-center max-h-6`} onChange={handleSelectionChange}>
                         <option id="selector-global-opt" value={"global"}>Global</option>
                         <option id="selector-capture-opt" value={"captures"}>Captures</option>
