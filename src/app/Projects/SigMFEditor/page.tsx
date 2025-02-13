@@ -26,11 +26,21 @@ export default function SigMFEditor() {
     const [filename, setFilename] = useState<string|null>(null);
     //const [sha512, setSha512] = useState<string|null>(null);
 
+    function removeCapture(idx: number) {
+        console.log("remove capture with idx: " + idx);
+        console.log("beginning array:");
+        console.log(capCompArr);
+        const tmpArr = capCompArr.filter((obj, inIdx) => inIdx !== idx);
+        console.log("ending array: ");
+        console.log(tmpArr);
+        setCapCompArr([...tmpArr]);
+    }
+
     function addCapture(capture: SigMfCaptureType) {
         const len = capCompArr.length;
         setCapCompArr([
             ...capCompArr,
-            {component: <SigMfCaptureDisplay inData={capture} idx={len} key={`cap-disp-${len}`} dataGetter={getCapture}/>, data: capture}
+            {component: <SigMfCaptureDisplay inData={capture} inIdx={len} key={`cap-disp-${len}`} dataGetter={getCapture} deleterFunction={removeCapture}/>, data: capture}
         ]);
     }
 
