@@ -74,7 +74,8 @@ export default function SigMFEditor() {
         outObj["annotations"] = annotArr;
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
-        el.download = "test.sigmf-meta";
+        const fileExt: string = ".sigmf-meta";
+        el.download = filename === null ? "out"+fileExt : filename + fileExt;
         document.body.appendChild(el);
         el.click();
     }
@@ -87,30 +88,35 @@ export default function SigMFEditor() {
         setSelectedOpt({value: retVal, label: retVal});
     }
 
+    function cleanFilename(name: string) {
+        console.log("In filename: " + name);
+        return name.replace(/\.[^/.]+$/, "");
+    }
+
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file: File = e.target.files[0];
         console.log(file);
-        setFilename(file.name);
-        document.getElementById("filename-input").value = file.name;
-        //console.log(el);
         if (file === null) {
             console.error('No file was selected');
         } else {
+            const inFilename: string = cleanFilename(file.name);
+            console.log("cleaned filename: " + inFilename);
+            setFilename(inFilename);
+            const fileEl = document.getElementById("filename-input");
             const reader: FileReader = new FileReader();
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            nativeInputValueSetter?.call(fileEl, inFilename);
+            const fileEvent = new Event('input', {bubbles: true});
+            fileEl?.dispatchEvent(fileEvent);
             reader.readAsArrayBuffer(file);
             reader.onload = () => {
-                //console.log(reader.result);
                 if (reader.result) {
                     sha512Encrypt(reader.result).then(rsp => {
-                        //console.log("sha512 has returned");
-                        //console.log("sha512 response: " + rsp);
                         const el = document.getElementById("sha-512-input");
-                        //document.getElementById("sha-512-input").value = rsp;
                         // Trigger the change event after setting the SHA-512 input element value
-                        const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
                         nativeInputValueSetter?.call(el, rsp);
-                        const event = new Event('input', { bubbles: true });
-                        el?.dispatchEvent(event);
+                        const shaEvent = new Event('input', { bubbles: true });
+                        el?.dispatchEvent(shaEvent);
                     });
                 }
             }
