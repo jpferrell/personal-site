@@ -80,6 +80,7 @@ export default function SigMFEditor() {
         const annotArr = getAnnotationArray();
         const outObj: {global?: {}, captures?: {}, annotations?: {}} = {};
         outObj["global"] = globalObj;
+        /* Need to sort each by sample start */
         outObj["captures"] = capArr;
         outObj["annotations"] = annotArr;
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
