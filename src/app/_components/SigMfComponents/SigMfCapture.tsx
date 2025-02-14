@@ -86,7 +86,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
     }
 
     return (
-        <div>
+        <div className="mx-auto p-2">
             <SigMfNumberInput label="Sample Start" id="capt-sample-start-input" placeholder="0" required changeFunction={setSampStart} hidden={isHidden}/>
             <SigMfDateInput label="Datetime" id="capt-datetime-input" changeFunction={setDatetime} hidden={isHidden} />
             <SigMfNumberInput label="Frequency" id="capt-freq-input" placeholder="0.0" changeFunction={setFreq} hidden={isHidden} />
@@ -95,7 +95,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
             <SigMfGeoInput idPart="annot" isHidden={isHidden} changeFunction={setGeo} />
             <CaptureDetailsCaptures isHidden={isHidden} changeFunction={setCapDets}/>
             <SpatialCapture idPart="annot" isHidden={isHidden} changeFunction={setSpace} />
-            <button id="add-cap-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""}`} disabled={!isButtonEnabled} onClick={addCapture}>Add Capture</button>
+            <button id="add-cap-button" className={`rounded p-2 mt-2 mb-2 mx-auto flex dark:hover:text-slate-200 bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""}`} disabled={!isButtonEnabled} onClick={addCapture}>Add Capture</button>
         </div>
     );
 }

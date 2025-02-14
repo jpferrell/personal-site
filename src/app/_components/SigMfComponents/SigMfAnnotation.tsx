@@ -131,7 +131,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     }
 
     return (
-        <div>
+        <div className="mx-auto">
             <SigMfNumberInput label="Sample Start" id="annot-sample-start-input" placeholder="0" changeFunction={setSampStart} required hidden={isHidden} />
             <SigMfNumberInput label="Sample Count" id="annot-sample-cnt-input" placeholder="0" changeFunction={setSampCnt} hidden={isHidden} />
             <SigMfNumberInput label="Frequency Lower Edge" id="annot-freq-lower-edge-input" placeholder="0.0" changeFunction={setFreqLowEdge} hidden={isHidden} />
@@ -145,7 +145,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
             <TraceabilityAnnotation changeFunction={setTrace} isHidden={isHidden} />
             <AntennaAnnotation changeFunction={setAnt} isHidden={isHidden} />
             <SpatialAnnotation idPart="annot-spatial" changeFunction={setSpace} isHidden={isHidden} />
-            <button id="add-annot-button" className={`rounded p-1 mx-auto flex dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""} disabled:bg-slate-700 disabled:hover:bg-slate-700 disabled:hover:text-indigo-400`} disabled={!isButtonEnabled} onClick={addAnnotation} >Add Annotation</button>
+            <button id="add-annot-button" className={`rounded p-2 mt-2 mb-2 mx-auto flex bg-slate-300 dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""} disabled:bg-slate-700 disabled:hover:bg-slate-700 disabled:hover:text-indigo-400`} disabled={!isButtonEnabled} onClick={addAnnotation} >Add Annotation</button>
         </div>
     );
 }

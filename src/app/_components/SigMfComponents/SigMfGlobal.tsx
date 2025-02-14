@@ -139,26 +139,26 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
         if (Object.hasOwn(retObj, 'traceability')) {
             delete retObj.traceability;
             Object.keys(globalData.traceability || {}).forEach(key => {
-                retObj[key] = globalData.traceability[key];
+                retObj[key as keyof typeof retObj] = globalData.traceability[key as keyof typeof globalData.traceability];
             });
         }
         if (Object.hasOwn(retObj, 'antenna')) {
             delete retObj.antenna;
             Object.keys(globalData.antenna || {}).forEach(key => {
-                retObj[key] = globalData.antenna[key];
+                retObj[key as keyof typeof retObj] = globalData.antenna[key];
             });
         }
         if (Object.hasOwn(retObj, 'spatial')) {
             delete retObj.spatial;
             Object.keys(globalData.spatial || {}).forEach(key => {
-                retObj[key] = globalData.spatial[key];
+                retObj[key as keyof typeof retObj] = globalData.spatial[key];
             })
         }
         transferData(retObj);
     }, [globalData])
 
     return (
-        <div>
+        <div className="mx-auto">
             <SigMfSelectInput label="Real or Complex?" id="real-cplx-input" required hidden={isHidden} changeFunction={setRealCplx} values={["r", "c"]}/>
             <SigMfSelectInput label="Little-endian or Big-endian?" id="le-be-input" required hidden={isHidden} changeFunction={setLeBe} values={["le", "be"]}/>
             <SigMfSelectInput label="Data Type" id="data-type-input" required hidden={isHidden} changeFunction={setDatatype} values={[
@@ -183,7 +183,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
             <SigMfGeoInput idPart="global" isHidden={isHidden} changeFunction={setGeo} />
             <TraceabilityGlobal isHidden={isHidden} changeFunction={setTrace} />
             <AntennaGlobal isHidden={isHidden} changeFunction={setAnt} />
-            <SpatialGlobal isHidden={isHidden} changeFunction={setSpace} />
+            <SpatialGlobal isHidden={isHidden} changeFunction={setSpace} idPart="spatial-global"/>
             {/*<h4 hidden={isHidden}>Extensions</h4>*/}
         </div>
     );

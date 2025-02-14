@@ -14,10 +14,10 @@ export default function SigMfAnnotationDisplay( { inData, inIdx, dataGetter, del
     }
 
     return (
-        <div className="dark:bg-slate-400 dark:hover:bg-slate-600 cursor-pointer rounded-md mx-4 items-center flex justify-between">
+        <div className="bg-slate-400 dark:hover:bg-slate-600 cursor-pointer rounded-md mx-4 items-center flex justify-between">
             <p> Annotation {inIdx} </p>
             <p> Sample Start {data['core:sample_start']}</p>
-            <AiOutlineClose className="dark:fill-rose-300 dark:hover:fill-rose-600 dark:hover:bg-slate-500 rounded-sm" onClick={raiseDeleteEvent}/>
+            <AiOutlineClose className="fill-rose-500 dark:fill-rose-300 hover:fill-rose-600 hover:bg-slate-500 rounded-md" onClick={raiseDeleteEvent}/>
         </div>
     );
 }
