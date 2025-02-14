@@ -21,12 +21,6 @@ interface AnnotationType {
 
 export default function SigMFEditor() {
 
-    const options = [
-        {value: 'global', label: 'Global'},
-        {value: 'captures', label: 'Captures'},
-        {value: 'annotations', label: 'Annotations'}
-    ];
-
     const [globalObj, setGlobalObj] = useState<object>({});
 
     const [selectedOpt, setSelectedOpt] = useState({value: 'global', label: 'Global'});
