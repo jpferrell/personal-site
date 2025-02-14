@@ -15,7 +15,7 @@ export default function SigMfCaptureDisplay( { inData, inIdx, dataGetter, delete
     }
 
     return (
-        <div className="bg-slate-400 dark:hover:bg-slate-600 cursor-pointer rounded-md mx-4 items-center justify-between p-4 first:mt-2 grid grid-cols-5">
+        <div className="bg-slate-400 dark:hover:bg-slate-600 dark:text-stone-100 dark:hover:text-white cursor-pointer rounded-md mx-4 items-center justify-between p-4 first:mt-2 grid grid-cols-5">
             <p><strong>Capture {idx}</strong></p>
             <div className="grid grid-cols-1 col-span-3">
                 <ul>

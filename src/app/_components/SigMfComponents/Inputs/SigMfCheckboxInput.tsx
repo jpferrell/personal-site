@@ -10,7 +10,7 @@ export default function SigMfCheckboxInput({ label, id, changeFunction, required
 
     return (
         <div className={`grid grid-cols-3 p-1 ${hidden ? "hidden" : ""}`}>
-            <label htmlFor={`${id}`} className={`col-span-2 ${required ? "text-orange-400" : ""} capitalize font-semibold ${hidden ? "hidden" : ""}`}>{label}</label>
+            <label htmlFor={`${id}`} className={`col-span-2 ${required ? "text-orange-500" : ""} capitalize font-semibold ${hidden ? "hidden" : ""}`}>{label}</label>
             <input id={id} type="checkbox" className={`bg-slate-300 dark:bg-slate-600 ${hidden ? "hidden" : ""}`} onChange={handleChange} />
         </div>
     );

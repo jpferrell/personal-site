@@ -147,10 +147,14 @@ export default function SigMFEditor() {
     return (
         <div className="min-h-screen min-w-full justify-items-center text-center p-4">
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
+            <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently, it is able to create a .sigmf-meta file with a filename stub that can
+                 be customized through the "Filename" input. </p>
             <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
-                <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto">
+                <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto gap-2">
                     <span><label htmlFor="sigmf-data-file-input">{"Input .sigmf-data File  "}</label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
-                    <SigMfTextInput label="Filename" id="filename-input" changeFunction={setFilename}/>
+                    <div className="">
+                        <SigMfTextInput label="Filename" id="filename-input" changeFunction={setFilename}/>
+                    </div>
                     <select id="selector" className={`dark:bg-slate-600 text-center max-h-6`} onChange={handleSelectionChange}>
                         <option id="selector-global-opt" value={"global"}>Global</option>
                         <option id="selector-capture-opt" value={"captures"}>Captures</option>
