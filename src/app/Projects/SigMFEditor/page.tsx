@@ -89,13 +89,10 @@ export default function SigMFEditor() {
 
     function createSigMfFile() {
         const el = document.createElement("a");
-        //const capArr = getCaptureArray();
-        //const annotArr = getAnnotationArray();
         const outObj: {global?: {}, captures?: {}, annotations?: {}} = {};
         outObj["global"] = globalObj;
-        /* Need to sort each by sample start */
-        outObj["captures"] = getCaptureArray();
-        outObj["annotations"] = getAnnotationArray();
+        outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
+        outObj["annotations"] = getAnnotationArray().sort((a,b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
         const fileExt: string = ".sigmf-meta";
@@ -135,7 +132,7 @@ export default function SigMFEditor() {
             reader.readAsArrayBuffer(file);
             reader.onload = () => {
                 if (reader.result) {
-                    sha512Encrypt(reader.result).then(rsp => {
+                    sha512Encrypt(reader.result as ArrayBuffer).then(rsp => {
                         const el = document.getElementById("sha-512-input");
                         // Trigger the change event after setting the SHA-512 input element value
                         nativeInputValueSetter?.call(el, rsp);

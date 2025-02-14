@@ -99,32 +99,32 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
         if (Object.hasOwn(retObj, 'capture_details')) {
             delete retObj.capture_details;
             Object.keys(annotData.capture_details || {}).forEach(key => {
-                retObj[key] = annotData.capture_details[key];
+                retObj[key as keyof typeof retObj] = annotData.capture_details[key as keyof typeof annotData.capture_details];
             });
         }
 
         if (Object.hasOwn(retObj, 'signal')) {
             delete retObj.signal;
             Object.keys(annotData.signal || {}).forEach(key => {
-                retObj[key] = annotData.signal[key];
+                retObj[key as keyof typeof retObj] = annotData.signal[key as keyof typeof annotData.signal];
             });
         }
         if (Object.hasOwn(retObj, 'traceability')) {
             delete retObj.traceability;
             Object.keys(annotData.traceability || {}).forEach(key => {
-                retObj[key] = annotData.traceability[key];
+                retObj[key as keyof typeof retObj] = annotData.traceability[key as keyof typeof annotData.traceability];
             });
         }
         if (Object.hasOwn(retObj, 'antenna')) {
             delete retObj.antenna;
             Object.keys(annotData.antenna || {}).forEach(key => {
-                retObj[key] = annotData.antenna[key];
+                retObj[key as keyof typeof retObj] = annotData.antenna[key as keyof typeof annotData.antenna];
             });
         }
         if (Object.hasOwn(retObj, 'spatial')) {
             delete retObj.spatial;
             Object.keys(annotData.spatial || {}).forEach(key => {
-                retObj[key] = annotData.spatial[key];
+                retObj[key as keyof typeof retObj] = annotData.spatial[key as keyof typeof annotData.spatial];
             });
         }
         transferData(retObj);

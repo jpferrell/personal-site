@@ -145,13 +145,13 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
         if (Object.hasOwn(retObj, 'antenna')) {
             delete retObj.antenna;
             Object.keys(globalData.antenna || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = globalData.antenna[key];
+                retObj[key as keyof typeof retObj] = globalData.antenna[key as keyof typeof globalData.antenna];
             });
         }
         if (Object.hasOwn(retObj, 'spatial')) {
             delete retObj.spatial;
             Object.keys(globalData.spatial || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = globalData.spatial[key];
+                retObj[key as keyof typeof retObj] = globalData.spatial[key as keyof typeof globalData.spatial];
             })
         }
         transferData(retObj);

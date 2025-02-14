@@ -72,13 +72,13 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
             if (Object.hasOwn(retObj, 'capture_details')) {
                 delete retObj.capture_details;
                 Object.keys(capData.capture_details || {}).forEach(key => {
-                    retObj[key] = capData.capture_details[key];
+                    retObj[key as keyof typeof retObj] = capData.capture_details[key as keyof typeof capData.capture_details];
                 });
             }
             if (Object.hasOwn(retObj, 'spatial')) {
                 delete retObj.spatial;
                 Object.keys(capData.spatial || {}).forEach(key => {
-                    retObj[key] = capData.spatial[key];
+                    retObj[key as keyof typeof retObj] = capData.spatial[key as keyof typeof capData.spatial];
                 });
             }
             transferCapData(retObj);
