@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureDisplay";
@@ -8,6 +8,16 @@ import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
 import SigMfAnnotationDisplay from "@/app/_components/SigMfComponents/SigMfAnnotationDisplay";
 import SigMfTextInput from "@/app/_components/SigMfComponents/Inputs/SigMfTextInput";
+
+interface CaptureType {
+    data: SigMfCaptureType,
+    id: number
+};
+
+interface AnnotationType {
+    data: SigMfAnnotationType,
+    id: number
+};
 
 export default function SigMFEditor() {
 
@@ -21,35 +31,34 @@ export default function SigMFEditor() {
 
     const [selectedOpt, setSelectedOpt] = useState({value: 'global', label: 'Global'});
     const [isCreateEnabled, setIsCreateEnabled] = useState<boolean>(false);
-    const [capCompArr, setCapCompArr] = useState<object []>([]);
-    const [annotCompArr, setAnnotCompArr] = useState<object []>([]);
     const [filename, setFilename] = useState<string|null>(null);
-    //const [sha512, setSha512] = useState<string|null>(null);
+    const [capArr, setCapArr] = useState<CaptureType []>([]);
+    const [capIdx, setCapIdx] = useState<number>(0);
+    const [annotArr, setAnnotArr] = useState<AnnotationType []>([]);
+    const [annotIdx, setAnnotIdx] = useState<number>(0);
 
     function removeCapture(idx: number) {
-        console.log("remove capture with idx: " + idx);
-        console.log("beginning array:");
-        console.log(capCompArr);
-        const tmpArr = capCompArr.filter((obj, inIdx) => inIdx !== idx);
-        console.log("ending array: ");
-        console.log(tmpArr);
-        setCapCompArr([...tmpArr]);
+        setCapArr(capArr.filter(cap => cap.id !== idx));
+    }
+
+    function removeAnnotation(idx: number) {
+        setAnnotArr(annotArr.filter(annot => annot.id !== idx));
     }
 
     function addCapture(capture: SigMfCaptureType) {
-        const len = capCompArr.length;
-        setCapCompArr([
-            ...capCompArr,
-            {component: <SigMfCaptureDisplay inData={capture} inIdx={len} key={`cap-disp-${len}`} dataGetter={getCapture} deleterFunction={removeCapture}/>, data: capture}
-        ]);
+       setCapArr([
+        ...capArr,
+        {data: capture, id: capIdx}
+       ]);
+       setCapIdx(capIdx + 1);
     }
 
     function addAnnotation(annotation: SigMfAnnotationType) {
-        const len = annotCompArr.length;
-        setAnnotCompArr([
-            ...annotCompArr,
-            {component: <SigMfAnnotationDisplay inData={annotation} idx={len} key={`annot-disp-${len}`} />, data: annotation}
-        ]);
+       setAnnotArr([
+        ...annotArr,
+        {data: annotation, id: annotIdx}
+       ]);
+       setAnnotIdx(annotIdx + 1)
     }
 
     useEffect(() => {
@@ -66,23 +75,27 @@ export default function SigMFEditor() {
         return data;
     }
 
+    function getAnnotation(data: SigMfAnnotationType) {
+        return data;
+    }
+
     function getCaptureArray() {
-        return capCompArr.map(cap => cap.data);
+        return capArr.map(cap => cap.data);
     }
 
     function getAnnotationArray() {
-        return annotCompArr.map(annot => annot.data);
+        return annotArr.map(annot => annot.data);
     }
 
     function createSigMfFile() {
         const el = document.createElement("a");
-        const capArr = getCaptureArray();
-        const annotArr = getAnnotationArray();
+        //const capArr = getCaptureArray();
+        //const annotArr = getAnnotationArray();
         const outObj: {global?: {}, captures?: {}, annotations?: {}} = {};
         outObj["global"] = globalObj;
         /* Need to sort each by sample start */
-        outObj["captures"] = capArr;
-        outObj["annotations"] = annotArr;
+        outObj["captures"] = getCaptureArray();
+        outObj["annotations"] = getAnnotationArray();
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
         const fileExt: string = ".sigmf-meta";
@@ -161,13 +174,13 @@ export default function SigMFEditor() {
                     <div className="h-screen" id="captures-section">
                         <h2>{`Captures`}</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="capture-grid">
-                            {capCompArr.map(capture => capture.component)}
+                            {capArr.map(cap => <SigMfCaptureDisplay inData={cap.data} inIdx={cap.id} dataGetter={getCapture} key={`cap-disp-${cap.id}`} deleterFunction={removeCapture} />)}
                         </div>
                     </div>
                     <div>
                         <h2>Annotations</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="annotation-grid">
-                            {annotCompArr.map(annotation => annotation.component)}
+                        {annotArr.map(annot => <SigMfAnnotationDisplay inData={annot.data} inIdx={annot.id} dataGetter={getAnnotation} key={`cap-disp-${annot.id}`} deleterFunction={removeAnnotation} />)}
                         </div>
                     </div>
                 </div>
