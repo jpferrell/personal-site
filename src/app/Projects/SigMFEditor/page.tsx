@@ -19,6 +19,30 @@ interface AnnotationType {
     id: number
 };
 
+interface ExtensionsType {
+    antenna: boolean,
+    capture_details: boolean,
+    signal: boolean,
+    spatial: boolean,
+    traceability: boolean
+}
+
+interface ExtensionsCheckType {
+    name: string,
+    regex: RegExp
+}
+
+const extensionKeywords: string[] = ['antenna', 'capture_details', 'signal', 'spatial', 'traceability'];
+const extRegex: RegExp[] = [/^(antenna)/g, /^(capture_details)/g, /^(signal)/g, /^(spatial)/g, /^(traceability)/g];
+
+const extObj: ExtensionsCheckType[] = [
+    {name: 'antenna', regex: /^(antenna)/g},
+    {name: 'capture_details', regex: /^(capture_details)/g},
+    {name: 'signal', regex: /^(signal)/g},
+    {name: 'spatial', regex: /^(spatial)/g},
+    {name: 'traceability', regex: /^(traceability)/g}
+];
+
 export default function SigMFEditor() {
 
     const [globalObj, setGlobalObj] = useState<object>({});
@@ -30,6 +54,13 @@ export default function SigMFEditor() {
     const [capIdx, setCapIdx] = useState<number>(0);
     const [annotArr, setAnnotArr] = useState<AnnotationType []>([]);
     const [annotIdx, setAnnotIdx] = useState<number>(0);
+    const [extensions, setExtensions] = useState<ExtensionsType>({
+        antenna: false,
+        capture_details: false,
+        signal: false,
+        spatial: false,
+        traceability: false
+    });
 
     function removeCapture(idx: number) {
         setCapArr(capArr.filter(cap => cap.id !== idx));
@@ -81,12 +112,34 @@ export default function SigMFEditor() {
         return annotArr.map(annot => annot.data);
     }
 
+    function findExtensions(obj: object) {
+        const keys: string[] = Object.keys(obj);
+        extObj.forEach(ext => {
+            const regex: RegExp = ext.regex;
+            const name: string = ext.name;
+            const extFound: boolean = keys.map(key => {
+                console.log("key: " + key);
+                return regex.test(key);
+            }).includes(true);
+            console.log("Was " + name + " found? " + extFound);
+            if (extFound) {
+                setExtensions({
+                    ...extensions,
+                    [name]: extFound
+                });
+            }
+        })
+    }
+
     function createSigMfFile() {
         const el = document.createElement("a");
-        const outObj: {global?: {}, captures?: {}, annotations?: {}} = {};
+        const outObj: {global?: object, captures?: object, annotations?: object} = {};
         outObj["global"] = globalObj;
         outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
         outObj["annotations"] = getAnnotationArray().sort((a,b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
+        findExtensions(globalObj);
+        findExtensions(getCaptureArray());
+        console.log(extensions);
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
         const fileExt: string = ".sigmf-meta";
