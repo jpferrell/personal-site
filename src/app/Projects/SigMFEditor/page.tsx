@@ -8,6 +8,7 @@ import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
 import SigMfAnnotationDisplay from "@/app/_components/SigMfComponents/SigMfAnnotationDisplay";
 import SigMfTextInput from "@/app/_components/SigMfComponents/Inputs/SigMfTextInput";
+import ExtensionPortal from "@/app/_components/SigMfComponents/Extensions/ExtensionPortal";
 
 interface CaptureType {
     data: SigMfCaptureType,
@@ -54,13 +55,6 @@ export default function SigMFEditor() {
     const [capIdx, setCapIdx] = useState<number>(0);
     const [annotArr, setAnnotArr] = useState<AnnotationType []>([]);
     const [annotIdx, setAnnotIdx] = useState<number>(0);
-    const [extensions, setExtensions] = useState<ExtensionsType>({
-        antenna: false,
-        capture_details: false,
-        signal: false,
-        spatial: false,
-        traceability: false
-    });
 
     function removeCapture(idx: number) {
         setCapArr(capArr.filter(cap => cap.id !== idx));
@@ -114,6 +108,13 @@ export default function SigMFEditor() {
 
     function findExtensions(obj: object) {
         const keys: string[] = Object.keys(obj);
+        let retObj: ExtensionsType = {
+            antenna: false,
+            capture_details: false,
+            signal: false,
+            spatial: false,
+            traceability: false
+        };
         extObj.forEach(ext => {
             const regex: RegExp = ext.regex;
             const name: string = ext.name;
@@ -123,29 +124,63 @@ export default function SigMFEditor() {
             }).includes(true);
             console.log("Was " + name + " found? " + extFound);
             if (extFound) {
-                setExtensions({
-                    ...extensions,
+                retObj = {
+                    ...retObj,
                     [name]: extFound
-                });
+                };
             }
+        });
+
+        return retObj;
+    }
+
+    function findExtensionInArray(searchObj: object, retObj: ExtensionsType) {
+        const keys: string[] = Object.keys(searchObj);
+        console.log(keys);
+        keys.forEach(key => {
+            console.log(searchObj[key as keyof typeof searchObj]);
+            extObj.forEach(ext => {
+                const regex: RegExp = ext.regex;
+                const name: string = ext.name;
+                const extFound: boolean = Object.keys(searchObj[key as keyof typeof searchObj]).map(innerKey => {
+                    console.log("inner key: " + innerKey);
+                    return regex.test(innerKey);
+                }).includes(true);
+                if (extFound) {
+                    console.log("extension: " + name + " found");
+                    retObj = {
+                        ...retObj,
+                        [name]: extFound
+                    };
+                }
+            });
         })
+        return retObj;
     }
 
     function createSigMfFile() {
         const el = document.createElement("a");
         const outObj: {global?: object, captures?: object, annotations?: object} = {};
+        let extObj: ExtensionsType = findExtensions(globalObj);
+        if (Object.values(extObj).includes(true)) {
+
+        }
+        console.log(extObj);
+        extObj = findExtensionInArray(getCaptureArray(), extObj);
+        console.log(extObj);
+        extObj = findExtensionInArray(getAnnotationArray(), extObj);
+        console.log(extObj);
+        /*
         outObj["global"] = globalObj;
         outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
         outObj["annotations"] = getAnnotationArray().sort((a,b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
-        findExtensions(globalObj);
-        findExtensions(getCaptureArray());
-        console.log(extensions);
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
         const fileExt: string = ".sigmf-meta";
         el.download = filename === null ? "out"+fileExt : filename + fileExt;
         document.body.appendChild(el);
         el.click();
+        */
     }
 
     function handleSelectionChange(e: React.ChangeEvent<HTMLSelectElement>) {
@@ -202,6 +237,7 @@ export default function SigMFEditor() {
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
             <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently, it is able to create a .sigmf-meta file with a filename stub that can
                  be customized through the "Filename" input. </p>
+            <ExtensionPortal></ExtensionPortal>
             <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
                 <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto gap-2">
                     <span><label htmlFor="sigmf-data-file-input">{"Input .sigmf-data File  "}</label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
