@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { createPortal } from "react-dom";
 
 export default function ExtensionPortal() {
@@ -34,7 +34,7 @@ function ModalContent({ onClose, extensions }: { onClose: Function, extensions: 
     interface GlobalExtensionObjectType {
         extension?: ExtensionObjectType
     }
-    const [output, setOutput] = useState<object>(() => {
+    const [output, setOutput] = useState<GlobalExtensionObjectType>(() => {
         const retObj: GlobalExtensionObjectType = {};
         for (const key of extensions) {
             retObj[key as keyof typeof retObj] = {
@@ -69,7 +69,7 @@ function ModalContent({ onClose, extensions }: { onClose: Function, extensions: 
                                             [ext]: {
                                                 name: ext,
                                                 version: e.target.value,
-                                                optional: output[ext as keyof typeof output].optional
+                                                optional: output[ext as keyof typeof output]!.optional
                                             }
                                         });
                                     }
@@ -81,7 +81,7 @@ function ModalContent({ onClose, extensions }: { onClose: Function, extensions: 
                                             ...tmp,
                                             [ext]: {
                                                 name: ext,
-                                                version: output[ext as keyof typeof output].version,
+                                                version: output[ext as keyof typeof output]!.version,
                                                 optional: e.target.checked
                                             }
                                         });
