@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function ExtensionPortal( { extArr, isEnabled, moveExtObj }: {extArr: string[], isEnabled: boolean, moveExtObj: Function} ) {
+export default function ExtensionPortal( { extArr, isEnabled, moveExtObj, showPortal }: {extArr: string[], isEnabled: boolean, moveExtObj: Function, showPortal: Function} ) {
 
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -15,11 +15,15 @@ export default function ExtensionPortal( { extArr, isEnabled, moveExtObj }: {ext
         moveExtObj(extObj);
     }
 
+    function handleClose() {
+        showPortal(false);
+    }
+
     return (
         <div>
             {
                 showModal && createPortal(
-                    <ModalContent onClose={() => setShowModal(false)} extensions={extArr} moveData={handleData}/>,
+                    <ModalContent onClose={() => {setShowModal(false); handleClose();}} extensions={extArr} moveData={handleData}/>,
                     document.body
                 )
             }
@@ -53,6 +57,7 @@ function ModalContent({ onClose, extensions, moveData }: { onClose: Function, ex
 
     function handleData() {
         moveData(output);
+        onClose();
     }
 
     function printOutput() {

@@ -56,12 +56,10 @@ export default function SigMFEditor() {
     const [annotArr, setAnnotArr] = useState<AnnotationType []>([]);
     const [annotIdx, setAnnotIdx] = useState<number>(0);
     const [extArr, setExtArr] = useState<string[]>([]);
-    const [isExtPortalEnabled, setIsExtPortalEnabled] = useState<boolean>(false);
+    const [isExtPortalOpen, setIsExtPortalOpen] = useState<boolean>(false);
     const [extModalObj, setExtModalObj] = useState<object>({});
-
-    useEffect(() => {
-        console.log(extModalObj);
-    }, [extModalObj]);
+    const [isCreateFile, setIsCreateFile] = useState<boolean>(false);
+    const [isModalObjValid, setIsModalObjValid] = useState<boolean>(true);
 
     function removeCapture(idx: number) {
         setCapArr(capArr.filter(cap => cap.id !== idx));
@@ -165,30 +163,63 @@ export default function SigMFEditor() {
         return retObj;
     }
 
-    function createSigMfFile() {
-        const el = document.createElement("a");
-        const outObj: {global?: object, captures?: object, annotations?: object} = {};
-        let extObj: ExtensionsType = findExtensions(globalObj);
-        if (Object.values(extObj).includes(true)) {
+    useEffect(() => {
+        const tmpArr = Object.keys(extModalObj).map(key => extModalObj[key as keyof typeof extModalObj]);
+        console.log(tmpArr);
+        setGlobalObj({
+            ...globalObj,
+            'core:extensions': tmpArr
+        });
 
-        }
-        console.log(extObj);
+        setIsModalObjValid(true);
+        console.log("global obj after modal: ");
+        console.log(globalObj);
+    }, [extModalObj]);
+
+    function checkForExtensions() {
+        let extObj: ExtensionsType = findExtensions(globalObj);
         extObj = findExtensionInArray(getCaptureArray(), extObj);
-        console.log(extObj);
         extObj = findExtensionInArray(getAnnotationArray(), extObj);
-        console.log(extObj);
         if (Object.values(extObj).includes(true)) {
             // There are extensions used that need to be accounted for
             const tmp = Object.keys(extObj).filter(key => extObj[key as keyof typeof extObj] === true);
-            console.log(tmp);
             setExtArr(tmp);
-            console.log(extArr);
-            setIsExtPortalEnabled(true);
+            setIsExtPortalOpen(true);
+            setIsModalObjValid(false);
         }
+    }
+
+    useEffect(() => {
+        if (isCreateFile && isModalObjValid) {
+            const el = document.createElement("a");
+            const outObj: {global?: object, captures?: object, annotations?: object} = {};
+            outObj["global"] = globalObj;
+            outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
+            outObj["annotations"] = getAnnotationArray().sort((a,b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
+            console.log("object out: ");
+            console.log(outObj);
+            setIsCreateFile(false);
+            const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
+            el.href = URL.createObjectURL(jsonFile);
+            const fileExt: string = ".sigmf-meta";
+            el.download = filename === null ? "out"+fileExt : filename + fileExt;
+            document.body.appendChild(el);
+            el.click();
+        }
+    }, [isCreateFile, isModalObjValid]);
+
+    function createSigMfFile() {
+        //const el = document.createElement("a");
+        //const outObj: {global?: object, captures?: object, annotations?: object} = {};
+        checkForExtensions();
+        setIsCreateFile(true);
         /*
         outObj["global"] = globalObj;
         outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
         outObj["annotations"] = getAnnotationArray().sort((a,b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
+        console.log(outObj);
+        */
+        /*
         const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
         el.href = URL.createObjectURL(jsonFile);
         const fileExt: string = ".sigmf-meta";
@@ -252,7 +283,7 @@ export default function SigMFEditor() {
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
             <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently, it is able to create a .sigmf-meta file with a filename stub that can
                  be customized through the "Filename" input. </p>
-            <ExtensionPortal extArr={extArr} isEnabled={isExtPortalEnabled} moveExtObj={setExtModalObj}></ExtensionPortal>
+            <ExtensionPortal extArr={extArr} isEnabled={isExtPortalOpen} moveExtObj={setExtModalObj} showPortal={setIsExtPortalOpen}></ExtensionPortal>
             <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
                 <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto gap-2">
                     <span><label htmlFor="sigmf-data-file-input">{"Input .sigmf-data File  "}</label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>

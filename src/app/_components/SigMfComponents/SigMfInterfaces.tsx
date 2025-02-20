@@ -19,6 +19,12 @@ export interface SigMfGeoType {
     alt?: number|null
 }
 
+export interface SigMfExtensionsType {
+    name: string,
+    version: string,
+    optional: boolean
+}
+
 export interface SigMfGlobalType {
     'core:datatype': string|null,
     'core:sample_rate'?: number| null,
@@ -38,6 +44,7 @@ export interface SigMfGlobalType {
     'core:trailing_bytes'?: number|null,
     'core:version': string|null,
     'core:geolocation'?: SigMfGeoType|null,
+    'core:extensions'?: SigMfExtensionsType|null,
     traceability?: SigMfTraceabilityGlobalType|null,
     antenna?: SigMfAntennaGlobalType|null,
     spatial?: SigMfSpatialGlobalType|null
