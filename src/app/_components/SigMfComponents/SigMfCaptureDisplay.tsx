@@ -10,7 +10,6 @@ export default function SigMfCaptureDisplay( { inData, inIdx, dataGetter, delete
     const idx = inIdx;
 
     function raiseDeleteEvent() {
-        console.log("delete event selected");
         deleterFunction(idx);
     }
 
@@ -19,7 +18,22 @@ export default function SigMfCaptureDisplay( { inData, inIdx, dataGetter, delete
             <p><strong>Capture {idx}</strong></p>
             <div className="grid grid-cols-1 col-span-3">
                 <ul>
-                    {Object.keys(data).map(key => <li key={`key-${key}`}><em>{key}</em>: {data[key as keyof typeof data] as ReactNode}</li>)}
+                    {/*Object.keys(data).map(key => <li key={`key-${key}`}><em>{key}</em>: {data[key as keyof typeof data] as ReactNode}</li>)*/}
+                    {Object.keys(data).map(key => {
+                        console.log("key: " + key);
+                        if (typeof data[key] === 'object') {
+                            console.log("key: " + key +" is an object");
+                            Object.keys(data[key]).map(subkey => {
+                                console.log("subkey: " + subkey);
+                                return (
+                                    <li key={`${subkey}-key`}>{subkey}</li>
+                                );
+                            })
+                        }
+                        return (
+                            <li key={`${key}-key`}>{key}</li>
+                        );
+                    })}
                 </ul>
             </div>
             <div className="flex justify-end">

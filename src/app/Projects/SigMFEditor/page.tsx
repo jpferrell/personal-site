@@ -78,10 +78,13 @@ export default function SigMFEditor() {
     }
 
     function addAnnotation(annotation: SigMfAnnotationType) {
+        console.log(annotation);
+        console.log([...annotArr, {data: annotation, id: annotIdx}]);
        setAnnotArr([
         ...annotArr,
         {data: annotation, id: annotIdx}
        ]);
+       console.log("here");
        setAnnotIdx(annotIdx + 1)
     }
 
@@ -310,7 +313,7 @@ export default function SigMFEditor() {
                     <div>
                         <h2>Annotations</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="annotation-grid">
-                        {annotArr.map(annot => <SigMfAnnotationDisplay inData={annot.data} inIdx={annot.id} dataGetter={getAnnotation} key={`cap-disp-${annot.id}`} deleterFunction={removeAnnotation} />)}
+                        {annotArr.map(annot => {console.log(annot); return <SigMfAnnotationDisplay inData={annot.data} inIdx={annot.id} dataGetter={getAnnotation} key={`cap-disp-${annot.id}`} deleterFunction={removeAnnotation} />})}
                         </div>
                     </div>
                 </div>

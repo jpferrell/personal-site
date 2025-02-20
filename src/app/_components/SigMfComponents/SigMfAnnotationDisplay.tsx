@@ -18,8 +18,9 @@ export default function SigMfAnnotationDisplay( { inData, inIdx, dataGetter, del
         <div className="bg-slate-400 dark:hover:bg-slate-600 cursor-pointer rounded-md mx-4 items-center justify-between p-4 first:mt-2 grid grid-cols-5">
             <p><strong>Annotation {inIdx}</strong></p>
             <div className="grid grid-cols-1 col-span-3">
+                {/**I've got an error here because some of the keys are actually objects */}
                 <ul>
-                    {Object.keys(data).map(key => <li key={`key-${key}`}><em>{key}</em>: {data[key as keyof typeof data] as ReactNode}</li>)}
+                    {/*Object.keys(data).map(key => {if(typeof key !== 'object') {return <li key={`key-${key}`}><em>{key}</em>: {data[key as keyof typeof data] as ReactNode}</li>} else {}})*/}
                 </ul>
             </div>
             <div className="flex justify-end">

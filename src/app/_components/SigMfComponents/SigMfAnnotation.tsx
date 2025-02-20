@@ -104,8 +104,14 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
         }
 
         if (Object.hasOwn(retObj, 'signal')) {
+            console.log("signal:");
+            console.log(retObj);
             delete retObj.signal;
+            console.log("post delete");
+            console.log(retObj);
+            console.log(annotData);
             Object.keys(annotData.signal || {}).forEach(key => {
+                console.log("key: " + key);
                 retObj[key as keyof typeof retObj] = annotData.signal[key as keyof typeof annotData.signal];
             });
         }
@@ -127,6 +133,8 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
                 retObj[key as keyof typeof retObj] = annotData.spatial[key as keyof typeof annotData.spatial];
             });
         }
+        console.log("returned object: ");
+        console.log(retObj);
         transferData(retObj);
     }
 

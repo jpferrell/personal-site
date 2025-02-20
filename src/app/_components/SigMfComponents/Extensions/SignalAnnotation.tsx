@@ -29,10 +29,26 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
         changeStateInput(sig, sigEmit, 'signal:emitter', setSig);
     }, [sigEmit]);
 
+    function isObjectEmpty(obj: object) {
+        for (const prop in obj) {
+            if (Object.hasOwn(obj, prop)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     useEffect(() => {
         if (sig.enabled) {
             const retObj: SigMfSignalType = {...sig};
             delete retObj.enabled;
+            if (isObjectEmpty(retObj["signal:detail"])) {
+                delete retObj["signal:detail"];
+            }
+            if (isObjectEmpty(retObj["signal:emitter"])) {
+                delete retObj["signal:emitter"];
+            }
             changeFunction(retObj);
         }
     }, [sig]);
