@@ -55,6 +55,13 @@ export default function SigMFEditor() {
     const [capIdx, setCapIdx] = useState<number>(0);
     const [annotArr, setAnnotArr] = useState<AnnotationType []>([]);
     const [annotIdx, setAnnotIdx] = useState<number>(0);
+    const [extArr, setExtArr] = useState<string[]>([]);
+    const [isExtPortalEnabled, setIsExtPortalEnabled] = useState<boolean>(false);
+    const [extModalObj, setExtModalObj] = useState<object>({});
+
+    useEffect(() => {
+        console.log(extModalObj);
+    }, [extModalObj]);
 
     function removeCapture(idx: number) {
         setCapArr(capArr.filter(cap => cap.id !== idx));
@@ -170,6 +177,14 @@ export default function SigMFEditor() {
         console.log(extObj);
         extObj = findExtensionInArray(getAnnotationArray(), extObj);
         console.log(extObj);
+        if (Object.values(extObj).includes(true)) {
+            // There are extensions used that need to be accounted for
+            const tmp = Object.keys(extObj).filter(key => extObj[key as keyof typeof extObj] === true);
+            console.log(tmp);
+            setExtArr(tmp);
+            console.log(extArr);
+            setIsExtPortalEnabled(true);
+        }
         /*
         outObj["global"] = globalObj;
         outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
@@ -237,7 +252,7 @@ export default function SigMFEditor() {
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
             <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently, it is able to create a .sigmf-meta file with a filename stub that can
                  be customized through the "Filename" input. </p>
-            <ExtensionPortal></ExtensionPortal>
+            <ExtensionPortal extArr={extArr} isEnabled={isExtPortalEnabled} moveExtObj={setExtModalObj}></ExtensionPortal>
             <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
                 <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto gap-2">
                     <span><label htmlFor="sigmf-data-file-input">{"Input .sigmf-data File  "}</label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>

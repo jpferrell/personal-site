@@ -1,21 +1,25 @@
 'use client'
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 
-export default function ExtensionPortal() {
+export default function ExtensionPortal( { extArr, isEnabled, moveExtObj }: {extArr: string[], isEnabled: boolean, moveExtObj: Function} ) {
 
     const [showModal, setShowModal] = useState<boolean>(false);
-    const extArr: string[] = ["antenna", "spatial"];
+
+    useEffect(() => {
+        setShowModal(isEnabled);
+    }, [isEnabled]);
+
+    function handleData(extObj: object) {
+        moveExtObj(extObj);
+    }
 
     return (
         <div>
-            <button onClick={() => setShowModal(true)}>
-                Show modal
-            </button>
             {
                 showModal && createPortal(
-                    <ModalContent onClose={() => setShowModal(false)} extensions={extArr}/>,
+                    <ModalContent onClose={() => setShowModal(false)} extensions={extArr} moveData={handleData}/>,
                     document.body
                 )
             }
@@ -23,7 +27,7 @@ export default function ExtensionPortal() {
     );
 }
 
-function ModalContent({ onClose, extensions }: { onClose: Function, extensions: Array<string> }) {
+function ModalContent({ onClose, extensions, moveData }: { onClose: Function, extensions: Array<string>, moveData: Function }) {
 
     interface ExtensionObjectType {
         name: string,
@@ -34,6 +38,7 @@ function ModalContent({ onClose, extensions }: { onClose: Function, extensions: 
     interface GlobalExtensionObjectType {
         extension?: ExtensionObjectType
     }
+
     const [output, setOutput] = useState<GlobalExtensionObjectType>(() => {
         const retObj: GlobalExtensionObjectType = {};
         for (const key of extensions) {
@@ -45,6 +50,10 @@ function ModalContent({ onClose, extensions }: { onClose: Function, extensions: 
         }
         return retObj;
     });
+
+    function handleData() {
+        moveData(output);
+    }
 
     function printOutput() {
         console.log(output);
@@ -93,7 +102,7 @@ function ModalContent({ onClose, extensions }: { onClose: Function, extensions: 
                 })
             }
             </div>
-            <button className="rounded-md bg-slate-600 hover:bg-slate-700" onClick={printOutput}>Close</button>
+            <button className="rounded-md bg-slate-600 hover:bg-slate-700" onClick={handleData}>Close</button>
         </div>
     )
 }
