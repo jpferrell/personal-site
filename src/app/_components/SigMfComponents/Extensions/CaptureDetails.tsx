@@ -68,6 +68,8 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
             changeFunction(retObj);
         } else if (capDetCapData.enabled && Object.values(capDetCapData).includes(null)) {
             changeFunction(null);
+        } else if (!capDetCapData.enabled) {
+            changeFunction(null);
         }
     }, [capDetCapData]);
 

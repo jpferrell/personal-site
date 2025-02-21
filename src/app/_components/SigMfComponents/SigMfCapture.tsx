@@ -3,11 +3,11 @@
 import { CaptureDetailsCaptures } from "./Extensions/CaptureDetails";
 import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import { useEffect, useState } from "react";
-import SigMfDateInput from "./Inputs/SigMfDateInput";
 import { SigMfCapDetsCapType, SigMfCaptureType, SigMfGeoType, SigMfSpatialCaptureType } from "./SigMfInterfaces";
 import SigMfGeoInput from "./SigMfGeoInput";
 import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
 import { SpatialCapture } from "./Extensions/Spatial";
+import SigMfTextInput from "./Inputs/SigMfTextInput";
 
 export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: boolean, transferCapData: Function }) {
 
@@ -88,7 +88,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
     return (
         <div className="mx-auto p-2">
             <SigMfNumberInput label="Sample Start" id="capt-sample-start-input" placeholder="0" required changeFunction={setSampStart} hidden={isHidden}/>
-            <SigMfDateInput label="Datetime" id="capt-datetime-input" changeFunction={setDatetime} hidden={isHidden} />
+            <SigMfTextInput label="Datetime" id="capture-datetime-id" hidden={isHidden} changeFunction={setDatetime} placeholder="yyyy-mm-ddTHH:MM:SSZ"/>
             <SigMfNumberInput label="Frequency" id="capt-freq-input" placeholder="0.0" changeFunction={setFreq} hidden={isHidden} />
             <SigMfNumberInput label="Global Index" id="capt-global-idx-input" placeholder="0" changeFunction={setGlobalIdx} hidden={isHidden} />
             <SigMfNumberInput label="Header Bytes" id="capt-head-bytes-input" placeholder="0" changeFunction={setHeaderBytes} hidden={isHidden} />

@@ -1,12 +1,10 @@
 'use client'
 
-import { ReactElement, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
-import SigMfCaptureDisplay from "@/app/_components/SigMfComponents/SigMfCaptureDisplay";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
 import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
-import SigMfAnnotationDisplay from "@/app/_components/SigMfComponents/SigMfAnnotationDisplay";
 import SigMfTextInput from "@/app/_components/SigMfComponents/Inputs/SigMfTextInput";
 import ExtensionPortal from "@/app/_components/SigMfComponents/Extensions/ExtensionPortal";
 import SigMfArrayDisplay from "@/app/_components/SigMfComponents/SigMfArrayDisplay";
@@ -213,24 +211,8 @@ export default function SigMFEditor() {
     }, [isCreateFile, isModalObjValid]);
 
     function createSigMfFile() {
-        //const el = document.createElement("a");
-        //const outObj: {global?: object, captures?: object, annotations?: object} = {};
         checkForExtensions();
         setIsCreateFile(true);
-        /*
-        outObj["global"] = globalObj;
-        outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
-        outObj["annotations"] = getAnnotationArray().sort((a,b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
-        console.log(outObj);
-        */
-        /*
-        const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
-        el.href = URL.createObjectURL(jsonFile);
-        const fileExt: string = ".sigmf-meta";
-        el.download = filename === null ? "out"+fileExt : filename + fileExt;
-        document.body.appendChild(el);
-        el.click();
-        */
     }
 
     function handleSelectionChange(e: React.ChangeEvent<HTMLSelectElement>) {
