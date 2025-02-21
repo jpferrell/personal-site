@@ -9,6 +9,7 @@ import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_c
 import SigMfAnnotationDisplay from "@/app/_components/SigMfComponents/SigMfAnnotationDisplay";
 import SigMfTextInput from "@/app/_components/SigMfComponents/Inputs/SigMfTextInput";
 import ExtensionPortal from "@/app/_components/SigMfComponents/Extensions/ExtensionPortal";
+import SigMfArrayDisplay from "@/app/_components/SigMfComponents/SigMfArrayDisplay";
 
 interface CaptureType {
     data: SigMfCaptureType,
@@ -307,13 +308,13 @@ export default function SigMFEditor() {
                     <div className="h-screen" id="captures-section">
                         <h2>{`Captures`}</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="capture-grid">
-                            {capArr.map(cap => <SigMfCaptureDisplay inData={cap.data} inIdx={cap.id} dataGetter={getCapture} key={`cap-disp-${cap.id}`} deleterFunction={removeCapture} />)}
+                            {capArr.map(cap => <SigMfArrayDisplay inData={cap.data} inIdx={cap.id} typeStr="Capture" key={`cap-disp-${cap.id}`} deleterFunction={removeCapture} />)}
                         </div>
                     </div>
                     <div>
                         <h2>Annotations</h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="annotation-grid">
-                        {annotArr.map(annot => {console.log(annot); return <SigMfAnnotationDisplay inData={annot.data} inIdx={annot.id} dataGetter={getAnnotation} key={`cap-disp-${annot.id}`} deleterFunction={removeAnnotation} />})}
+                        {annotArr.map(annot => <SigMfArrayDisplay inData={annot.data} inIdx={annot.id} typeStr="Annotation" key={`cap-disp-${annot.id}`} deleterFunction={removeAnnotation} />)}
                         </div>
                     </div>
                 </div>
