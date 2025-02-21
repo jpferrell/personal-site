@@ -153,7 +153,7 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
             <TraceabilityAnnotation changeFunction={setTrace} isHidden={isHidden} />
             <AntennaAnnotation changeFunction={setAnt} isHidden={isHidden} />
             <SpatialAnnotation idPart="annot-spatial" changeFunction={setSpace} isHidden={isHidden} />
-            <button id="add-annot-button" className={`rounded p-2 mt-2 mb-2 mx-auto flex bg-slate-300 dark:hover:text-slate-200 dark:bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""} disabled:bg-slate-700 disabled:hover:bg-slate-700 disabled:hover:text-indigo-400`} disabled={!isButtonEnabled} onClick={addAnnotation} >Add Annotation</button>
+            <button id="add-annot-button" className={`rounded p-2 mt-2 mb-2 mx-auto flex ${isButtonEnabled ? "dark:bg-indigo-800 bg-indigo-400 dark:hover:bg-indigo-900 hover:bg-indigo-500" : "bg-slate-200 text-slate-300 dark:bg-slate-500"}  ${isHidden ? "hidden" : ""} `} disabled={!isButtonEnabled} onClick={addAnnotation} >Add Annotation</button>
         </div>
     );
 }

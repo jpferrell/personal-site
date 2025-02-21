@@ -89,21 +89,11 @@ export default function SigMFEditor() {
 
     useEffect(() => {
         let btnEnabled = false;
-        if (Object.hasOwn(globalObj, 'core:datatype') && Object.hasOwn(globalObj, 'core:version')) {
-                btnEnabled = true;
+        if (globalObj['core:datatype' as keyof typeof globalObj] !== null && globalObj['core:version' as keyof typeof globalObj] !== null) {
+            btnEnabled = true;
         }
-
-
         setIsCreateEnabled(btnEnabled);
     }, [globalObj]);
-
-    function getCapture(data: SigMfCaptureType) {
-        return data;
-    }
-
-    function getAnnotation(data: SigMfAnnotationType) {
-        return data;
-    }
 
     function getCaptureArray() {
         return capArr.map(cap => cap.data);
@@ -284,7 +274,7 @@ export default function SigMFEditor() {
                     <SigMfGlobal isHidden={selectedOpt.value !== 'global'} transferData={setGlobalObj}/>
                     <SigMfCapture isHidden={selectedOpt.value !== 'captures'} transferCapData={addCapture} />
                     <SigMfAnnotation isHidden={selectedOpt.value !== 'annotations'} transferData={addAnnotation} />
-                    <button className="rounded block bg-slate-300 dark:bg-slate-300 hover:slate-700 dark:hover:bg-slate-500 text-indigo-500 max-h-8 min-w-20" onClick={createSigMfFile} disabled={!isCreateEnabled}>Create</button>
+                    <button className={`rounded block ${isCreateEnabled ? "dark:bg-indigo-800 bg-indigo-400 dark:hover:bg-indigo-900 hover:bg-indigo-500" : "bg-slate-200 text-slate-300 dark:bg-slate-500"} max-h-8 min-w-20`} onClick={createSigMfFile} disabled={!isCreateEnabled}>Create</button>
                 </div>
                 <div className="grid grid-cols-2 h-screen">
                     <div className="h-screen" id="captures-section">

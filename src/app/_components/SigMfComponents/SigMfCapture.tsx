@@ -95,7 +95,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
             <SigMfGeoInput idPart="annot" isHidden={isHidden} changeFunction={setGeo} />
             <CaptureDetailsCaptures isHidden={isHidden} changeFunction={setCapDets}/>
             <SpatialCapture idPart="annot" isHidden={isHidden} changeFunction={setSpace} />
-            <button id="add-cap-button" className={`rounded p-2 mt-2 mb-2 mx-auto flex dark:hover:text-slate-200 bg-slate-300 dark:text-indigo-400 dark:hover:bg-slate-500 ${isHidden ? "hidden" : ""}`} disabled={!isButtonEnabled} onClick={addCapture}>Add Capture</button>
+            <button id="add-cap-button" className={`rounded p-2 mt-2 mb-2 mx-auto flex ${isButtonEnabled ? "dark:bg-indigo-800 bg-indigo-400 dark:hover:bg-indigo-900 hover:bg-indigo-500" : "bg-slate-200 text-slate-300 dark:bg-slate-500"}  ${isHidden ? "hidden" : ""}`} disabled={!isButtonEnabled} onClick={addCapture}>Add Capture</button>
         </div>
     );
 }

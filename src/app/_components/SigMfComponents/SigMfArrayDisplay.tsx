@@ -13,35 +13,21 @@ export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunc
         deleterFunction(idx);
     }
 
-    function createObjectList(obj: object) {
+    function createObjectList(obj: object, parentKey: string) {
         console.log(obj);
-        const tmp = [];
+        console.log(parentKey);
+        let tmp: ReactNode[] = [];
         Object.keys(obj).map(key => {
-            console.log(key);
+            console.log(parentKey+":"+key);
             if (typeof data[obj as keyof typeof obj] === 'object') {
-                return createObjectList(obj[key as keyof typeof obj] as object);
+                tmp = [...tmp, createObjectList(obj[key as keyof typeof obj] as object, parentKey+":"+key)];
             } else {
-                console.log("here");
-                /*
-                const tmpArr = Object.keys(obj[key as keyof typeof obj] as object).map(subkey => {
-                    console.log("subkey:" + subkey);
-                    return (
-                        <li key={`${key}-${subkey}-key`}><em>{key}:{subkey}</em>{obj[key as keyof typeof obj][subkey] as ReactNode}</li>
-                    );
-                });
-                console.log(tmpArr);
-                return tmpArr;
-                */
-               /*
-                return (
-                    <li key={`${key}-key`}><em>{key}</em>: {obj[key as keyof typeof obj] as ReactNode}</li>
-                );
-                */
-               tmp.push(<li key={`${key}-key`}><em>{key}</em>: {obj[key as keyof typeof obj] as ReactNode}</li>);
+               tmp = [...tmp, <li key={`${parentKey}-${key}-key`}><em>{parentKey+":"+key}</em>: {obj[key as keyof typeof obj] as ReactNode}</li>];
             }
             console.log(tmp);
-            return tmp;
         });
+
+        return tmp;
     }
 
     return (
@@ -50,18 +36,8 @@ export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunc
             <div className="grid grid-cols-1 col-span-6">
                 <ul className="overflow-auto">
                     {Object.keys(data).map(key => {
-                        if (typeof data[key as keyof typeof data] === 'object') { /*
-                            const tmpArr = Object.keys(data[key as keyof typeof data]).map(subkey => {
-                                return (
-                                    <li key={`${key}-${subkey}-key`}><em>{key}:{subkey}</em> {data[key as keyof typeof data][subkey] as ReactNode}</li>
-                                )
-                            });
-
-                            return tmpArr; */
-                            //return createObjectList(data[key]) as ReactNode;
-                            //const whatevs = createObjectList(data[key]);
-                            //console.log(whatevs);
-                            return createObjectList(data[key]) as ReactNode;
+                        if (typeof data[key as keyof typeof data] === 'object') {
+                            return createObjectList(data[key as keyof typeof data], key) as ReactNode;
                         } else {
                             return (
                                 <li key={`${key}-key`}><em>{key}</em>: {data[key as keyof typeof data] as ReactNode}</li>
