@@ -6,6 +6,7 @@ import { changeStateInput } from "../SigMfFunctions";
 import SigMfBearingInput from "./SigMfBearingInput";
 import SigMfCartesianPoint from "./SigMfCartesianPointInput";
 import SigMfSelectInput from "./SigMfSelectInput";
+import SigMfCheckboxInput from "./SigMfCheckboxInput";
 
 export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function})
 {
@@ -48,10 +49,11 @@ export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, c
     }, [cal]);
 
     return (
-        <div id={`${idPart}-calibration-input-container`} hidden={isHidden}>
-            <SigMfSelectInput id={`${idPart}-calibration-cal-type`} label="Calibration Type" hidden={isHidden} values={calTypes} changeFunction={setCalType} />
-            <SigMfBearingInput idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} isHidden={isHidden} changeFunction={setBearing} />
-            <SigMfCartesianPoint idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} changeFunction={setCalGeo} isHidden={isHidden} />
+        <div className="border border-slate-200" id={`${idPart}-calibration-input-container`} hidden={isHidden}>
+            <SigMfCheckboxInput id={`${idPart}-calibration-enabled-input`} label={`${labelPart} Calibration`} changeFunction={setIsEnabled} hidden={isHidden} />
+            <SigMfSelectInput id={`${idPart}-calibration-cal-type`} label="Calibration Type" hidden={isHidden || !isEnabled} values={calTypes} changeFunction={setCalType} required />
+            <SigMfBearingInput idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} isHidden={isHidden || !isEnabled} changeFunction={setBearing} />
+            <SigMfCartesianPoint idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} changeFunction={setCalGeo} isHidden={isHidden || !isEnabled} />
         </div>
     );
 }

@@ -22,7 +22,7 @@ export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunc
                         if (typeof data[key as keyof typeof data] === 'object') {
                             const tmpArr = Object.keys(data[key as keyof typeof data]).map(subkey => {
                                 return (
-                                    <li key={`${key}-${subkey}-key`}><em>{key}:{subkey}</em>: {data[key as keyof typeof data][subkey] as ReactNode}</li>
+                                    <li key={`${key}-${subkey}-key`}><em>{key}:{subkey}</em>: {/*data[key as keyof typeof data][subkey] as ReactNode*/}</li>
                                 )
                             });
 

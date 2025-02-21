@@ -103,6 +103,7 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
         if (space.enabled) {
             const retObj: SigMfSpatialCaptureType = {...space};
             delete retObj.enabled;
+            console.log(retObj);
             changeFunction(retObj);
         } else {
             changeFunction(null);
