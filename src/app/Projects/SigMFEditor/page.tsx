@@ -32,9 +32,6 @@ interface ExtensionsCheckType {
     regex: RegExp
 }
 
-const extensionKeywords: string[] = ['antenna', 'capture_details', 'signal', 'spatial', 'traceability'];
-const extRegex: RegExp[] = [/^(antenna)/g, /^(capture_details)/g, /^(signal)/g, /^(spatial)/g, /^(traceability)/g];
-
 const extObj: ExtensionsCheckType[] = [
     {name: 'antenna', regex: /^(antenna)/g},
     {name: 'capture_details', regex: /^(capture_details)/g},
@@ -255,18 +252,18 @@ export default function SigMFEditor() {
     }
 
     return (
-        <div className="min-h-screen min-w-full text-center p-4">
-            <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
-            <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently, it is able to create a .sigmf-meta file with a filename stub that can
-                 be customized through the "Filename" input. </p>
+        <div className="text-center p-4 mx-auto">
+            <h1 className="text-4xl"><strong>SigMF Editor</strong></h1>
+            <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently it is able to create a .sigmf-meta file with a filename stub that can
+                 be customized through the Filename input. </p>
             <ExtensionPortal extArr={extArr} isEnabled={isExtPortalOpen} moveExtObj={setExtModalObj} showPortal={setIsExtPortalOpen}></ExtensionPortal>
-            <div className="grid grid-cols-2 pt-4 max-h-[calc(85vh)] overflow-auto">
-                <div className="grid grid-cols-1 max-h-[calc(85vh)] overflow-auto gap-2">
-                    <span><label htmlFor="sigmf-data-file-input">{"Input .sigmf-data File  "}</label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
+            <div className="grid grid-cols-1 place-items-center pt-4 overflow-auto gap-6">
+                <div className="grid grid-cols-1 overflow-auto h-[calc(50dvw)] w-[calc(50dvw)] dark:bg-zinc-800 bg-slate-100 rounded-lg p-2">
+                    <span className="grid grid-cols-3"><label htmlFor="sigmf-data-file-input" className="text-center col-span-2"><strong>{".sigmf-data File  "}</strong></label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
                     <div className="">
                         <SigMfTextInput label="Filename" id="filename-input" changeFunction={setFilename}/>
                     </div>
-                    <select id="selector" className={`dark:bg-slate-600 text-center max-h-6`} onChange={handleSelectionChange}>
+                    <select id="selector" className={`dark:bg-slate-600 bg-slate-300 text-center max-h-6`} onChange={handleSelectionChange}>
                         <option id="selector-global-opt" value={"global"}>Global</option>
                         <option id="selector-capture-opt" value={"captures"}>Captures</option>
                         <option id="selector-annot-opt" value={"annotations"}>Annotations</option>
@@ -274,17 +271,17 @@ export default function SigMFEditor() {
                     <SigMfGlobal isHidden={selectedOpt.value !== 'global'} transferData={setGlobalObj}/>
                     <SigMfCapture isHidden={selectedOpt.value !== 'captures'} transferCapData={addCapture} />
                     <SigMfAnnotation isHidden={selectedOpt.value !== 'annotations'} transferData={addAnnotation} />
-                    <button className={`rounded block ${isCreateEnabled ? "dark:bg-indigo-800 bg-indigo-400 dark:hover:bg-indigo-900 hover:bg-indigo-500" : "bg-slate-200 text-slate-300 dark:bg-slate-500"} max-h-8 min-w-20`} onClick={createSigMfFile} disabled={!isCreateEnabled}>Create</button>
+                    <button className={`rounded block ${isCreateEnabled ? "dark:bg-indigo-800 bg-indigo-400 dark:hover:bg-indigo-900 hover:bg-indigo-500" : "bg-slate-200 text-slate-300 dark:bg-zinc-600 dark:text-zinc-500"} max-h-8 min-w-20`} onClick={createSigMfFile} disabled={!isCreateEnabled}>Create</button>
                 </div>
-                <div className="grid grid-cols-2 h-screen">
-                    <div className="h-screen" id="captures-section">
-                        <h2>{`Captures`}</h2>
+                <div className="grid grid-cols-2 place-content-center w-[calc(80dvw)] gap-2">
+                    <div className="dark:bg-zinc-800 bg-slate-100 rounded-lg pb-2" id="captures-section">
+                        <h2 className="text-2xl"><strong>Captures</strong></h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="capture-grid">
                             {capArr.map(cap => <SigMfArrayDisplay inData={cap.data} inIdx={cap.id} typeStr="Capture" key={`cap-disp-${cap.id}`} deleterFunction={removeCapture} />)}
                         </div>
                     </div>
-                    <div>
-                        <h2>Annotations</h2>
+                    <div className="dark:bg-zinc-800 bg-slate-100 rounded-lg pb-2" id="annotations-section">
+                        <h2 className="text-2xl"><strong>Annotations</strong></h2>
                         <div className="grid grid-cols-1 overflow-auto max-h-[calc(90vh)] gap-2" id="annotation-grid">
                         {annotArr.map(annot => <SigMfArrayDisplay inData={annot.data} inIdx={annot.id} typeStr="Annotation" key={`cap-disp-${annot.id}`} deleterFunction={removeAnnotation} />)}
                         </div>

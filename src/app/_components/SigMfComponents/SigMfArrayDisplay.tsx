@@ -31,7 +31,7 @@ export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunc
     }
 
     return (
-        <div className="bg-slate-400 dark:hover:bg-slate-600 dark:text-stone-100 dark:hover:text-white cursor-pointer rounded-md mx-4 items-center p-4 first:mt-2 grid grid-cols-10">
+        <div className="bg-slate-400 hover:bg-slate-500 dark:hover:bg-slate-600 dark:text-stone-100 dark:hover:text-white cursor-pointer rounded-md mx-4 items-center p-4 first:mt-2 grid grid-cols-10">
             <p className="overflow-auto col-span-3 flex justify-start"><strong>{typeStr} {inIdx}</strong></p>
             <div className="grid grid-cols-1 col-span-6">
                 <ul className="overflow-auto">
