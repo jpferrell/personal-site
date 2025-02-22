@@ -184,7 +184,6 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
             <TraceabilityGlobal isHidden={isHidden} changeFunction={setTrace} />
             <AntennaGlobal isHidden={isHidden} changeFunction={setAnt} />
             <SpatialGlobal isHidden={isHidden} changeFunction={setSpace} idPart="spatial-global"/>
-            {/*<h4 hidden={isHidden}>Extensions</h4>*/}
         </div>
     );
 }

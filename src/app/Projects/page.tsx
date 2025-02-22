@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 interface Project {
     name: string,
@@ -8,19 +9,21 @@ interface Project {
 };
 
 const projectArr: Project[] = [
-    {name: "SigMFEditor", path: "./Projects/SigMFEditor", description: "SigMF Editor"},
-    {name: "FPL", path: "./Projects/FPL", description: "FPL analysis"}
+    {name: "SigMF Editor", path: "./Projects/SigMFEditor", description: "Client-side based application to create and edit SigMF files.", img: "logo-color.svg"}
+    /*{name: "FPL", path: "./Projects/FPL", description: "FPL analysis"}*/
 ];
 
 export default function Projects() {
     return (
         <div className="min-h-screen min-w-full justify-items-center text-center p-4">
             <h1 className="text-4xl">Projects</h1>
-            <div className="grid md:grid-cols-3 sm:grid-cols-1 p-4 mx-auto gap-4">
+            <div className={`grid ${projectArr.length === 1 ? "grid-cols-1" : projectArr.length % 3 ? "grid-cols-2" : "grid-cols-3"} p-4 mx-auto gap-4`}>
                 {projectArr.map((project) => (
-                    <div key={`div-project-${project.name}`} className="rounded dark:bg-slate-700 p-4">
-                        <h2 className="pb-2 text-2xl"><strong>{project.name}</strong></h2>
-                        <Link key={`link-project-${project.name}`} href={project.path} className="rounded p-2 mx-8 dark:hover:bg-slate-600">Read More</Link>
+                    <div key={`div-project-${project.name}`} className="rounded dark:bg-slate-700 bg-slate-200 p-4">
+                        <h2 className="text-2xl p-2"><strong>{project.name}</strong></h2>
+                        {/*<Image src={"/public/logo-color.svg"} alt="SigMF logo" width={200} height={200} />*/}
+                        <p className="pb-2">{project.description}</p>
+                        <Link key={`link-project-${project.name}`} href={project.path} className="rounded p-2 mx-8 hover:bg-slate-400 hover:underline dark:hover:bg-slate-600">Read More</Link>
                     </div>
                 ))}
             </div>

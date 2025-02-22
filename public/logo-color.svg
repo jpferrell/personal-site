@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" height="475.624" width="441.693">
+  <defs>
+    <path id="a" d="M261.905 226.19h880.952v921.429H261.905z"/>
+    <path id="b" d="M261.905 226.19h880.952v921.429H261.905z"/>
+  </defs>
+  <g font-style="normal" font-family="Eurostile LT Std" stroke-width="5">
+    <g aria-label="MF" transform="translate(-705.992 -231.728)" style="line-height:0;-inkscape-font-specification:'Overpass, Light Italic';text-align:center;white-space:pre;shape-inside:url(#a)" font-weight="700" font-size="264.567" text-anchor="end">
+      <path d="M766.114 542.727h1.588l50.797 152.126h45.77l50.267-152.126h1.852l-5.291 152.126h52.913V496.427h-85.984l-35.981 124.611h-1.852l-37.833-124.61h-83.868v198.425h52.914zM1047.349 539.816h87.836v-43.389h-140.75v198.426h52.914v-72.756h80.957v-43.39h-80.957z" style="line-height:1;-inkscape-font-specification:'Eurostile LT Std, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:end"/>
+    </g>
+    <g aria-label="sig" transform="translate(-479.38 -97.244)" style="line-height:0;-inkscape-font-specification:'Overpass, Light Italic';text-align:center;white-space:pre;shape-inside:url(#b)" font-weight="400" font-size="245.669" text-anchor="middle" fill="#00d3ff" stroke="#000" font-stretch="expanded">
+      <path d="M493.071 251.987c0 37.587 29.235 37.587 60.435 37.587h38.815c25.796 0 58.224-1.228 58.224-36.359v-.491c0-33.903-21.619-37.096-53.31-37.096h-55.767c-22.11 0-25.55-5.896-25.55-16.215v-4.667c0-14.249 6.633-17.197 36.85-17.197h36.851c23.093 0 35.868.491 35.868 19.653v1.229h19.653v-6.633c0-17.688-6.633-31.446-54.293-31.446H558.42c-52.082 0-63.628 11.3-63.628 31.691v7.37c0 23.83 11.055 33.411 40.78 33.411h65.103c25.304 0 28.744 6.634 28.744 18.671v.983c0 18.67-10.073 19.9-41.764 19.9H542.45c-21.62 0-29.726-6.388-29.726-21.865v-6.142H493.07zM688.624 287.609h21.127V162.317h-21.127zm0-154.772h21.127v-23.093h-21.127zM885.896 231.105c0 21.619-11.055 33.656-41.273 33.656h-40.78c-25.796 0-36.114-8.844-35.868-37.587v-23.093c.245-20.636 15.722-26.532 37.341-26.532h42.992c29.726 0 38.079 14.986 37.588 38.324zm21.127-68.788H887.37v22.356h-.492c-6.633-20.39-22.601-24.32-38.57-24.32h-44.957c-23.584 0-56.504 5.158-56.504 50.607v20.882c0 32.182 17.442 50.116 52.573 50.116h43.484c29.48 0 38.078-7.615 42.5-19.408h.492v18.671c0 33.903-16.706 34.394-58.47 34.394H806.79c-19.653 0-36.359-4.668-36.359-20.882v-3.44h-19.653v4.177c0 15.969 10.318 37.342 49.133 37.342h47.66c26.287 0 59.452-7.616 59.452-45.449z" style="-inkscape-font-specification:'Eurostile LT Std, Expanded';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:center"/>
+    </g>
+  </g>
+</svg>
