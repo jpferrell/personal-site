@@ -255,7 +255,7 @@ export default function SigMFEditor() {
     }
 
     return (
-        <div className="min-h-screen min-w-full justify-items-center text-center p-4">
+        <div className="min-h-screen min-w-full text-center p-4">
             <h1 className="text-2xl"><strong>SigMF Editor</strong></h1>
             <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently, it is able to create a .sigmf-meta file with a filename stub that can
                  be customized through the "Filename" input. </p>

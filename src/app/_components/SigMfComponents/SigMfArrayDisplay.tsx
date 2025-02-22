@@ -6,11 +6,11 @@ import { AiOutlineClose } from "react-icons/ai";
 
 export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunction }: { inData: SigMfCaptureType|SigMfAnnotationType, inIdx: number, typeStr: string, deleterFunction: Function }) {
 
-    const data = inData;
-    const idx = inIdx;
+    //const data = inData;
+    //const idx = inIdx;
 
     function raiseDeleteEvent() {
-        deleterFunction(idx);
+        deleterFunction(inIdx);
     }
 
     function createObjectList(obj: object, parentKey: string) {
@@ -32,15 +32,15 @@ export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunc
 
     return (
         <div className="bg-slate-400 dark:hover:bg-slate-600 dark:text-stone-100 dark:hover:text-white cursor-pointer rounded-md mx-4 items-center p-4 first:mt-2 grid grid-cols-10">
-            <p className="overflow-auto col-span-3 flex justify-start"><strong>{typeStr} {idx}</strong></p>
+            <p className="overflow-auto col-span-3 flex justify-start"><strong>{typeStr} {inIdx}</strong></p>
             <div className="grid grid-cols-1 col-span-6">
                 <ul className="overflow-auto">
-                    {Object.keys(data).map(key => {
-                        if (typeof data[key as keyof typeof data] === 'object') {
-                            return createObjectList(data[key as keyof typeof data], key) as ReactNode;
+                    {Object.keys(inData).map(key => {
+                        if (typeof inData[key as keyof typeof inData] === 'object') {
+                            return createObjectList(inData[key as keyof typeof inData], key) as ReactNode;
                         } else {
                             return (
-                                <li key={`${key}-key`}><em>{key}</em>: {data[key as keyof typeof data] as ReactNode}</li>
+                                <li key={`${key}-key`}><em>{key}</em>: {inData[key as keyof typeof inData] as ReactNode}</li>
                             )
                         }
                     })}
