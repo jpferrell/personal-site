@@ -21,3 +21,7 @@ export function changeStateInput<T extends Object, U extends Object>(obj: T, var
         fn(tmpObj);
     }
 }
+
+export function cleanObject(obj: object) {
+    
+}
