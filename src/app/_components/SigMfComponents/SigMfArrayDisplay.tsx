@@ -6,9 +6,6 @@ import { AiOutlineClose } from "react-icons/ai";
 
 export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunction }: { inData: SigMfCaptureType|SigMfAnnotationType, inIdx: number, typeStr: string, deleterFunction: Function }) {
 
-    //const data = inData;
-    //const idx = inIdx;
-
     function raiseDeleteEvent() {
         deleterFunction(inIdx);
     }

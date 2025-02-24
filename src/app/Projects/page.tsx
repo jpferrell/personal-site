@@ -9,8 +9,8 @@ interface Project {
 };
 
 const projectArr: Project[] = [
-    {name: "SigMF Editor", path: "./Projects/SigMFEditor", description: "Client-side based application to create and edit SigMF files.", img: "logo-color.svg"}
-    /*{name: "FPL", path: "./Projects/FPL", description: "FPL analysis"}*/
+    {name: "SigMF Editor", path: "./Projects/SigMFEditor", description: "Client-side based application to create and edit SigMF files.", img: "logo-color.svg"},
+    {name: "Strava Analytics", path: "./Projects/Strava", description: "Analytics of my own personal Strava workouts"}
 ];
 
 export default function Projects() {
