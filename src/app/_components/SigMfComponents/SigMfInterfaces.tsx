@@ -216,18 +216,18 @@ export interface SigMfCalibrationType {
 export interface SigMfSpatialCaptureType {
     enabled?: boolean,
     'spatial:aperture_azimuth'?: number|string,
-    'spatial:aperture_bearing'?: SigMfBearingType|string,
+    'spatial:aperture_bearing'?: SigMfBearingType|object,
     'spatial:aperture_rotation'?: number|string,
-    'spatial:emitter_bearing'?: SigMfBearingType|string,
+    'spatial:emitter_bearing'?: SigMfBearingType|object,
     'spatial:element_geometry'?: SigMfCartesianPointType[]|string,
     'spatial:phase_offset'?: number|string,
-    'spatial:calibration'?: SigMfCalibrationType|string
+    'spatial:calibration'?: SigMfCalibrationType|object
 }
 
 export interface SigMfSpatialAnnotationType {
     enabled?: boolean,
     'spatial:signal_azimuth'?: number|string,
-    'spatial:bearing'?: SigMfBearingType|string,
-    'spatial:emitter_location'?: SigMfGeoType|string
+    'spatial:bearing'?: SigMfBearingType|object,
+    'spatial:emitter_location'?: SigMfGeoType|object
 }
 

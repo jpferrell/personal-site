@@ -43,7 +43,7 @@ export default function SigMfDataChangeInput ( { idPart, labelPart, isHidden, ch
     }, [dataChange]);
 
     return (
-        <div id={`${idPart}-data-change-input`} hidden={isHidden}>
+        <div id={`${idPart}-data-change-input`} hidden={isHidden} className='border-2 m-2 border-dotted rounded-lg'>
             <SigMfCheckboxInput label={`${labelPart}`} id={`${idPart}-data-change-enabled-input`} hidden={isHidden} changeFunction={setIsEnabled} />
             <SigMfTextInput label={`${labelPart} Author`} id={`${idPart}-data-change-author-input`} placeholder='email address of the author who changed the metadata' hidden={isHidden || !isEnabled} changeFunction={setAuthor} />
             <SigMfTextInput label={`${labelPart} Datetime`} id={`${idPart}-data-change-datetime-input`} placeholder='YYYY-MM-DD' hidden={isHidden || !isEnabled} changeFunction={setDatetime} required />

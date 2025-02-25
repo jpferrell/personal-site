@@ -5,7 +5,7 @@ import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 import SigMfEmitterInput from "../Inputs/SigMfEmitterInput";
 import SigMfDetailInput from "../Inputs/SigMfDetailInput";
 import { SigMfSignalDetailType, SigMfSignalEmitterType, SigMfSignalType } from "../SigMfInterfaces";
-import { changeStateInput } from "../SigMfFunctions";
+import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
 export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
@@ -40,21 +40,18 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
     }
 
     useEffect(() => {
-        if (sig.enabled) {
-            const retObj: SigMfSignalType = {...sig};
-            delete retObj.enabled;
-            if (isObjectEmpty(retObj["signal:detail"])) {
-                delete retObj["signal:detail"];
-            }
-            if (isObjectEmpty(retObj["signal:emitter"])) {
-                delete retObj["signal:emitter"];
-            }
+       if (sig.enabled) {
+            const tmpObj: SigMfSignalType = {...sig};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
             changeFunction(retObj);
-        }
+       } else {
+            changeFunction({});
+       }
     }, [sig]);
 
     return (
-        <div id="annotation-sig-ext-container" hidden={isHidden} className="border-4 dark:border-slate-200">
+        <div id="annotation-sig-ext-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">
             <SigMfCheckboxInput label="Signal" id={`${idPart}-sig-enabled-input`} changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfDetailInput idPart={idPart} isHidden={isHidden || !isEnabled} changeFunction={setSigDet} />
             <SigMfEmitterInput idPart={idPart} isHidden={isHidden || !isEnabled} changeFunction={setSigEmit} />

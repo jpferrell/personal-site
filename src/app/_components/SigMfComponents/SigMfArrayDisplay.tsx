@@ -11,17 +11,13 @@ export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunc
     }
 
     function createObjectList(obj: object, parentKey: string) {
-        console.log(obj);
-        console.log(parentKey);
         let tmp: ReactNode[] = [];
         Object.keys(obj).map(key => {
-            console.log(parentKey+":"+key);
             if (typeof obj[key as keyof typeof obj] === 'object') {
                 tmp = [...tmp, createObjectList(obj[key as keyof typeof obj] as object, parentKey+":"+key)];
             } else {
                tmp = [...tmp, <li key={`${parentKey}-${key}-key`}><em>{parentKey+":"+key}</em>: {obj[key as keyof typeof obj] as ReactNode}</li>];
             }
-            console.log(tmp);
         });
 
         return tmp;

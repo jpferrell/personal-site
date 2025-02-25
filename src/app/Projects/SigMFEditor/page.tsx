@@ -249,7 +249,7 @@ export default function SigMFEditor() {
                     <div className="">
                         <SigMfTextInput label="Filename" id="filename-input" changeFunction={setFilename}/>
                     </div>
-                    <select id="selector" className={`dark:bg-slate-600 bg-slate-300 text-center max-h-6`} onChange={handleSelectionChange}>
+                    <select id="selector" className={`dark:bg-slate-600 bg-slate-300 text-center max-h-6 rounded-md`} onChange={handleSelectionChange}>
                         <option id="selector-global-opt" value={"global"}>Global</option>
                         <option id="selector-capture-opt" value={"captures"}>Captures</option>
                         <option id="selector-annot-opt" value={"annotations"}>Annotations</option>

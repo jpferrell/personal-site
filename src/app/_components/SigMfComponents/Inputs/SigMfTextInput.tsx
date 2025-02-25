@@ -16,7 +16,7 @@ export default function SigMfTextInput({ label, id, changeFunction, placeholder,
     return (
         <div className={`grid grid-cols-3 p-1 ${hidden ? "hidden" : ""}`}>
             <label htmlFor={`${id}`} className={`col-span-2 ${required ? "text-orange-500" : ""} capitalize font-semibold ${hidden ? "hidden" : ""}`}>{label}</label>
-            <input id={id} type="text" placeholder={placeholder} className={`bg-slate-300 dark:bg-slate-600 ${hidden ? "hidden" : ""}`} onChange={handleChange} />
+            <input id={id} type="text" placeholder={placeholder} className={`bg-slate-300 dark:bg-slate-600 ${hidden ? "hidden" : ""} rounded`} onChange={handleChange} />
         </div>
     );
 }

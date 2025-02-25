@@ -70,7 +70,7 @@ export default function SigMfBearingInput( { idPart, labelPart, isHidden, change
     }, [bearing]);
 
     return (
-        <div id={`${idPart}-bearing-container`} hidden={isHidden} className="border border-slate-200">
+        <div id={`${idPart}-bearing-container`} hidden={isHidden} className="border-dotted border-2 border-slate-200 rounded-lg m-2">
             <SigMfCheckboxInput id={`${idPart}-bearing-enabled-input`} label={`${labelPart} Bearing`} changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfNumberInput id={`${idPart}-bearing-azimuth-input`} label={`${labelPart} Azimuth`} placeholder="0.0" changeFunction={setAzimuth} hidden={isHidden || !isEnabled}/>
             <SigMfNumberInput id={`${idPart}-bearing-elevation-input`} label={`${labelPart} Elevation`} placeholder="0.0" changeFunction={setEl} hidden={isHidden || !isEnabled} />
