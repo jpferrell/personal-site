@@ -1,6 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
+import sigmflogo from '../../../../public/logo-color.svg'
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
@@ -243,7 +245,8 @@ export default function SigMFEditor() {
             <p className="p-8">This is an editor for SigMF IQ signal capture files. Currently it is able to create a .sigmf-meta file with a filename stub that can
                  be customized through the Filename input. </p>
             <ExtensionPortal extArr={extArr} isEnabled={isExtPortalOpen} moveExtObj={setExtModalObj} showPortal={setIsExtPortalOpen}></ExtensionPortal>
-            <div className="grid grid-cols-1 place-items-center pt-4 overflow-auto gap-6">
+            <div className={`grid grid-cols-1 place-items-center pt-4 overflow-auto gap-6`}>
+                <Image src={sigmflogo} alt="SigMF Logo"/>
                 <div className="grid grid-cols-1 overflow-auto h-[calc(50dvw)] w-[calc(50dvw)] dark:bg-zinc-800 bg-slate-100 rounded-lg p-2">
                     <span className="grid grid-cols-3"><label htmlFor="sigmf-data-file-input" className="text-center col-span-2"><strong>{".sigmf-data File  "}</strong></label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
                     <div className="">
