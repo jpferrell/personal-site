@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react';
 import SigMfTextInput from './SigMfTextInput'
 import { SigMfOriginType } from '../SigMfInterfaces';
-import { changeStateTextInput } from '../SigMfFunctions';
+import { changeStateInput, cleanObject } from '../SigMfFunctions';
 import SigMfCheckboxInput from './SigMfCheckboxInput';
 
 export default function SigMfOriginInput( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function } ) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [account, setAccount] = useState<string|null>(null);
-    const [container, setContainer] = useState<string|null>(null);
-    const [filePath, setFilePath] = useState<string|null>(null);
+    const [account, setAccount] = useState<string>("");
+    const [container, setContainer] = useState<string>("");
+    const [filePath, setFilePath] = useState<string>("");
 
     const [originData, setOriginData] = useState<SigMfOriginType>({
         enabled: false,
@@ -21,11 +21,11 @@ export default function SigMfOriginInput( { idPart, labelPart, isHidden, changeF
     }, [isEnabled]);
 
     useEffect(() => {
-        changeStateTextInput(originData, account, 'account', setOriginData);
+        changeStateInput(originData, account, 'account', setOriginData);
     }, [account]);
 
     useEffect(() => {
-        changeStateTextInput(originData, container, 'container', setOriginData);
+        changeStateInput(originData, container, 'container', setOriginData);
     }, [container]);
 
     useEffect(() => {
@@ -33,13 +33,14 @@ export default function SigMfOriginInput( { idPart, labelPart, isHidden, changeF
     }, [filePath]);
 
     useEffect(() => {
-        if (originData.enabled && !Object.values(originData).includes(null)) {
-            const retObj: SigMfOriginType = {...originData};
-            delete retObj.enabled;
-            changeFunction(retObj);
-        } else if (originData.enabled && Object.values(originData).includes(null)) {
-            changeFunction(null);
-        }
+       if (originData.enabled) {
+        const tmpObj: SigMfOriginType = {...originData};
+        delete tmpObj.enabled;
+        const retObj: object = cleanObject(tmpObj);
+        changeFunction(retObj);
+       } else {
+        changeFunction({});
+       }
     }, [originData]);
 
     return (

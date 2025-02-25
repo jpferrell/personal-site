@@ -74,19 +74,16 @@ export default function SigMFEditor() {
     }
 
     function addAnnotation(annotation: SigMfAnnotationType) {
-        console.log(annotation);
-        console.log([...annotArr, {data: annotation, id: annotIdx}]);
        setAnnotArr([
         ...annotArr,
         {data: annotation, id: annotIdx}
        ]);
-       console.log("here");
        setAnnotIdx(annotIdx + 1)
     }
 
     useEffect(() => {
         let btnEnabled = false;
-        if (globalObj['core:datatype' as keyof typeof globalObj] !== null && globalObj['core:version' as keyof typeof globalObj] !== null) {
+        if (Object.keys(globalObj).length !== 0) {
             btnEnabled = true;
         }
         setIsCreateEnabled(btnEnabled);
@@ -113,10 +110,8 @@ export default function SigMFEditor() {
             const regex: RegExp = ext.regex;
             const name: string = ext.name;
             const extFound: boolean = keys.map(key => {
-                console.log("key: " + key);
                 return regex.test(key);
             }).includes(true);
-            console.log("Was " + name + " found? " + extFound);
             if (extFound) {
                 retObj = {
                     ...retObj,
@@ -130,18 +125,14 @@ export default function SigMFEditor() {
 
     function findExtensionInArray(searchObj: object, retObj: ExtensionsType) {
         const keys: string[] = Object.keys(searchObj);
-        console.log(keys);
         keys.forEach(key => {
-            console.log(searchObj[key as keyof typeof searchObj]);
             extObj.forEach(ext => {
                 const regex: RegExp = ext.regex;
                 const name: string = ext.name;
                 const extFound: boolean = Object.keys(searchObj[key as keyof typeof searchObj]).map(innerKey => {
-                    console.log("inner key: " + innerKey);
                     return regex.test(innerKey);
                 }).includes(true);
                 if (extFound) {
-                    console.log("extension: " + name + " found");
                     retObj = {
                         ...retObj,
                         [name]: extFound
@@ -154,15 +145,12 @@ export default function SigMFEditor() {
 
     useEffect(() => {
         const tmpArr = Object.keys(extModalObj).map(key => extModalObj[key as keyof typeof extModalObj]);
-        console.log(tmpArr);
         setGlobalObj({
             ...globalObj,
             'core:extensions': tmpArr
         });
 
         setIsModalObjValid(true);
-        console.log("global obj after modal: ");
-        console.log(globalObj);
     }, [extModalObj]);
 
     function checkForExtensions() {
@@ -185,8 +173,6 @@ export default function SigMFEditor() {
             outObj["global"] = globalObj;
             outObj["captures"] = getCaptureArray().sort((a, b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
             outObj["annotations"] = getAnnotationArray().sort((a,b) => a["core:sample_start"]! < b["core:sample_start"]! ? -1 : a["core:sample_start"]! > b["core:sample_start"]! ? 1 : 0);
-            console.log("object out: ");
-            console.log(outObj);
             setIsCreateFile(false);
             const jsonFile = new Blob([JSON.stringify(outObj)], {type: 'text/plain'});
             el.href = URL.createObjectURL(jsonFile);

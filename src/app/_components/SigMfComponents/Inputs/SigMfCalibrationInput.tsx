@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { SigMfBearingType, SigMfCalibrationType, SigMfCartesianPointType } from "../SigMfInterfaces";
-import { changeStateInput } from "../SigMfFunctions";
+import { changeStateInput, cleanObject } from "../SigMfFunctions";
 import SigMfBearingInput from "./SigMfBearingInput";
 import SigMfCartesianPoint from "./SigMfCartesianPointInput";
 import SigMfSelectInput from "./SigMfSelectInput";
@@ -13,13 +13,13 @@ export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, c
     const calTypes: string[] = ["tone", "xcorr", "ref", "other"];
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [calType, setCalType] = useState<string|null>(null);
-    const [bearing, setBearing] = useState<SigMfBearingType|null>(null);
-    const [calGeo, setCalGeo] = useState<SigMfCartesianPointType|null>(null);
+    const [calType, setCalType] = useState<string>("");
+    const [bearing, setBearing] = useState<SigMfBearingType|object>({});
+    const [calGeo, setCalGeo] = useState<SigMfCartesianPointType|object>({});
 
     const [cal, setCal] = useState<SigMfCalibrationType>({
         enabled: false,
-        caltype: null
+        caltype: ""
     });
 
     useEffect(() => {
@@ -40,11 +40,16 @@ export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, c
 
     useEffect(() => {
         if (cal.enabled) {
-            const retObj: SigMfCalibrationType = {...cal};
-            delete retObj.enabled;
-            changeFunction(retObj);
+            const tmpObj: SigMfCalibrationType = {...cal};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
+            if (Object.hasOwn(retObj, 'caltype')) {
+                changeFunction(retObj);
+            } else {
+                changeFunction({});
+            }
         } else {
-            changeFunction(null);
+            changeFunction({});
         }
     }, [cal]);
 

@@ -6,27 +6,27 @@ import SigMfTextInput from "../Inputs/SigMfTextInput";
 import SigMfNumberInput from "../Inputs/SigMfTextInput";
 import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 import { SigMfCapDetsAnnotType, SigMfCapDetsCapType } from "../SigMfInterfaces";
-import { changeStateInput } from "../SigMfFunctions";
+import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
 export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function } ) {
 
     const [isCapEnabled, setIsCapEnabled] = useState<boolean>(false);
-    const [acqScaleFactor, setAcqScaleFactor] = useState<number|null>(null);
-    const [attn, setAttn] = useState<number|null>(null);
-    const [acqBw, setAcqBw] = useState<number|null>(null);
-    const [startCap, setStartCap] = useState<string|null>(null);
-    const [stopCap, setStopCap] = useState<string|null>(null);
-    const [srcFile, setSrcFile] = useState<string|null>(null);
-    const [gain, setGain] = useState<number|null>(null);
+    const [acqScaleFactor, setAcqScaleFactor] = useState<number|string>("");
+    const [attn, setAttn] = useState<number|string>("");
+    const [acqBw, setAcqBw] = useState<number|string>("");
+    const [startCap, setStartCap] = useState<string>("");
+    const [stopCap, setStopCap] = useState<string>("");
+    const [srcFile, setSrcFile] = useState<string>("");
+    const [gain, setGain] = useState<number|string>("");
 
     const [capDetCapData, setCapDetCapData] = useState<SigMfCapDetsCapType>({
         enabled: false,
-        'capture_details:acq_scale_factor': null,
-        'capture_details:attenuation': null,
-        'capture_details:acquisition_bandwidth': null,
-        'capture_details:start_capture': null,
-        'capture_details:stop_capture': null,
-        'capture_details:source_file': null,
+        'capture_details:acq_scale_factor': "",
+        'capture_details:attenuation': "",
+        'capture_details:acquisition_bandwidth': "",
+        'capture_details:start_capture': "",
+        'capture_details:stop_capture': "",
+        'capture_details:source_file': "",
     });
 
     useEffect(() => {
@@ -62,15 +62,25 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
     }, [gain]);
 
     useEffect(() => {
-        if (capDetCapData.enabled && !Object.values(capDetCapData).includes(null)) {
-            const retObj: SigMfCapDetsCapType = {...capDetCapData};
-            delete retObj.enabled;
+       if (capDetCapData.enabled) {
+        const tmpObj: SigMfCapDetsCapType = {...capDetCapData};
+        delete tmpObj.enabled;
+        const retObj: object = cleanObject(tmpObj);
+        if (
+            Object.hasOwn(retObj, 'capture_details:acq_scale_factor') &&
+            Object.hasOwn(retObj, 'capture_details:attenuation') &&
+            Object.hasOwn(retObj, 'capture_details:acquisition_bandwidth') &&
+            Object.hasOwn(retObj, 'capture_details:start_capture') &&
+            Object.hasOwn(retObj, 'capture_details:stop_capture') &&
+            Object.hasOwn(retObj, 'capture_details:source_file')
+        ) {
             changeFunction(retObj);
-        } else if (capDetCapData.enabled && Object.values(capDetCapData).includes(null)) {
-            changeFunction(null);
-        } else if (!capDetCapData.enabled) {
-            changeFunction(null);
+        } else {
+            changeFunction({});
         }
+       } else {
+        changeFunction({});
+       }
     }, [capDetCapData]);
 
     return (
@@ -90,11 +100,13 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
 export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function }) {
 
     const [isCapEnabled, setIsCapEnabled] = useState<boolean>(false);
-    const [snr, setSnr] = useState<number|null>(null);
-    const [sigRefNum, setSigRefNum] = useState<number|null>(null);
+    const [snr, setSnr] = useState<number|string>("");
+    const [sigRefNum, setSigRefNum] = useState<number|string>("");
 
     const [capDetsAnnotData, setCapDetsAnnotData] = useState<SigMfCapDetsAnnotType>({
         enabled: false,
+        'capture_details:SNRdB': "",
+        'capture_details:signal_reference_number': ""
     });
 
     useEffect(() => {
@@ -110,13 +122,21 @@ export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidd
     }, [sigRefNum]);
 
     useEffect(() => {
-        if (capDetsAnnotData.enabled && !Object.values(capDetsAnnotData).includes(null)) {
-            const retObj: SigMfCapDetsAnnotType = {...capDetsAnnotData};
-            delete retObj.enabled;
-            changeFunction(retObj);
-        } else if (capDetsAnnotData.enabled && Object.values(capDetsAnnotData).includes(null)) {
-            changeFunction(null);
-        }
+       if (capDetsAnnotData.enabled) {
+            const tmpObj: SigMfCapDetsAnnotType = {...capDetsAnnotData};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
+            if (
+                Object.hasOwn(retObj, 'capture_details:SNRdB') &&
+                Object.hasOwn(retObj, 'capture_details:signal_reference_number')
+            ) {
+                changeFunction(retObj);
+            } else {
+                changeFunction({});
+            }
+       } else {
+        changeFunction({});
+       }
     }, [capDetsAnnotData]);
 
     return (

@@ -5,17 +5,17 @@ import { SigMfDataChangeType, SigMfOriginType, SigMfTraceabilityAnnotationType, 
 import SigMfDataChangeInput from "../Inputs/SigMfDataChangeInput";
 import SigMfNumberInput from "../Inputs/SigMfNumberInput";
 import SigMfOriginInput from "../Inputs/SigMfOriginInput";
-import { changeStateInput } from "../SigMfFunctions";
+import { changeStateInput, cleanObject } from "../SigMfFunctions";
 import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 
 
 export function TraceabilityGlobal( { isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function}) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [lastMod, setLastMod] = useState<SigMfDataChangeType|null>(null);
-    const [lastRev, setLastRev] = useState<SigMfDataChangeType|null>(null);
-    const [rev, setRev] = useState<number|null>(null);
-    const [origin, setOrigin] = useState<SigMfOriginType|null>(null);
+    const [lastMod, setLastMod] = useState<SigMfDataChangeType|string>("");
+    const [lastRev, setLastRev] = useState<SigMfDataChangeType|string>("");
+    const [rev, setRev] = useState<number|string>("");
+    const [origin, setOrigin] = useState<SigMfOriginType|object>({});
 
     const [traceData, setTraceData] = useState<SigMfTraceabilityGlobalType>({
         enabled: false
@@ -43,11 +43,13 @@ export function TraceabilityGlobal( { isHidden, changeFunction }: { isHidden: bo
 
     useEffect(() => {
         if (traceData.enabled) {
-            const retObj: SigMfTraceabilityGlobalType = {...traceData};
-            delete retObj.enabled;
+            const tmpObj: SigMfTraceabilityGlobalType = {...traceData};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
+            console.log(retObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction({});
         }
     }, [traceData]);
 
@@ -65,8 +67,8 @@ export function TraceabilityGlobal( { isHidden, changeFunction }: { isHidden: bo
 export function TraceabilityAnnotation({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function}) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [lastMod, setLastMod] = useState<SigMfDataChangeType|null>(null);
-    const [lastRev, setLastRev] = useState<SigMfDataChangeType|null>(null);
+    const [lastMod, setLastMod] = useState<SigMfDataChangeType|object>({});
+    const [lastRev, setLastRev] = useState<SigMfDataChangeType|object>({});
 
     const [traceData, setTraceData] = useState<SigMfTraceabilityAnnotationType>({
         enabled: false
@@ -86,11 +88,12 @@ export function TraceabilityAnnotation({ isHidden, changeFunction }: { isHidden:
 
     useEffect(() => {
         if (traceData.enabled) {
-            const retObj: SigMfTraceabilityAnnotationType = {...traceData};
-            delete retObj.enabled;
+            const tmpObj: SigMfTraceabilityAnnotationType = {...traceData};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction({});
         }
     }, [traceData]);
 

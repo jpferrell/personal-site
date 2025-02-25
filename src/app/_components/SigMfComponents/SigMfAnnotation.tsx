@@ -7,29 +7,29 @@ import SigMfTextInput from "./Inputs/SigMfTextInput"
 import { CaptureDetailsAnnotations } from "./Extensions/CaptureDetails";
 import { SigMfAnnotationType, SigMfAntennaAnnotationType, SigMfCapDetsAnnotType, SigMfGeoType, SigMfSignalType, SigMfSpatialAnnotationType, SigMfTraceabilityAnnotationType } from "./SigMfInterfaces";
 import { SignalAnnotation } from "./Extensions/SignalAnnotation";
-import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
+import { changeStateInput, cleanObject } from "./SigMfFunctions";
 import { TraceabilityAnnotation } from "./Extensions/Traceability";
 import { AntennaAnnotation } from "./Extensions/Antenna";
 import { SpatialAnnotation } from "./Extensions/Spatial";
 
 export default function SigMfAnnotation( { isHidden, transferData }: { isHidden: boolean, transferData: Function } ) {
 
-    const [sampStart, setSampStart] = useState<number|null>(null);
-    const [sampCnt, setSampCnt] = useState<number|null>(null);
-    const [freqLowEdge, setFreqLowEdge] = useState<number|null>(null);
-    const [freqHighEdge, setFreqHighEdge] = useState<number|null>(null);
-    const [label, setLabel] = useState<string|null>(null);
-    const [comment, setComment] = useState<string|null>(null);
-    const [generator, setGenerator] = useState<string|null>(null);
-    const [uuid, setUuid] = useState<string|null>(null);
-    const [capDets, setCapDets] = useState<SigMfCapDetsAnnotType|null>(null);
-    const [sigAnnot, setSigAnnot] = useState<SigMfSignalType|null>(null);
-    const [trace, setTrace] = useState<SigMfTraceabilityAnnotationType|null>(null);
-    const [ant, setAnt] = useState<SigMfAntennaAnnotationType|null>(null);
-    const [space, setSpace] = useState<SigMfSpatialAnnotationType|null>(null);
+    const [sampStart, setSampStart] = useState<number|string>("");
+    const [sampCnt, setSampCnt] = useState<number|string>("");
+    const [freqLowEdge, setFreqLowEdge] = useState<number|string>("");
+    const [freqHighEdge, setFreqHighEdge] = useState<number|string>("");
+    const [label, setLabel] = useState<string>("");
+    const [comment, setComment] = useState<string>("");
+    const [generator, setGenerator] = useState<string>("");
+    const [uuid, setUuid] = useState<string>("");
+    const [capDets, setCapDets] = useState<SigMfCapDetsAnnotType|object>({});
+    const [sigAnnot, setSigAnnot] = useState<SigMfSignalType|object>({});
+    const [trace, setTrace] = useState<SigMfTraceabilityAnnotationType|object>({});
+    const [ant, setAnt] = useState<SigMfAntennaAnnotationType|object>({});
+    const [space, setSpace] = useState<SigMfSpatialAnnotationType|object>({});
 
     const [annotData, setAnnotData] = useState<SigMfAnnotationType>({
-        'core:sample_start': null,
+        'core:sample_start': "",
     });
 
     const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
@@ -51,19 +51,19 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
     }, [freqHighEdge]);
 
     useEffect(() => {
-        changeStateTextInput(annotData, label, 'core:label', setAnnotData);
+        changeStateInput(annotData, label, 'core:label', setAnnotData);
     }, [label]);
 
     useEffect(() => {
-        changeStateTextInput(annotData, comment, 'core:comment', setAnnotData);
+        changeStateInput(annotData, comment, 'core:comment', setAnnotData);
     }, [comment]);
 
     useEffect(() => {
-        changeStateTextInput(annotData, generator, 'core:generator', setAnnotData);
+        changeStateInput(annotData, generator, 'core:generator', setAnnotData);
     }, [generator]);
 
     useEffect(() => {
-        changeStateTextInput(annotData, uuid, 'core:uuid', setAnnotData);
+        changeStateInput(annotData, uuid, 'core:uuid', setAnnotData);
     }, [uuid]);
 
     useEffect(() => {
@@ -88,53 +88,44 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
 
     useEffect(() => {
         let btnEnabled: boolean = false;
-        if (!Object.values(annotData).includes(null)) {
+        if (annotData["core:sample_start"] !== "") {
             btnEnabled = true;
         }
         setIsButtonEnabled(btnEnabled);
     }, [annotData]);
 
     function addAnnotation() {
-        const retObj: SigMfAnnotationType = {...annotData};
-        if (Object.hasOwn(retObj, 'capture_details')) {
-            delete retObj.capture_details;
-            Object.keys(annotData.capture_details || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = annotData.capture_details[key as keyof typeof annotData.capture_details];
-            });
+        const tmpObj: object = cleanObject(annotData);
+        const retObj: object = {};
+        if (Object.hasOwn(tmpObj, 'core:sample_start')) {
+            for (const key in tmpObj) {
+                switch(key) {
+                    case 'signal':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    case 'traceability':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    case 'antenna':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    case 'spatial':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    default:
+                        retObj[key as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj];
+                        break;
+                }
+            }
         }
-
-        if (Object.hasOwn(retObj, 'signal')) {
-            console.log("signal:");
-            console.log(retObj);
-            delete retObj.signal;
-            console.log("post delete");
-            console.log(retObj);
-            console.log(annotData);
-            Object.keys(annotData.signal || {}).forEach(key => {
-                console.log("key: " + key);
-                retObj[key as keyof typeof retObj] = annotData.signal[key as keyof typeof annotData.signal];
-            });
-        }
-        if (Object.hasOwn(retObj, 'traceability')) {
-            delete retObj.traceability;
-            Object.keys(annotData.traceability || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = annotData.traceability[key as keyof typeof annotData.traceability];
-            });
-        }
-        if (Object.hasOwn(retObj, 'antenna')) {
-            delete retObj.antenna;
-            Object.keys(annotData.antenna || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = annotData.antenna[key as keyof typeof annotData.antenna];
-            });
-        }
-        if (Object.hasOwn(retObj, 'spatial')) {
-            delete retObj.spatial;
-            Object.keys(annotData.spatial || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = annotData.spatial[key as keyof typeof annotData.spatial];
-            });
-        }
-        console.log("returned object: ");
-        console.log(retObj);
         transferData(retObj);
     }
 

@@ -4,19 +4,19 @@ import { useEffect, useState } from "react";
 import { SigMfBearingType } from "../SigMfInterfaces";
 import SigMfCheckboxInput from "./SigMfCheckboxInput";
 import SigMfNumberInput from "./SigMfNumberInput";
-import { changeStateInput } from "../SigMfFunctions";
+import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
 export default function SigMfBearingInput( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function}) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [azimuth, setAzimuth] = useState<number|null>(null);
-    const [el, setEl] = useState<number|null>(null);
-    const [range, setRange] = useState<number|null>(null);
-    const [rangeRate, setRangeRate] = useState<number|null>(null);
-    const [azErr, setAzErr] = useState<number|null>(null);
-    const [elErr, setElErr] = useState<number|null>(null);
-    const [rangeErr, setRangeErr] = useState<number|null>(null);
-    const [rangeRateErr, setRangeRateErr] = useState<number|null>(null);
+    const [azimuth, setAzimuth] = useState<number|string>("");
+    const [el, setEl] = useState<number|string>("");
+    const [range, setRange] = useState<number|string>("");
+    const [rangeRate, setRangeRate] = useState<number|string>("");
+    const [azErr, setAzErr] = useState<number|string>("");
+    const [elErr, setElErr] = useState<number|string>("");
+    const [rangeErr, setRangeErr] = useState<number|string>("");
+    const [rangeRateErr, setRangeRateErr] = useState<number|string>("");
 
     const [bearing, setBearing] = useState<SigMfBearingType>({
         enabled: false
@@ -59,12 +59,13 @@ export default function SigMfBearingInput( { idPart, labelPart, isHidden, change
     }, [rangeRateErr]);
 
     useEffect(() => {
-        if (isEnabled) {
-            const retObj = {...bearing};
-            delete retObj.enabled;
+        if (bearing.enabled) {
+            const tmpObj = {...bearing};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction({});
         }
     }, [bearing]);
 

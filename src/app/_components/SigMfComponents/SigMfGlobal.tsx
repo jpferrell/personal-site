@@ -8,46 +8,46 @@ import SigMfCheckboxInput from "./Inputs/SigMfCheckboxInput";
 import SigMfGeoInput from "./SigMfGeoInput";
 import { SigMfAntennaGlobalType, SigMfGeoType, SigMfGlobalType, SigMfSpatialGlobalType, SigMfTraceabilityGlobalType } from "./SigMfInterfaces";
 import SigMfSelectInput from "./Inputs/SigMfSelectInput";
-import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
+import { changeStateInput, cleanObject } from "./SigMfFunctions";
 import { TraceabilityGlobal } from "./Extensions/Traceability";
 import { AntennaGlobal } from "./Extensions/Antenna";
 import { SpatialGlobal } from "./Extensions/Spatial";
 
 export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: Function} ) {
 
-    const [realCplx, setRealCplx] = useState<string|null>(null);
-    const [leBe, setLeBe] = useState<string|null>(null);
-    const [datatype, setDatatype] = useState<string|null>(null);
-    const [sigmfDatatype, setSigmfDatatype] = useState<string|null>(null);
-    const [sr, setSr] = useState<number|null>(null);
-    const [author, setAuthor] = useState<string|null>(null);
-    const [collection, setCollection] = useState<string|null>(null);
-    const [dataset, setDataset] = useState<string|null>(null);
-    const [dataDoi, setDataDoi] = useState<string|null>(null);
-    const [desc, setDesc] = useState<string|null>(null);
-    const [hw, setHw] = useState<string|null>(null);
-    const [license, setLicense] = useState<string|null>(null);
+    const [realCplx, setRealCplx] = useState<string>("");
+    const [leBe, setLeBe] = useState<string>("");
+    const [datatype, setDatatype] = useState<string>("");
+    const [sigmfDatatype, setSigmfDatatype] = useState<string>("");
+    const [sr, setSr] = useState<number|string>("");
+    const [author, setAuthor] = useState<string>("");
+    const [collection, setCollection] = useState<string>("");
+    const [dataset, setDataset] = useState<string>("");
+    const [dataDoi, setDataDoi] = useState<string>("");
+    const [desc, setDesc] = useState<string>("");
+    const [hw, setHw] = useState<string>("");
+    const [license, setLicense] = useState<string>("'");
     const [isMetaOnly, setIsMetaOnly] = useState<boolean>(false);
-    const [metaDoi, setMetaDoi] = useState<string|null>(null);
-    const [numChans, setNumChans] = useState<integer|null>(null);
-    const [offset, setOffset] = useState<integer|null>(null);
-    const [recorder, setRecorder] = useState<string|null>(null);
-    const [sha, setSha] = useState<string|null>(null);
-    const [trailBytes, setTrailBytes] = useState<integer|null>(null);
-    const [version, setVersion] = useState<string|null>(null);
-    const [geo, setGeo] = useState<SigMfGeoType|null>(null);
-    const [trace, setTrace] = useState<SigMfTraceabilityGlobalType|null>(null);
-    const [ant, setAnt] = useState<SigMfAntennaGlobalType|null>(null);
-    const [space, setSpace] = useState<SigMfSpatialGlobalType|null>(null);
+    const [metaDoi, setMetaDoi] = useState<string>("");
+    const [numChans, setNumChans] = useState<integer|string>("");
+    const [offset, setOffset] = useState<integer|string>("");
+    const [recorder, setRecorder] = useState<string>("");
+    const [sha, setSha] = useState<string>("");
+    const [trailBytes, setTrailBytes] = useState<integer|string>("");
+    const [version, setVersion] = useState<string>("");
+    const [geo, setGeo] = useState<SigMfGeoType|object>({});
+    const [trace, setTrace] = useState<SigMfTraceabilityGlobalType|object>({});
+    const [ant, setAnt] = useState<SigMfAntennaGlobalType|object>({});
+    const [space, setSpace] = useState<SigMfSpatialGlobalType|object>({});
 
     const [globalData, setGlobalData] = useState<SigMfGlobalType>({
-        'core:datatype': null,
+        'core:datatype': "",
         'core:metadata_only': isMetaOnly,
-        'core:version': null,
+        'core:version': ""
     });
 
     useEffect(() => {
-        (realCplx !== null && datatype !== null) ? setSigmfDatatype(realCplx + datatype + "_" + leBe): null;
+        (realCplx !== "" && datatype !== "" && leBe !== "") ? setSigmfDatatype(realCplx + datatype + "_" + leBe): setSigmfDatatype("");
     }, [realCplx, leBe, datatype]);
 
     useEffect(() => {
@@ -59,31 +59,31 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [sr]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, author, 'core:author', setGlobalData);
+        changeStateInput(globalData, author, 'core:author', setGlobalData);
     }, [author]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, collection, 'core:collection', setGlobalData);
+        changeStateInput(globalData, collection, 'core:collection', setGlobalData);
     }, [collection]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, dataset, 'core:dataset', setGlobalData);
+        changeStateInput(globalData, dataset, 'core:dataset', setGlobalData);
     }, [dataset]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, dataDoi, 'core:data_doi', setGlobalData);
+        changeStateInput(globalData, dataDoi, 'core:data_doi', setGlobalData);
     }, [dataDoi]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, desc, 'core:description', setGlobalData);
+        changeStateInput(globalData, desc, 'core:description', setGlobalData);
     }, [desc]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, hw, 'core:hw', setGlobalData);
+        changeStateInput(globalData, hw, 'core:hw', setGlobalData);
     }, [hw]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, license, 'core:license', setGlobalData);
+        changeStateInput(globalData, license, 'core:license', setGlobalData);
     }, [license]);
 
     useEffect(() => {
@@ -91,7 +91,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [isMetaOnly]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, metaDoi, 'core:meta_doi', setGlobalData);
+        changeStateInput(globalData, metaDoi, 'core:meta_doi', setGlobalData);
     }, [metaDoi]);
 
     useEffect(() => {
@@ -103,11 +103,11 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [offset]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, recorder, 'core:recorder', setGlobalData);
+        changeStateInput(globalData, recorder, 'core:recorder', setGlobalData);
     }, [recorder]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, sha, 'core:sha512', setGlobalData);
+        changeStateInput(globalData, sha, 'core:sha512', setGlobalData);
     }, [sha]);
 
     useEffect(() => {
@@ -115,7 +115,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [trailBytes]);
 
     useEffect(() => {
-        changeStateTextInput(globalData, version, 'core:version', setGlobalData);
+        changeStateInput(globalData, version, 'core:version', setGlobalData);
     }, [version]);
 
     useEffect(() => {
@@ -135,24 +135,30 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     }, [space]);
 
     useEffect(() => {
-        const retObj: SigMfGlobalType = {...globalData};
-        if (Object.hasOwn(retObj, 'traceability')) {
-            delete retObj.traceability;
-            Object.keys(globalData.traceability || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = globalData.traceability[key as keyof typeof globalData.traceability];
-            });
-        }
-        if (Object.hasOwn(retObj, 'antenna')) {
-            delete retObj.antenna;
-            Object.keys(globalData.antenna || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = globalData.antenna[key as keyof typeof globalData.antenna];
-            });
-        }
-        if (Object.hasOwn(retObj, 'spatial')) {
-            delete retObj.spatial;
-            Object.keys(globalData.spatial || {}).forEach(key => {
-                retObj[key as keyof typeof retObj] = globalData.spatial[key as keyof typeof globalData.spatial];
-            })
+        const tmpObj: object = cleanObject(globalData);
+        const retObj: object = {};
+        if (Object.hasOwn(tmpObj, 'core:version') && Object.hasOwn(tmpObj, 'core:datatype')) {
+            for (const key in tmpObj) {
+                switch(key) {
+                    case 'traceability':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    case 'antenna':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    case 'spatial':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    default:
+                        retObj[key as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj];
+                }
+            }
         }
         transferData(retObj);
     }, [globalData])

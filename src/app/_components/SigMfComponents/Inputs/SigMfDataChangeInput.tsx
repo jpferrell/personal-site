@@ -1,18 +1,18 @@
 import { useEffect, useState } from 'react'
 import SigMfTextInput from './SigMfTextInput'
 import { SigMfDataChangeType } from '../SigMfInterfaces';
-import { changeStateTextInput } from '../SigMfFunctions';
+import { changeStateInput, cleanObject } from '../SigMfFunctions';
 import SigMfCheckboxInput from './SigMfCheckboxInput';
 
 export default function SigMfDataChangeInput ( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function } ) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [author, setAuthor] = useState<string|null>(null);
-    const [datetime, setDatetime] = useState<string|null>(null);
+    const [author, setAuthor] = useState<string>("");
+    const [datetime, setDatetime] = useState<string>("");
 
     const [dataChange, setDataChange] = useState<SigMfDataChangeType>({
         enabled: false,
-        datetime: null
+        datetime: ""
     });
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function SigMfDataChangeInput ( { idPart, labelPart, isHidden, ch
     }, [isEnabled]);
 
     useEffect(() => {
-        changeStateTextInput(dataChange, author, 'author', setDataChange);
+        changeStateInput(dataChange, author, 'author', setDataChange);
     }, [author]);
 
     useEffect(() => {
@@ -28,12 +28,17 @@ export default function SigMfDataChangeInput ( { idPart, labelPart, isHidden, ch
     }, [datetime]);
 
     useEffect(() => {
-        if (dataChange.enabled && !Object.values(dataChange).includes(null)) {
-            const retObj: SigMfDataChangeType = {...dataChange};
-            delete retObj.enabled;
-            changeFunction(retObj);
-        } else if (dataChange.enabled && Object.values(dataChange).includes(null)) {
-            changeFunction(null);
+        if (dataChange.enabled) {
+            const tmpObj: SigMfDataChangeType = {...dataChange};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
+            if (Object.hasOwn(retObj, 'datetime')) {
+                changeFunction(retObj);
+            } else {
+                changeFunction({});
+            }
+        } else {
+            changeFunction({});
         }
     }, [dataChange]);
 

@@ -8,17 +8,18 @@ import SigMfBearingInput from "../Inputs/SigMfBearingInput";
 import { changeStateInput } from "../SigMfFunctions";
 import SigMfGeoInput from "../SigMfGeoInput";
 import SigMfCalibrationInput from "../Inputs/SigMfCalibrationInput";
+import { cleanObject } from "../SigMfFunctions";
 
 export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [numEl, setNumEl] = useState<number|null>(null);
-    const [chanIdx, setChanIdx] = useState<number|null>(null);
+    const [numEl, setNumEl] = useState<number|string>("");
+    const [chanIdx, setChanIdx] = useState<number|string>("");
 
     const [spatial, setSpatial] = useState<SigMfSpatialGlobalType>({
         enabled: false,
-        'spatial:num_elements': null,
-        'spatial:channel_index': null
+        'spatial:num_elements': "",
+        'spatial:channel_index': ""
     });
 
     useEffect(() => {
@@ -34,13 +35,22 @@ export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: s
     }, [chanIdx]);
 
     useEffect(() => {
-        if (spatial.enabled) {
-            const retObj: SigMfSpatialGlobalType = {...spatial};
-            delete retObj.enabled;
+       if (spatial.enabled) {
+        const tmpObj: SigMfSpatialGlobalType = {...spatial};
+        delete tmpObj.enabled;
+        const retObj: object = cleanObject(tmpObj);
+        if (
+            Object.hasOwn(retObj, 'spatial:num_elements') &&
+            Object.hasOwn(retObj, 'spatial:channel_index')
+        ) {
+            console.log(retObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction("");
         }
+       } else {
+        changeFunction("");
+       }
     }, [spatial]);
 
     return (
@@ -55,13 +65,13 @@ export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: s
 export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [apAz, setApAz] = useState<number|null>(null);
-    const [apBear, setApBear] = useState<SigMfBearingType|null>(null);
-    const [apRot, setApRot] = useState<number|null>(null);
-    const [emitBear, setEmitBear] = useState<SigMfBearingType|null>(null);
-    const [elGeo, setElGeo] = useState<SigMfCartesianPointType[]|null>(null);
-    const [phaseOff, setPhaseOff] = useState<number|null>(null);
-    const [cal, setCal] = useState<SigMfCalibrationType|null>(null);
+    const [apAz, setApAz] = useState<number|string>("");
+    const [apBear, setApBear] = useState<SigMfBearingType|string>("");
+    const [apRot, setApRot] = useState<number|string>("");
+    const [emitBear, setEmitBear] = useState<SigMfBearingType|string>("");
+    const [elGeo, setElGeo] = useState<SigMfCartesianPointType[]|string>("");
+    const [phaseOff, setPhaseOff] = useState<number|string>("");
+    const [cal, setCal] = useState<SigMfCalibrationType|string>("");
 
     const [space, setSpace] = useState<SigMfSpatialCaptureType>({
         enabled: false
@@ -101,12 +111,12 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
 
     useEffect(() => {
         if (space.enabled) {
-            const retObj: SigMfSpatialCaptureType = {...space};
-            delete retObj.enabled;
-            console.log(retObj);
+            const tmpObj: SigMfSpatialCaptureType = {...space};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction("");
         }
     }, [space])
 
@@ -127,9 +137,9 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
 export function SpatialAnnotation( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [az, setAz] = useState<number|null>(null);
-    const [bearing, setBearing] = useState<SigMfBearingType|null>(null);
-    const [loc, setLoc] = useState<SigMfGeoType|null>(null);
+    const [az, setAz] = useState<number|string>("");
+    const [bearing, setBearing] = useState<SigMfBearingType|string>("");
+    const [loc, setLoc] = useState<SigMfGeoType|string>("");
 
     const [space, setSpace] = useState<SigMfSpatialAnnotationType>({
         enabled: false
@@ -153,11 +163,14 @@ export function SpatialAnnotation( { idPart, isHidden, changeFunction }: { idPar
 
     useEffect(() => {
         if (space.enabled) {
-            const retObj: SigMfSpatialAnnotationType = {...space};
-            delete retObj.enabled;
+            const tmpObj: SigMfSpatialAnnotationType = {...space};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
+            console.log("spatial annotation");
+            console.log(retObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction("");
         }
     }, [space]);
 

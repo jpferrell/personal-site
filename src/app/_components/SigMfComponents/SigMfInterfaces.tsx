@@ -13,10 +13,10 @@ export interface SigMfSelectInputProps extends SigMfInputProps {
 
 export interface SigMfGeoType {
     enabled: boolean,
-    type: string|null,
-    lat: number|null,
-    lon: number|null,
-    alt?: number|null
+    type: string,
+    lat: number|string,
+    lon: number|string,
+    alt?: number|string
 }
 
 export interface SigMfExtensionsType {
@@ -26,72 +26,72 @@ export interface SigMfExtensionsType {
 }
 
 export interface SigMfGlobalType {
-    'core:datatype': string|null,
-    'core:sample_rate'?: number| null,
-    'core:author'?: string|null,
-    'core:collection'?: string|null,
-    'core:dataset'?: string|null,
-    'core:data_doi'?: string|null,
-    'core:description'?: string|null,
-    'core:hw'?: string|null,
-    'core:license'?: string|null,
-    'core:metadata_only'?: boolean|null,
-    'core:meta_doi'?: string|null,
-    'core:num_channels'?: number|null,
-    'core:offset'?: number|null,
-    'core:recorder'?: string|null,
-    'core:sha512'?: string|null,
-    'core:trailing_bytes'?: number|null,
-    'core:version': string|null,
-    'core:geolocation'?: SigMfGeoType|null,
-    'core:extensions'?: SigMfExtensionsType|null,
-    traceability?: SigMfTraceabilityGlobalType|null,
-    antenna?: SigMfAntennaGlobalType|null,
-    spatial?: SigMfSpatialGlobalType|null
+    'core:datatype': string,
+    'core:sample_rate'?: number| string,
+    'core:author'?: string,
+    'core:collection'?: string,
+    'core:dataset'?: string,
+    'core:data_doi'?: string,
+    'core:description'?: string,
+    'core:hw'?: string,
+    'core:license'?: string,
+    'core:metadata_only'?: boolean,
+    'core:meta_doi'?: string,
+    'core:num_channels'?: number|string,
+    'core:offset'?: number|string,
+    'core:recorder'?: string,
+    'core:sha512'?: string,
+    'core:trailing_bytes'?: number|string,
+    'core:version': string,
+    'core:geolocation'?: SigMfGeoType|object,
+    'core:extensions'?: SigMfExtensionsType|object,
+    traceability?: SigMfTraceabilityGlobalType|object,
+    antenna?: SigMfAntennaGlobalType|object,
+    spatial?: SigMfSpatialGlobalType|object
 }
 
 export interface SigMfCaptureType {
-    'core:sample_start': number|null,
-    'core:datetime'?: string|null,
-    'core:frequency'?: number|null,
-    'core:global_index'?: number|null,
-    'core:header_bytes'?: number|null,
-    'core:geolocation'?: SigMfGeoType|null,
-    capture_details?: SigMfCapDetsCapType|null,
-    spatial?: SigMfSpatialCaptureType|null
+    'core:sample_start': number|string,
+    'core:datetime'?: string,
+    'core:frequency'?: number|string,
+    'core:global_index'?: number|string,
+    'core:header_bytes'?: number|string,
+    'core:geolocation'?: SigMfGeoType|object,
+    capture_details?: SigMfCapDetsCapType|object,
+    spatial?: SigMfSpatialCaptureType|object
 }
 
 export interface SigMfAnnotationType {
-    'core:sample_start': number|null,
-    'core:sample_count'?: number|null,
-    'core:freq_lower_edge'?: number|null,
-    'core:freq_upper_edge'?: number|null,
-    'core:label'?: string|null,
-    'core:comment'?: string|null,
-    'core:generator'?: string|null,
-    'core:uuid'?: string|null,
-    capture_details?: SigMfCapDetsAnnotType|null,
-    signal?: SigMfSignalType|null,
-    traceability?: SigMfTraceabilityAnnotationType|null,
-    antenna?: SigMfAntennaAnnotationType|null
-    spatial?: SigMfSpatialAnnotationType|null
+    'core:sample_start': number|string,
+    'core:sample_count'?: number|string,
+    'core:freq_lower_edge'?: number|string,
+    'core:freq_upper_edge'?: number|string,
+    'core:label'?: string,
+    'core:comment'?: string,
+    'core:generator'?: string,
+    'core:uuid'?: string,
+    capture_details?: SigMfCapDetsAnnotType|object,
+    signal?: SigMfSignalType|object,
+    traceability?: SigMfTraceabilityAnnotationType|object,
+    antenna?: SigMfAntennaAnnotationType|object
+    spatial?: SigMfSpatialAnnotationType|object
 }
 
 export interface SigMfCapDetsCapType {
     enabled?: boolean,
-    'capture_details:acq_scale_factor': number|null,
-    'capture_details:attenuation': number|null,
-    'capture_details:acquisition_bandwidth': number|null,
-    'capture_details:start_capture': string|null,
-    'capture_details:stop_capture': string|null,
-    'capture_details:source_file': string|null,
-    'capture_details:gain'?: number|null
+    'capture_details:acq_scale_factor': number|string,
+    'capture_details:attenuation': number|string,
+    'capture_details:acquisition_bandwidth': number|string,
+    'capture_details:start_capture': string|string,
+    'capture_details:stop_capture': string|string,
+    'capture_details:source_file': string|string,
+    'capture_details:gain'?: number|string
 }
 
 export interface SigMfCapDetsAnnotType {
     enabled?: boolean,
-    'capture_details:SNRdB'?: number|null,
-    'capture_details:signal_reference_number'?: number|null
+    'capture_details:SNRdB': number|string,
+    'capture_details:signal_reference_number': number|string
 }
 
 export interface SigMfCapComponent {
@@ -100,27 +100,27 @@ export interface SigMfCapComponent {
 }
 
 export interface SigMfSignalDetailType {
-    type?: string|null,
-    mod_class?: string|null,
-    standard?: string|null,
-    carrier_variant?: string|null,
-    symbol_variant?: string|null,
-    order?: number|null,
-    duplexing?: string|null,
-    multiplexing?: string|null,
-    multiple_access?: string|null,
-    spreading?: string|null,
-    channel_bw?: number|null,
-    channel?: number|null,
-    class_variant?: string|null
+    type?: string,
+    mod_class?: string,
+    standard?: string,
+    carrier_variant?: string,
+    symbol_variant?: string,
+    order?: number|string,
+    duplexing?: string,
+    multiplexing?: string,
+    multiple_access?: string,
+    spreading?: string,
+    channel_bw?: number|string,
+    channel?: number|string,
+    class_variant?: string
 }
 
 export interface SigMfSignalEmitterType {
-    seid?: number|null,
-    manufacturer?: string|null,
-    power_tx?: number|null,
-    power_eirp?: number|null,
-    geolocation?: SigMfGeoType|null
+    seid?: number|string,
+    manufacturer?: string,
+    power_tx?: number|string,
+    power_eirp?: number|string,
+    geolocation?: SigMfGeoType|string
 }
 
 export interface SigMfSignalType {
@@ -131,8 +131,8 @@ export interface SigMfSignalType {
 
 export interface SigMfDataChangeType {
     enabled?: boolean,
-    'author'?: string|null,
-    'datetime': string|null
+    'author'?: string,
+    'datetime': string
 }
 
 export interface SigMfOriginType {
@@ -144,54 +144,54 @@ export interface SigMfOriginType {
 
 export interface SigMfTraceabilityGlobalType {
     enabled?: boolean,
-    'traceability:last_modified'?: SigMfDataChangeType|null,
-    'traceability:last_reviewed'?: SigMfDataChangeType|null,
-    'traceability:revision'?: number|null,
-    'traceability:origin'?: SigMfOriginType
+    'traceability:last_modified'?: SigMfDataChangeType|string,
+    'traceability:last_reviewed'?: SigMfDataChangeType|string,
+    'traceability:revision'?: number|string,
+    'traceability:origin'?: SigMfOriginType|string
 }
 
 export interface SigMfTraceabilityAnnotationType {
     enabled?: boolean,
-    'traceability:last_modified'?: SigMfDataChangeType|null,
-    'traceability:last_reviewed'?: SigMfDataChangeType|null
+    'traceability:last_modified'?: SigMfDataChangeType|string,
+    'traceability:last_reviewed'?: SigMfDataChangeType|string
 }
 
 export interface SigMfAntennaGlobalType {
     enabled?: boolean,
-    'antenna:model': string|null,
-    'antenna:type'?: string|null,
-    'antenna:low_frequency'?: number|null,
-    'antenna:high_frequency'?: number|null,
-    'antenna:gain'?: number|null,
-    'antenna:horizontal_gain_pattern'?: number[]|null,
-    'antenna:vertical_gain_pattern'?: number[]|null,
-    'antenna:horizontal_beam_width'?: number|null,
-    'antenna:vertical_beam_width'?: number|null,
-    'antenna:cross_polar_discrimination'?: number|null,
-    'antenna:voltage_standing_wave_ratio'?: number|null,
-    'antenna:cable_loss'?: number|null,
-    'antenna:steerable'?: boolean|null,
-    'antenna:mobile'?: boolean|null,
-    'antenna:hagl'?: number|null
+    'antenna:model': string,
+    'antenna:type'?: string,
+    'antenna:low_frequency'?: number|string,
+    'antenna:high_frequency'?: number|string,
+    'antenna:gain'?: number|string,
+    'antenna:horizontal_gain_pattern'?: number[],
+    'antenna:vertical_gain_pattern'?: number[],
+    'antenna:horizontal_beam_width'?: number|string,
+    'antenna:vertical_beam_width'?: number|string,
+    'antenna:cross_polar_discrimination'?: number|string,
+    'antenna:voltage_standing_wave_ratio'?: number|string,
+    'antenna:cable_loss'?: number|string,
+    'antenna:steerable'?: boolean,
+    'antenna:mobile'?: boolean,
+    'antenna:hagl'?: number|string
 }
 
 export interface SigMfAntennaAnnotationType {
     enabled?: boolean,
-    'antenna:azimuth_angle'?: number|null,
-    'antenna:elevation_angle'?: number|null,
-    'antenna:polarization'?: string|null
+    'antenna:azimuth_angle'?: number|string,
+    'antenna:elevation_angle'?: number|string,
+    'antenna:polarization'?: string|string
 }
 
 export interface SigMfBearingType {
     enabled?: boolean,
-    azimuth?: number|null,
-    elevation?: number|null,
-    range?: number|null,
-    range_rate?: number|null,
-    az_error?: number|null,
-    el_error?: number|null,
-    range_error?: number|null,
-    range_rate_error?: number|null
+    azimuth?: number|string,
+    elevation?: number|string,
+    range?: number|string,
+    range_rate?: number|string,
+    az_error?: number|string,
+    el_error?: number|string,
+    range_error?: number|string,
+    range_rate_error?: number|string
 }
 
 export interface SigMfCartesianPointType {
@@ -202,31 +202,32 @@ export interface SigMfCartesianPointType {
 
 export interface SigMfSpatialGlobalType {
     enabled?: boolean,
-    'spatial:num_elements': number|null,
-    'spatial:channel_index': number|null
+    'spatial:num_elements': number|string,
+    'spatial:channel_index': number|string
 }
 
 export interface SigMfCalibrationType {
     enabled?: boolean,
-    caltype: string|null,
-    bearing?: SigMfBearingType|null,
-    cal_geometry?: SigMfCartesianPointType|null
+    caltype: string,
+    bearing?: SigMfBearingType|string,
+    cal_geometry?: SigMfCartesianPointType|string
 }
 
 export interface SigMfSpatialCaptureType {
     enabled?: boolean,
-    'spatial:aperture_azimuth'?: number|null,
-    'spatial:aperture_bearing'?: SigMfBearingType|null,
-    'spatial:aperture_rotation'?: number|null,
-    'spatial:emitter_bearing'?: SigMfBearingType|null,
-    'spatial:element_geometry'?: SigMfCartesianPointType[]|null,
-    'spatial:phase_offset'?: number|null,
-    'spatial:calibration'?: SigMfCalibrationType|null
+    'spatial:aperture_azimuth'?: number|string,
+    'spatial:aperture_bearing'?: SigMfBearingType|string,
+    'spatial:aperture_rotation'?: number|string,
+    'spatial:emitter_bearing'?: SigMfBearingType|string,
+    'spatial:element_geometry'?: SigMfCartesianPointType[]|string,
+    'spatial:phase_offset'?: number|string,
+    'spatial:calibration'?: SigMfCalibrationType|string
 }
 
 export interface SigMfSpatialAnnotationType {
     enabled?: boolean,
-    'spatial:signal_azimuth'?: number|null,
-    'spatial:bearing'?: SigMfBearingType|null,
-    'spatial:emitter_location'?: SigMfGeoType|null
+    'spatial:signal_azimuth'?: number|string,
+    'spatial:bearing'?: SigMfBearingType|string,
+    'spatial:emitter_location'?: SigMfGeoType|string
 }
+

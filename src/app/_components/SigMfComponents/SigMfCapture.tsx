@@ -5,25 +5,25 @@ import SigMfNumberInput from "./Inputs/SigMfNumberInput";
 import { useEffect, useState } from "react";
 import { SigMfCapDetsCapType, SigMfCaptureType, SigMfGeoType, SigMfSpatialCaptureType } from "./SigMfInterfaces";
 import SigMfGeoInput from "./SigMfGeoInput";
-import { changeStateInput, changeStateTextInput } from "./SigMfFunctions";
+import { changeStateInput, cleanObject } from "./SigMfFunctions";
 import { SpatialCapture } from "./Extensions/Spatial";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
 
 export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: boolean, transferCapData: Function }) {
 
-    const [sampStart, setSampStart] = useState<number|null>(null);
-    const [datetime, setDatetime] = useState<string|null>(null);
-    const [freq, setFreq] = useState<number|null>(null);
-    const [globalIdx, setGlobalIdx] = useState<number|null>(null);
-    const [headerBytes, setHeaderBytes] = useState<number|null>(null);
-    const [geo, setGeo] = useState<SigMfGeoType|null>(null);
-    const [capDets, setCapDets] = useState<SigMfCapDetsCapType|null>(null);
-    const [space, setSpace] = useState<SigMfSpatialCaptureType|null>(null);
+    const [sampStart, setSampStart] = useState<number|string>("");
+    const [datetime, setDatetime] = useState<string>("");
+    const [freq, setFreq] = useState<number|string>("");
+    const [globalIdx, setGlobalIdx] = useState<number|string>("");
+    const [headerBytes, setHeaderBytes] = useState<number|string>("");
+    const [geo, setGeo] = useState<SigMfGeoType|object>({});
+    const [capDets, setCapDets] = useState<SigMfCapDetsCapType|object>({});
+    const [space, setSpace] = useState<SigMfSpatialCaptureType|object>({});
 
     const [isButtonEnabled, setIsButtonEnabled] = useState<boolean>(false);
 
     const [capData, setCapData] = useState<SigMfCaptureType>({
-        'core:sample_start': null,
+        'core:sample_start': "",
     });
 
     useEffect(() => {
@@ -31,7 +31,7 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
     }, [sampStart]);
 
     useEffect(() => {
-        changeStateTextInput(capData, datetime, 'core:datetime', setCapData);
+        changeStateInput(capData, datetime, 'core:datetime', setCapData);
     }, [datetime]);
 
     useEffect(() => {
@@ -60,29 +60,34 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
 
     useEffect(() => {
         let btnEnabled: boolean = false;
-        if (!Object.values(capData).includes(null)) {
+        if (capData["core:sample_start"] !== "") {
             btnEnabled = true;
         }
         setIsButtonEnabled(btnEnabled);
     }, [capData]);
 
     function addCapture() {
-        if (capData["core:sample_start"] !== null) {
-            const retObj: SigMfCaptureType = {...capData};
-            if (Object.hasOwn(retObj, 'capture_details')) {
-                delete retObj.capture_details;
-                Object.keys(capData.capture_details || {}).forEach(key => {
-                    retObj[key as keyof typeof retObj] = capData.capture_details[key as keyof typeof capData.capture_details];
-                });
+        const tmpObj: object = cleanObject(capData);
+        const retObj: object = {};
+        if (Object.hasOwn(tmpObj, 'core:sample_start')) {
+            for (const key in tmpObj) {
+                switch (key) {
+                    case 'spatial':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    case 'capture_details':
+                        for (const innerKey in tmpObj[key as keyof typeof tmpObj] as object) {
+                            retObj[innerKey as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj][innerKey];
+                        }
+                        break;
+                    default:
+                        retObj[key as keyof typeof retObj] = tmpObj[key as keyof typeof tmpObj];
+                }
             }
-            if (Object.hasOwn(retObj, 'spatial')) {
-                delete retObj.spatial;
-                Object.keys(capData.spatial || {}).forEach(key => {
-                    retObj[key as keyof typeof retObj] = capData.spatial[key as keyof typeof capData.spatial];
-                });
-            }
-            transferCapData(retObj);
         }
+        transferCapData(retObj);
     }
 
     return (

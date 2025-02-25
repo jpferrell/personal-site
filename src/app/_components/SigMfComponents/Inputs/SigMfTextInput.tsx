@@ -6,7 +6,7 @@ export default function SigMfTextInput({ label, id, changeFunction, placeholder,
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-        let retVal = null;
+        let retVal = "";
         if (e.target.value !== "") {
             retVal = e.target.value;
         }

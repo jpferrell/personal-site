@@ -5,31 +5,31 @@ import { SigMfAntennaAnnotationType, SigMfAntennaGlobalType } from "../SigMfInte
 import SigMfTextInput from "../Inputs/SigMfTextInput";
 import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 import SigMfNumberInput from "../Inputs/SigMfNumberInput";
-import { changeStateInput, changeStateTextInput } from "../SigMfFunctions";
+import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
 export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function })
 {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [model, setModel] = useState<string|null>(null);
-    const [type, setType] = useState<string|null>(null);
-    const [lowFreq, setLowFreq] = useState<number|null>(null);
-    const [highFreq, setHighFreq] = useState<number|null>(null);
-    const [gain, setGain] = useState<number|null>(null);
-    const [hGainPattern, setHGainPattern] = useState<number[]|null>(null);
-    const [vGainPattern, setVGainPattern] = useState<number[]|null>(null);
-    const [hBeamWidth, setHBeamWidth] = useState<number|null>(null);
-    const [vBeamWidth, setVBeamWidth] = useState<number|null>(null);
-    const [xPolar, setXPolar] = useState<number|null>(null);
-    const [vswr, setVswr] = useState<number|null>(null);
-    const [cableLoss, setCableLoss] = useState<number|null>(null);
+    const [model, setModel] = useState<string>("");
+    const [type, setType] = useState<string>("");
+    const [lowFreq, setLowFreq] = useState<number|string>("");
+    const [highFreq, setHighFreq] = useState<number|string>("");
+    const [gain, setGain] = useState<number|string>("");
+    const [hGainPattern, setHGainPattern] = useState<number[]>([]);
+    const [vGainPattern, setVGainPattern] = useState<number[]>([]);
+    const [hBeamWidth, setHBeamWidth] = useState<number|string>("");
+    const [vBeamWidth, setVBeamWidth] = useState<number|string>("");
+    const [xPolar, setXPolar] = useState<number|string>("");
+    const [vswr, setVswr] = useState<number|string>("");
+    const [cableLoss, setCableLoss] = useState<number|string>("");
     const [isSteerable, setIsSteerable] = useState<boolean>(false);
     const [isMobile, setIsMobile] = useState<boolean>(false);
-    const [hagl, setHagl] = useState<number|null>(null);
+    const [hagl, setHagl] = useState<number|string>("");
 
     const [antData, setAntData] = useState<SigMfAntennaGlobalType>({
         enabled: false,
-        'antenna:model': null
+        'antenna:model': ""
     });
 
     useEffect(() => {
@@ -37,11 +37,11 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
     }, [isEnabled]);
 
     useEffect(() => {
-        changeStateTextInput(antData, model, 'antenna:model', setAntData);
+        changeStateInput(antData, model, 'antenna:model', setAntData);
     }, [model]);
 
     useEffect(() => {
-        changeStateTextInput(antData, type, 'antenna:type', setAntData);
+        changeStateInput(antData, type, 'antenna:type', setAntData);
     }, [type]);
 
     useEffect(() => {
@@ -90,11 +90,16 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
 
     useEffect(() => {
         if (antData.enabled) {
-            const retObj: SigMfAntennaGlobalType = {...antData};
-            delete retObj.enabled;
-            changeFunction(retObj);
+            const tmpObj: SigMfAntennaGlobalType = {...antData};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
+            if (Object.hasOwn(retObj, 'antenna:model')) {
+                changeFunction(retObj);
+            } else {
+                changeFunction({});
+            }
         } else {
-            changeFunction(null);
+            changeFunction({});
         }
     }, [antData]);
 
@@ -122,9 +127,9 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
 export function AntennaAnnotation({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function })
 {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [azAngle, setAzAngle] = useState<number|null>(null);
-    const [elAngle, setElAngle] = useState<number|null>(null);
-    const [polar, setPolar] = useState<string|null>(null);
+    const [azAngle, setAzAngle] = useState<number|string>("");
+    const [elAngle, setElAngle] = useState<number|string>("");
+    const [polar, setPolar] = useState<string>("");
 
     const [antData, setAntData] = useState<SigMfAntennaAnnotationType>({
         enabled: false
@@ -148,11 +153,12 @@ export function AntennaAnnotation({ isHidden, changeFunction }: { isHidden: bool
 
     useEffect(() => {
         if (antData.enabled) {
-            const retObj: SigMfAntennaAnnotationType = {...antData};
-            delete retObj.enabled;
+            const tmpObj: SigMfAntennaAnnotationType = {...antData};
+            delete tmpObj.enabled;
+            const retObj: object = cleanObject(tmpObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction({});
         }
     }, [antData]);
 

@@ -8,7 +8,7 @@ import { changeStateInput } from "../SigMfFunctions";
 export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
-    const [point, setPoint] = useState<number[]|null>([]);
+    const [point, setPoint] = useState<number[]>([]);
     const [isUnk, setIsUnk] = useState<boolean>(false);
 
     const [cartPnt, setCartPnt] = useState<SigMfCartesianPointType>({
@@ -32,7 +32,7 @@ export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, chan
             console.log(retObj);
             changeFunction(retObj);
         } else {
-            changeFunction(null);
+            changeFunction({});
         }
     }, [cartPnt]);
 

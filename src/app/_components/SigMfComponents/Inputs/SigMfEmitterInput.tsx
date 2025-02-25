@@ -6,15 +6,15 @@ import SigMfTextInput from "./SigMfTextInput"
 import SigMfNumberInput from "./SigMfNumberInput"
 import SigMfGeoInput from "../SigMfGeoInput"
 import { SigMfGeoType, SigMfSignalEmitterType } from "../SigMfInterfaces"
-import { changeStateInput, changeStateTextInput } from "../SigMfFunctions"
+import { changeStateInput } from "../SigMfFunctions"
 
 export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function})
 {
-    const [seid, setSeid] = useState<number|null>(null);
-    const [manu, setManu] = useState<string|null>(null);
-    const [txPwr, setTxPwr] = useState<number|null>(null);
-    const [eirpPwr, setEirpPwr] = useState<number|null>(null);
-    const [geo, setGeo] = useState<SigMfGeoType|null>(null);
+    const [seid, setSeid] = useState<number|string>("");
+    const [manu, setManu] = useState<string>("");
+    const [txPwr, setTxPwr] = useState<number|string>("");
+    const [eirpPwr, setEirpPwr] = useState<number|string>("");
+    const [geo, setGeo] = useState<SigMfGeoType|string>("");
 
     const [sigEmit, setSigEmit] = useState<SigMfSignalEmitterType>({});
 
@@ -23,7 +23,7 @@ export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }:
     }, [seid]);
 
     useEffect(() => {
-        changeStateTextInput(sigEmit, manu, 'manufacturer', setSigEmit);
+        changeStateInput(sigEmit, manu, 'manufacturer', setSigEmit);
     }, [manu]);
 
     useEffect(() => {

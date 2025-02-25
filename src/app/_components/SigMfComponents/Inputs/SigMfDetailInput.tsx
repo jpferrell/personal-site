@@ -6,44 +6,44 @@ import SigMfSelectInput from "./SigMfSelectInput"
 import SigMfTextInput from "./SigMfTextInput"
 import SigMfNumberInput from "./SigMfNumberInput";
 import { SigMfSignalDetailType } from "../SigMfInterfaces";
-import { changeStateInput, changeStateTextInput } from "../SigMfFunctions";
+import { changeStateInput } from "../SigMfFunctions";
 
 export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function})
 {
-    const [type, setType] = useState<string|null>(null);
-    const [modClass, setModClass] = useState<string|null>(null);
-    const [standard, setStandard] = useState<string|null>(null);
-    const [carVar, setCarVar] = useState<string|null>(null);
-    const [symVar, setSymVar] = useState<string|null>(null);
-    const [order, setOrder] = useState<number|null>(null);
-    const [duplex, setDuplex] = useState<string|null>(null);
-    const [multiplex, setMultiplex] = useState<string|null>(null);
-    const [multAcc, setMultAcc] = useState<string|null>(null);
-    const [spreading, setSpreading] = useState<string|null>(null);
-    const [bw, setBw] = useState<number|null>(null);
-    const [channel, setChannel] = useState<number|null>(null);
-    const [classVar, setClassVar] = useState<string|null>(null);
+    const [type, setType] = useState<string>("");
+    const [modClass, setModClass] = useState<string>("");
+    const [standard, setStandard] = useState<string>("");
+    const [carVar, setCarVar] = useState<string>("");
+    const [symVar, setSymVar] = useState<string>("");
+    const [order, setOrder] = useState<number|string>("");
+    const [duplex, setDuplex] = useState<string>("");
+    const [multiplex, setMultiplex] = useState<string>("");
+    const [multAcc, setMultAcc] = useState<string>("");
+    const [spreading, setSpreading] = useState<string>("");
+    const [bw, setBw] = useState<number|string>("");
+    const [channel, setChannel] = useState<number|string>("");
+    const [classVar, setClassVar] = useState<string>("");
 
     const [sigDet, setSigDet] = useState<SigMfSignalDetailType>({});
 
     useEffect(() => {
-       changeStateTextInput(sigDet, type, 'type', setSigDet);
+       changeStateInput(sigDet, type, 'type', setSigDet);
     }, [type]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, modClass, 'mod_class', setSigDet);
+        changeStateInput(sigDet, modClass, 'mod_class', setSigDet);
     }, [modClass]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, standard, 'standard', setSigDet);
+        changeStateInput(sigDet, standard, 'standard', setSigDet);
     }, [standard]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, carVar, 'carrier_variant', setSigDet);
+        changeStateInput(sigDet, carVar, 'carrier_variant', setSigDet);
     }, [carVar]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, symVar, 'symbol_variant', setSigDet);
+        changeStateInput(sigDet, symVar, 'symbol_variant', setSigDet);
     }, [symVar]);
 
     useEffect(() => {
@@ -51,19 +51,19 @@ export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: 
     }, [order]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, duplex, 'duplexing', setSigDet);
+        changeStateInput(sigDet, duplex, 'duplexing', setSigDet);
     }, [duplex]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, multiplex, 'multiplexing', setSigDet);
+        changeStateInput(sigDet, multiplex, 'multiplexing', setSigDet);
     }, [multiplex]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, multAcc, 'multiple_access', setSigDet);
+        changeStateInput(sigDet, multAcc, 'multiple_access', setSigDet);
     }, [multAcc]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, spreading, 'spreading', setSigDet);
+        changeStateInput(sigDet, spreading, 'spreading', setSigDet);
     }, [spreading]);
 
     useEffect(() => {
@@ -75,7 +75,7 @@ export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: 
     }, [channel]);
 
     useEffect(() => {
-        changeStateTextInput(sigDet, classVar, 'class_variant', setSigDet);
+        changeStateInput(sigDet, classVar, 'class_variant', setSigDet);
     }, [classVar]);
 
     useEffect(() => {
