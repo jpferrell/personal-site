@@ -4,7 +4,9 @@ export interface SigMfInputProps {
     changeFunction: Function,
     placeholder?: string,
     required?: boolean,
-    hidden?: boolean
+    hidden?: boolean,
+    isDisabled?: boolean,
+    inClass?: string
 }
 
 export interface SigMfSelectInputProps extends SigMfInputProps {

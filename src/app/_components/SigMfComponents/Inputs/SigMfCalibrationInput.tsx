@@ -54,7 +54,7 @@ export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, c
     }, [cal]);
 
     return (
-        <div className="border border-slate-200" id={`${idPart}-calibration-input-container`} hidden={isHidden}>
+        <div className="border-dotted border-2 rounded-lg m-2 border-slate-200" id={`${idPart}-calibration-input-container`} hidden={isHidden}>
             <SigMfCheckboxInput id={`${idPart}-calibration-enabled-input`} label={`${labelPart} Calibration`} changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfSelectInput id={`${idPart}-calibration-cal-type`} label="Calibration Type" hidden={isHidden || !isEnabled} values={calTypes} changeFunction={setCalType} required />
             <SigMfBearingInput idPart={`${idPart}-calibration`} labelPart={`${labelPart}`} isHidden={isHidden || !isEnabled} changeFunction={setBearing} />
