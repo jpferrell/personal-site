@@ -233,3 +233,8 @@ export interface SigMfSpatialAnnotationType {
     'spatial:emitter_location'?: SigMfGeoType|object
 }
 
+export interface SigMfMetaInterface {
+    global: object,
+    annotations: object[],
+    captures: object[]
+}

@@ -6,7 +6,7 @@ import sigmflogo from '../../../../public/logo-color.svg'
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
-import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType } from "@/app/_components/SigMfComponents/SigMfInterfaces";
+import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType, SigMfMetaInterface } from "@/app/_components/SigMfComponents/SigMfInterfaces";
 import SigMfTextInput from "@/app/_components/SigMfComponents/Inputs/SigMfTextInput";
 import ExtensionPortal from "@/app/_components/SigMfComponents/Extensions/ExtensionPortal";
 import SigMfArrayDisplay from "@/app/_components/SigMfComponents/SigMfArrayDisplay";
@@ -203,6 +203,10 @@ export default function SigMFEditor() {
         return name.replace(/\.[^/.]+$/, "");
     }
 
+    function getFileExtension(filename: string) {
+        return filename.substring(0,1) === '.' ? '' : filename.split('.').slice(1).pop() || '';
+    }
+
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
         const file: File = e.target.files[0];
         console.log(file);
@@ -210,27 +214,64 @@ export default function SigMFEditor() {
             console.error('No file was selected');
         } else {
             const inFilename: string = cleanFilename(file.name);
+            const inFileExt: string = getFileExtension(file.name);
             console.log("cleaned filename: " + inFilename);
-            setFilename(inFilename);
-            const fileEl = document.getElementById("filename-input");
-            const reader: FileReader = new FileReader();
-            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
-            nativeInputValueSetter?.call(fileEl, inFilename);
-            const fileEvent = new Event('input', {bubbles: true});
-            fileEl?.dispatchEvent(fileEvent);
-            reader.readAsArrayBuffer(file);
-            reader.onload = () => {
-                if (reader.result) {
-                    sha512Encrypt(reader.result as ArrayBuffer).then(rsp => {
-                        const el = document.getElementById("sha-512-input");
-                        // Trigger the change event after setting the SHA-512 input element value
-                        nativeInputValueSetter?.call(el, rsp);
-                        const shaEvent = new Event('input', { bubbles: true });
-                        el?.dispatchEvent(shaEvent);
-                    });
+            console.log("File extension: " + inFileExt);
+            if (inFileExt === 'sigmf-meta') {
+                console.log("in file is a sigmf-meta file");
+                let fr: FileReader = new FileReader();
+                fr.onload = rxJson;
+                fr.readAsText(file);
+            } else {
+                setFilename(inFilename);
+                const fileEl = document.getElementById("filename-input");
+                const reader: FileReader = new FileReader();
+                const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                nativeInputValueSetter?.call(fileEl, inFilename);
+                const fileEvent = new Event('input', {bubbles: true});
+                fileEl?.dispatchEvent(fileEvent);
+                reader.readAsArrayBuffer(file);
+                reader.onload = () => {
+                    if (reader.result) {
+                        sha512Encrypt(reader.result as ArrayBuffer).then(rsp => {
+                            const el = document.getElementById("sha-512-input");
+                            // Trigger the change event after setting the SHA-512 input element value
+                            nativeInputValueSetter?.call(el, rsp);
+                            const shaEvent = new Event('input', { bubbles: true });
+                            el?.dispatchEvent(shaEvent);
+                        });
+                    }
                 }
             }
         }
+
+        function rxJson(e: ProgressEvent) {
+            let lines = e.target.result;
+            let inMetaJson: SigMfMetaInterface = JSON.parse(lines);
+            console.log(inMetaJson);
+            handleInAnnotations(inMetaJson.annotations);
+            handleInCaptures(inMetaJson.captures);
+        }
+    }
+
+    function handleInAnnotations(inAnnotations: Array<object>) {
+
+        const tmpArr: AnnotationType[] = [];
+        inAnnotations.forEach((annot, idx) => {
+            tmpArr.push({data: annot as SigMfAnnotationType, id: idx});
+        });
+
+        setAnnotArr(tmpArr);
+    }
+
+    function handleInCaptures(inCaptures: Array<object>) {
+
+        const tmpArr: CaptureType[] = [];
+        inCaptures.forEach((cap, idx) => {
+            tmpArr.push({data: cap as SigMfCaptureType, id: idx});
+        });
+
+        setCapArr(tmpArr);
     }
 
     async function sha512Encrypt(inMsg: ArrayBuffer) {
@@ -246,7 +287,7 @@ export default function SigMFEditor() {
                  be customized through the Filename input. </p>
             <ExtensionPortal extArr={extArr} isEnabled={isExtPortalOpen} moveExtObj={setExtModalObj} showPortal={setIsExtPortalOpen}></ExtensionPortal>
             <div className={`grid grid-cols-1 place-items-center pt-4 overflow-auto gap-6`}>
-                <Image src={sigmflogo} alt="SigMF Logo"/>
+                {/*<Image src={sigmflogo} alt="SigMF Logo"/>*/}
                 <div className="grid grid-cols-1 overflow-auto h-[calc(50dvw)] w-[calc(50dvw)] dark:bg-zinc-800 bg-slate-100 rounded-lg p-2">
                     <span className="grid grid-cols-3"><label htmlFor="sigmf-data-file-input" className="text-center col-span-2"><strong>{".sigmf-data File  "}</strong></label><input type="file" id="sigmf-data-file-input" name="sigmf-data-file-input" onChange={handleFileChange}/></span>
                     <div className="">
