@@ -222,19 +222,20 @@ export default function SigMFEditor() {
                 let fr: FileReader = new FileReader();
                 fr.onload = rxJson;
                 fr.readAsText(file);
-            } else {
-                setFilename(inFilename);
-                const fileEl = document.getElementById("filename-input");
+            }
+            setFilename(inFilename);
+            const fileEl = document.getElementById("filename-input");
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            nativeInputValueSetter?.call(fileEl, inFilename);
+            const fileEvent = new Event('input', {bubbles: true});
+            fileEl?.dispatchEvent(fileEvent);
+            if (inFileExt !== 'sigmf-meta') {
                 const reader: FileReader = new FileReader();
-                const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
-                nativeInputValueSetter?.call(fileEl, inFilename);
-                const fileEvent = new Event('input', {bubbles: true});
-                fileEl?.dispatchEvent(fileEvent);
                 reader.readAsArrayBuffer(file);
                 reader.onload = () => {
                     if (reader.result) {
                         sha512Encrypt(reader.result as ArrayBuffer).then(rsp => {
-                            const el = document.getElementById("sha-512-input");
+                            const el = document.getElementById("sha512-input");
                             // Trigger the change event after setting the SHA-512 input element value
                             nativeInputValueSetter?.call(el, rsp);
                             const shaEvent = new Event('input', { bubbles: true });
@@ -251,6 +252,7 @@ export default function SigMFEditor() {
             console.log(inMetaJson);
             handleInAnnotations(inMetaJson.annotations);
             handleInCaptures(inMetaJson.captures);
+            handleInGlobal(inMetaJson.global);
         }
     }
 
@@ -272,6 +274,153 @@ export default function SigMFEditor() {
         });
 
         setCapArr(tmpArr);
+    }
+
+    function handleGeolocationKey(key: string, geoObj: object) {
+        /*
+        const enableEl: HTMLElement = document.getElementById(key+"-geo-enabled-input");
+        const typeEl: HTMLElement = document.getElementById(key+"geo-type-input");
+        const latEl: HTMLElement = document.getElementById(key+"-geo-lat-input");
+        const lonEl: HTMLElement = document.getElementById(key+"-geo-lon-input");
+        const altEl: HTMLElement = document.getElementById(key+"-geo-alt-input");
+
+        console.log(geoObj);
+
+        if (enableEl) {
+            console.log(enableEl);
+            //enableEl.setAttribute('checked', 'checked');
+            enableEl.checked = true;
+            console.log(enableEl);
+            const enableEvent = new Event('change', {bubbles: true, cancelable: true});
+            enableEl.dispatchEvent(enableEvent);
+        }
+        */
+        const enableEl = document.getElementById(key+"-geo-enabled-input");
+        if (enableEl) {
+            enableEl.checked = true;
+            const event = new Event('click', {
+                bubbles: true,
+                cancelable: true
+            });
+            enableEl?.dispatchEvent(event);
+        }
+        const typeEl: HTMLElement = document.getElementById("global-geo-type-input");
+        if (typeEl) {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            nativeInputValueSetter?.call(typeEl, geoObj['type' as keyof typeof geoObj]);
+            const inputEvent = new Event('input', {bubbles: true});
+            typeEl?.dispatchEvent(inputEvent);
+        }
+        const latEl: HTMLElement = document.getElementById("global-geo-lat-input");
+        if (latEl) {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            console.log("lat: " + geoObj['coordinates' as keyof typeof geoObj][0]);
+            nativeInputValueSetter?.call(latEl, geoObj['coordinates' as keyof typeof geoObj][0]);
+            const inputEvent = new Event('input', {bubbles: true});
+            latEl?.dispatchEvent(inputEvent);
+        }
+        const lonEl: HTMLElement = document.getElementById("global-geo-lon-input");
+        if (lonEl) {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            nativeInputValueSetter?.call(lonEl, geoObj['coordinates' as keyof typeof geoObj][1]);
+            const inputEvent = new Event('input', {bubbles: true});
+            lonEl?.dispatchEvent(inputEvent);
+        }
+        if ((geoObj['coordinates' as keyof typeof geoObj] as Array<number>).length === 3) {
+            const altEl: HTMLElement = document.getElementById("global-geo-alt-input");
+            if (altEl) {
+                const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                nativeInputValueSetter?.call(altEl, geoObj['coordinates' as keyof typeof geoObj][2]);
+                const inputEvent = new Event('input', {bubbles: true});
+                altEl?.dispatchEvent(inputEvent);
+            }
+        }
+    }
+
+    function handleDatatypeKey(inVal: string) {
+        console.log(inVal);
+        let realCplx: string = inVal.substring(0, 1);
+        console.log("real or complex? " + realCplx);
+        const rcElement: HTMLElement = document.getElementById("real-cplx-input");
+        rcElement.value = realCplx;
+        rcElement.dispatchEvent(new Event('change'));
+        let bigLittle: string = inVal.match(/_(.*)/gm)?.at(0)?.substring(1) || "";
+        console.log("big or little endian? " + bigLittle);
+        const blElement: HTMLElement = document.getElementById("le-be-input");
+        blElement.value = bigLittle;
+        blElement.dispatchEvent(new Event('change'));
+        const dt: string = inVal.match(/([^_]{1}\d{1,2})/gm)?.at(0) || "";
+        console.log("dt: " + dt);
+        const dtElement: HTMLElement = document.getElementById("data-type-input");
+        dtElement.value = dt;
+        dtElement.dispatchEvent(new Event('change'));
+    }
+
+    function handleGlobalCoreKey(key: string, val: any) {
+        console.log("in handleGlobalCoreKey with key: " + key);
+        console.log("in value: ");
+        console.log(val);
+        let htmlEl = document.getElementById(key + "-input");
+
+        if (key === 'metadata_only') {
+            htmlEl.checked = val;
+            const event = new Event('click', {
+                bubbles: true,
+                cancelable: true
+            });
+            htmlEl?.dispatchEvent(event);
+        } else if (key === 'geolocation') {
+           handleGeolocationKey('global', val);
+        } else if (key === 'datatype') {
+            handleDatatypeKey(val);
+        }
+
+        if (htmlEl) {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            console.log(nativeInputValueSetter);
+            nativeInputValueSetter?.call(htmlEl, val);
+            const inputEvent = new Event('input', {bubbles: true});
+            htmlEl?.dispatchEvent(inputEvent);
+        }
+    }
+
+    function handleGlobalTraceabilityKey(key: string) {
+
+    }
+
+    function handleGlobalAntennaKey(key: string) {
+
+    }
+
+    function handleGlobalSpatialKey(key: string) {
+
+    }
+
+    function handleInGlobal(inGlobal: object) {
+        console.log("inGlobal object: "); console.log(inGlobal);
+        Object.keys(inGlobal).forEach(key => {
+            const base = key.match(/^[^:]+\s*/gm)?.at(0) || "";
+            const subkey = key.match(/:(.*)/gm)?.at(0)?.substring(1) || "";
+            console.log("before colon: " + base);
+            console.log("after colon: " + subkey);
+            switch(base) {
+                case 'core':
+                    handleGlobalCoreKey(subkey, inGlobal[key as keyof typeof inGlobal]);
+                break;
+                case 'traceability':
+                    handleGlobalTraceabilityKey(subkey);
+                break;
+                case 'antenna':
+                    handleGlobalAntennaKey(subkey);
+                break;
+                case 'spatial':
+                    handleGlobalSpatialKey(subkey);
+                break;
+                default:
+                    console.log("unknown base found: " + base);
+                break;
+            }
+        });
     }
 
     async function sha512Encrypt(inMsg: ArrayBuffer) {

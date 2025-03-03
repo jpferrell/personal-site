@@ -170,21 +170,21 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
             <SigMfSelectInput label="Data Type" id="data-type-input" required hidden={isHidden} changeFunction={setDatatype} values={[
                 "f32", "f64", "i32", "i16", "u32", "u16", "i8", "u8"
             ]} />
-            <SigMfNumberInput label="Sample Rate" id="sample-rate-input" placeholder="0.0" changeFunction={setSr} hidden={isHidden} />
+            <SigMfNumberInput label="Sample Rate" id="sample_rate-input" placeholder="0.0" changeFunction={setSr} hidden={isHidden} />
             <SigMfTextInput label="Author" id="author-input" placeholder="Enter author name" changeFunction={setAuthor} hidden={isHidden} />
             <SigMfTextInput label="Collection" id="collection-input" placeholder="collection" changeFunction={setCollection} hidden={isHidden} />
             <SigMfTextInput label="Dataset" id="dataset-input" placeholder="dataset" changeFunction={setDataset} hidden={isHidden} />
-            <SigMfTextInput label="Data DOI" id="data-doi-input" placeholder="Data DOI" changeFunction={setDataDoi} hidden={isHidden} />
+            <SigMfTextInput label="Data DOI" id="data_doi-input" placeholder="Data DOI" changeFunction={setDataDoi} hidden={isHidden} />
             <SigMfTextInput label="Description" id="description-input" placeholder="Description" changeFunction={setDesc} hidden={isHidden} />
             <SigMfTextInput label="Hardware" id="hw-input" placeholder="Hardware" changeFunction={setHw} hidden={isHidden} />
             <SigMfTextInput label="License" id="license-input" placeholder="license" changeFunction={setLicense} hidden={isHidden} />
-            <SigMfCheckboxInput label="Metadata Only?" id="metadata-only-input" changeFunction={setIsMetaOnly} hidden={isHidden} />
-            <SigMfTextInput label="Meta DOI" id="meta-doi-input" placeholder="meta doi" changeFunction={setMetaDoi} hidden={isHidden} />
-            <SigMfNumberInput label="Number of Channels" id="num-channels-input" placeholder="0" changeFunction={setNumChans} hidden={isHidden} />
+            <SigMfCheckboxInput label="Metadata Only?" id="metadata_only-input" changeFunction={setIsMetaOnly} hidden={isHidden} />
+            <SigMfTextInput label="Meta DOI" id="meta_doi-input" placeholder="meta doi" changeFunction={setMetaDoi} hidden={isHidden} />
+            <SigMfNumberInput label="Number of Channels" id="num_channels-input" placeholder="0" changeFunction={setNumChans} hidden={isHidden} />
             <SigMfNumberInput label="Offset" id="offset-input" placeholder="0" changeFunction={setOffset} hidden={isHidden} />
             <SigMfTextInput label="Recorder" id="recorder-input" placeholder="recorder" changeFunction={setRecorder} hidden={isHidden} />
-            <SigMfTextInput label="SHA512" id="sha-512-input" placeholder="SHA512 hash" changeFunction={setSha} hidden={isHidden} />
-            <SigMfNumberInput label="Trailing Bytes" id="trail-bytes-input" placeholder="0" changeFunction={setTrailBytes} hidden={isHidden} />
+            <SigMfTextInput label="SHA512" id="sha512-input" placeholder="SHA512 hash" changeFunction={setSha} hidden={isHidden} />
+            <SigMfNumberInput label="Trailing Bytes" id="trailing_bytes-input" placeholder="0" changeFunction={setTrailBytes} hidden={isHidden} />
             <SigMfTextInput label="Version" id="version-input" placeholder="0.0.0" required changeFunction={setVersion} hidden={isHidden} />
             <SigMfGeoInput idPart="global" isHidden={isHidden} changeFunction={setGeo} />
             <TraceabilityGlobal isHidden={isHidden} changeFunction={setTrace} />
