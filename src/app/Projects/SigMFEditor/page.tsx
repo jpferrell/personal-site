@@ -383,7 +383,17 @@ export default function SigMFEditor() {
     }
 
     function handleGlobalTraceabilityKey(key: string, val: any) {
-        console.log("traceability key: " + key);
+        let checkboxEl: HTMLElement|null = document.getElementById("trace-global-enabled-input");
+        if (checkboxEl) {
+            if (!(checkboxEl as HTMLInputElement).checked) {
+                (checkboxEl as HTMLInputElement).checked = true;
+                const event = new Event('change', {
+                    bubbles: true,
+                    cancelable: true
+                });
+                checkboxEl?.dispatchEvent(event);
+            }
+        }
         let element: HTMLElement|null;
         if (key === 'revision') {
             element = document.getElementById("trace-global-revision");
@@ -394,6 +404,17 @@ export default function SigMFEditor() {
                 element?.dispatchEvent(inputEvent);
             }
         } else if (key === 'origin') {
+            let originCheckEl: HTMLElement|null = document.getElementById("trace-global-origin-enabled-input");
+            if (originCheckEl) {
+                if (!(originCheckEl as HTMLInputElement).checked) {
+                    (originCheckEl as HTMLInputElement).checked = true;
+                    const event = new Event('change', {
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    originCheckEl?.dispatchEvent(event);
+                }
+            }
             let acctEl: HTMLElement|null = document.getElementById("trace-global-origin-account-input");
             let contEl: HTMLElement|null = document.getElementById("trace-global-origin-container-input");
             let fileEl: HTMLElement|null = document.getElementById("trace-global-origin-filepath-input");
@@ -422,6 +443,17 @@ export default function SigMFEditor() {
                 }
             }
         } else {
+            let dataCheckEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-enabled-input");
+            if (dataCheckEl) {
+                if (!(dataCheckEl as HTMLInputElement).checked) {
+                    (dataCheckEl as HTMLInputElement).checked = true;
+                    const event = new Event('change', {
+                        bubbles: true,
+                        cancelable: true
+                    });
+                    dataCheckEl?.dispatchEvent(event);
+                }
+            }
             let authEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-author-input");
             let datetimeEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-datetime-input");
             if (Object.hasOwn(val, "datetime")) {
@@ -444,6 +476,17 @@ export default function SigMFEditor() {
     }
 
     function handleGlobalAntennaKey(key: string, val: any) {
+        let checkboxEl: HTMLElement|null = document.getElementById("antenna-global-enabled-input");
+        if (checkboxEl) {
+            if (!(checkboxEl as HTMLInputElement).checked) {
+                (checkboxEl as HTMLInputElement).checked = true;
+                const event = new Event('change', {
+                    bubbles: true,
+                    cancelable: true
+                });
+                checkboxEl?.dispatchEvent(event);
+            }
+        }
         let element: HTMLElement|null = document.getElementById("antenna-global-" + key + "-input");
         if (element) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
@@ -454,6 +497,17 @@ export default function SigMFEditor() {
     }
 
     function handleGlobalSpatialKey(key: string, val: any) {
+        let checkboxEl: HTMLElement|null = document.getElementById("spatial-global-enabled-input");
+        if (checkboxEl) {
+            if (!(checkboxEl as HTMLInputElement).checked) {
+                (checkboxEl as HTMLInputElement).checked = true;
+                const event = new Event('change', {
+                    bubbles: true,
+                    cancelable: true
+                });
+                checkboxEl?.dispatchEvent(event);
+            }
+        }
         let element: HTMLElement|null = document.getElementById("spatial-global-" + key + "-input");
         if (element) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;

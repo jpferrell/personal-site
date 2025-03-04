@@ -54,7 +54,7 @@ export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: s
 
     return (
         <div id="spatial-global-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">
-            <SigMfCheckboxInput label="Spatial" id="spatial-global-enable-input" changeFunction={setIsEnabled} hidden={isHidden} />
+            <SigMfCheckboxInput label="Spatial" id="spatial-global-enabled-input" changeFunction={setIsEnabled} hidden={isHidden} />
             <SigMfNumberInput id={`${idPart}spatial-global-num_elements-input`} label="Number Elements" hidden={isHidden || !isEnabled} changeFunction={setNumEl} required />
             <SigMfNumberInput id={`${idPart}spatial-global-channel_index-input`} label="Channel Index" hidden={isHidden || !isEnabled} changeFunction={setChanIdx} required />
         </div>
