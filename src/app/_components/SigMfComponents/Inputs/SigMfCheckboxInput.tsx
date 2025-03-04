@@ -5,6 +5,7 @@ import { SigMfInputProps } from "../SigMfInterfaces";
 export default function SigMfCheckboxInput({ label, id, changeFunction, required, hidden }: SigMfInputProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        console.log(e);
         changeFunction(e.target.checked);
     }
 

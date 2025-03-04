@@ -208,7 +208,7 @@ export default function SigMFEditor() {
     }
 
     function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-        const file: File = e.target.files[0];
+        const file: File|null = e.target?.files?.item(0) || null;
         console.log(file);
         if (file === null) {
             console.error('No file was selected');
@@ -246,8 +246,8 @@ export default function SigMFEditor() {
             }
         }
 
-        function rxJson(e: ProgressEvent) {
-            let lines = e.target.result;
+        function rxJson(e: ProgressEvent<FileReader>) {
+            let lines = e.target?.result as string || "";
             let inMetaJson: SigMfMetaInterface = JSON.parse(lines);
             console.log(inMetaJson);
             handleInAnnotations(inMetaJson.annotations);
@@ -295,23 +295,23 @@ export default function SigMFEditor() {
             enableEl.dispatchEvent(enableEvent);
         }
         */
-        const enableEl = document.getElementById(key+"-geo-enabled-input");
+        const enableEl: HTMLElement|null = document.getElementById(key+"-geo-enabled-input");
         if (enableEl) {
-            enableEl.checked = true;
-            const event = new Event('click', {
+            (enableEl as HTMLInputElement).checked = true;
+            const event = new Event('change', {
                 bubbles: true,
                 cancelable: true
             });
             enableEl?.dispatchEvent(event);
         }
-        const typeEl: HTMLElement = document.getElementById("global-geo-type-input");
+        const typeEl: HTMLElement|null = document.getElementById("global-geo-type-input");
         if (typeEl) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
             nativeInputValueSetter?.call(typeEl, geoObj['type' as keyof typeof geoObj]);
             const inputEvent = new Event('input', {bubbles: true});
             typeEl?.dispatchEvent(inputEvent);
         }
-        const latEl: HTMLElement = document.getElementById("global-geo-lat-input");
+        const latEl: HTMLElement|null = document.getElementById("global-geo-lat-input");
         if (latEl) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
             console.log("lat: " + geoObj['coordinates' as keyof typeof geoObj][0]);
@@ -319,7 +319,7 @@ export default function SigMFEditor() {
             const inputEvent = new Event('input', {bubbles: true});
             latEl?.dispatchEvent(inputEvent);
         }
-        const lonEl: HTMLElement = document.getElementById("global-geo-lon-input");
+        const lonEl: HTMLElement|null = document.getElementById("global-geo-lon-input");
         if (lonEl) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
             nativeInputValueSetter?.call(lonEl, geoObj['coordinates' as keyof typeof geoObj][1]);
@@ -327,7 +327,7 @@ export default function SigMFEditor() {
             lonEl?.dispatchEvent(inputEvent);
         }
         if ((geoObj['coordinates' as keyof typeof geoObj] as Array<number>).length === 3) {
-            const altEl: HTMLElement = document.getElementById("global-geo-alt-input");
+            const altEl: HTMLElement|null = document.getElementById("global-geo-alt-input");
             if (altEl) {
                 const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
                 nativeInputValueSetter?.call(altEl, geoObj['coordinates' as keyof typeof geoObj][2]);
@@ -338,32 +338,34 @@ export default function SigMFEditor() {
     }
 
     function handleDatatypeKey(inVal: string) {
-        console.log(inVal);
         let realCplx: string = inVal.substring(0, 1);
-        console.log("real or complex? " + realCplx);
-        const rcElement: HTMLElement = document.getElementById("real-cplx-input");
-        rcElement.value = realCplx;
-        rcElement.dispatchEvent(new Event('change'));
+        const rcElement: HTMLElement|null = document.getElementById("real-cplx-input");
+        if (rcElement) {
+            (rcElement as HTMLInputElement).value = realCplx;
+            rcElement.dispatchEvent(new Event('change', {bubbles: true}));
+        }
         let bigLittle: string = inVal.match(/_(.*)/gm)?.at(0)?.substring(1) || "";
-        console.log("big or little endian? " + bigLittle);
-        const blElement: HTMLElement = document.getElementById("le-be-input");
-        blElement.value = bigLittle;
-        blElement.dispatchEvent(new Event('change'));
+        const blElement: HTMLElement|null = document.getElementById("le-be-input");
+        if (blElement) {
+            (blElement as HTMLInputElement).value = bigLittle;
+            blElement.dispatchEvent(new Event('change', {bubbles: true}));
+        }
         const dt: string = inVal.match(/([^_]{1}\d{1,2})/gm)?.at(0) || "";
-        console.log("dt: " + dt);
-        const dtElement: HTMLElement = document.getElementById("data-type-input");
-        dtElement.value = dt;
-        dtElement.dispatchEvent(new Event('change'));
+        const dtElement: HTMLElement|null = document.getElementById("data-type-input");
+        if (dtElement) {
+            (dtElement as HTMLInputElement).value = dt;
+            dtElement.dispatchEvent(new Event('change', {bubbles: true}));
+        }
     }
 
     function handleGlobalCoreKey(key: string, val: any) {
         console.log("in handleGlobalCoreKey with key: " + key);
         console.log("in value: ");
         console.log(val);
-        let htmlEl = document.getElementById(key + "-input");
+        let htmlEl: HTMLElement|null = document.getElementById(key + "-input");
 
-        if (key === 'metadata_only') {
-            htmlEl.checked = val;
+        if (key === 'metadata_only' && htmlEl) {
+            (htmlEl as HTMLInputElement).checked = val;
             const event = new Event('click', {
                 bubbles: true,
                 cancelable: true
