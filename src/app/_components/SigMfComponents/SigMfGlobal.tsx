@@ -189,7 +189,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
             <SigMfGeoInput idPart="global" isHidden={isHidden} changeFunction={setGeo} />
             <TraceabilityGlobal isHidden={isHidden} changeFunction={setTrace} />
             <AntennaGlobal isHidden={isHidden} changeFunction={setAnt} />
-            <SpatialGlobal isHidden={isHidden} changeFunction={setSpace} idPart="spatial-global"/>
+            <SpatialGlobal isHidden={isHidden} changeFunction={setSpace} idPart=""/>
         </div>
     );
 }

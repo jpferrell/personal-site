@@ -44,7 +44,7 @@ export default function SigMfOriginInput( { idPart, labelPart, isHidden, changeF
     }, [originData]);
 
     return (
-        <div id={`${idPart}-origin-container`} hidden={isHidden}>
+        <div id={`${idPart}-origin-container`} hidden={isHidden} className='border-dotted border-2 rounded-lg m-2'>
             <SigMfCheckboxInput label={`${labelPart}`} id={`${idPart}-origin-enabled`} changeFunction={setIsEnabled} />
             <SigMfTextInput label={`${labelPart} Account`} id={`${idPart}-origin-account-input`} hidden={isHidden || !isEnabled} changeFunction={setAccount} placeholder='Account name or identifier' />
             <SigMfTextInput label={`${labelPart} Container`} id={`${idPart}-origin-container-input`} hidden={isHidden || !isEnabled} placeholder='Container or repository name' changeFunction={setContainer} />

@@ -107,19 +107,19 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
         <div id="antenna-global-container" className="border-double rounded-lg border-4 border-slate-200 dark:bg-zinc-700 mb-2" hidden={isHidden}>
             <SigMfCheckboxInput label="Antenna" id="antenna-global-enabled-input" hidden={isHidden} changeFunction={setIsEnabled} />
             <SigMfTextInput label="Model" id="antenna-global-model-input" placeholder="Antenna make and model number" hidden={isHidden || !isEnabled} required changeFunction={setModel} />
-            <SigMfTextInput label="Type" id="antenna-global-type" placeholder="Antenna type" changeFunction={setType} hidden={isHidden || !isEnabled} />
-            <SigMfNumberInput label="Low Frequency" id="antenna-global-low-freq" placeholder="0.0" changeFunction={setLowFreq} hidden={isHidden || !isEnabled} />
-            <SigMfNumberInput label="High Frequency" id="antenna-global-high-freq" placeholder="0.0" changeFunction={setHighFreq} hidden={isHidden || !isEnabled} />
-            <SigMfNumberInput label="Gain" id="antenna-global-gain" placeholder="0.0" changeFunction={setGain} hidden={isHidden || !isEnabled} />
+            <SigMfTextInput label="Type" id="antenna-global-type-input" placeholder="Antenna type" changeFunction={setType} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput label="Low Frequency" id="antenna-global-low_frequency-input" placeholder="0.0" changeFunction={setLowFreq} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput label="High Frequency" id="antenna-global-high_frequency-input" placeholder="0.0" changeFunction={setHighFreq} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput label="Gain" id="antenna-global-gain-input" placeholder="0.0" changeFunction={setGain} hidden={isHidden || !isEnabled} />
             {/** TODO: do the gain pattern array inputs */}
-            <SigMfNumberInput label="Horizontal Beam Width" id="antenna-global-horiz-beam-width" placeholder="0.0" changeFunction={setHBeamWidth} hidden={isHidden || !isEnabled} />
-            <SigMfNumberInput label="Vertical Beam Width" id="antenna-global-vert-beam-width" placeholder="0.0" changeFunction={setVBeamWidth} hidden={isHidden || !isEnabled} />
-            <SigMfNumberInput label="Cross Polar Discrimination" id="antenna-global-x-polar-disc" placeholder="0.0" changeFunction={setXPolar} hidden={isHidden || !isEnabled} />
-            <SigMfNumberInput label="Voltage Standing Wave Ratio" id="antenna-global-vswr" placeholder="0.0" changeFunction={setVswr}  hidden={isHidden || !isEnabled}/>
-            <SigMfNumberInput label="Cable Loss" id="antenna-global-cable-loss" placeholder="0.0" changeFunction={setCableLoss} hidden={isHidden || !isEnabled}/>
-            <SigMfCheckboxInput label="Steerable" id="antenna-global-steerable" changeFunction={setIsSteerable} hidden={isHidden || !isEnabled}/>
-            <SigMfCheckboxInput label="Mobile" id="antenna-global-mobile" changeFunction={setIsMobile} hidden={isHidden || !isEnabled}/>
-            <SigMfNumberInput label="Height Above Ground Level (m)" id="antenna-global-m" placeholder="0.0" changeFunction={setHagl} hidden={isHidden || !isEnabled}/>
+            <SigMfNumberInput label="Horizontal Beam Width" id="antenna-global-horizontal_beam_width-input" placeholder="0.0" changeFunction={setHBeamWidth} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput label="Vertical Beam Width" id="antenna-global-vertical_beam_width-input" placeholder="0.0" changeFunction={setVBeamWidth} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput label="Cross Polar Discrimination" id="antenna-global-cross_polar_discrimination-input" placeholder="0.0" changeFunction={setXPolar} hidden={isHidden || !isEnabled} />
+            <SigMfNumberInput label="Voltage Standing Wave Ratio" id="antenna-global-voltage_standing_wave_ratio-input" placeholder="0.0" changeFunction={setVswr}  hidden={isHidden || !isEnabled}/>
+            <SigMfNumberInput label="Cable Loss" id="antenna-global-cable_loss-input" placeholder="0.0" changeFunction={setCableLoss} hidden={isHidden || !isEnabled}/>
+            <SigMfCheckboxInput label="Steerable" id="antenna-global-steerable-input" changeFunction={setIsSteerable} hidden={isHidden || !isEnabled}/>
+            <SigMfCheckboxInput label="Mobile" id="antenna-global-mobile-input" changeFunction={setIsMobile} hidden={isHidden || !isEnabled}/>
+            <SigMfNumberInput label="Height Above Ground Level (m)" id="antenna-global-hagl-input" placeholder="0.0" changeFunction={setHagl} hidden={isHidden || !isEnabled}/>
         </div>
     );
 }

@@ -359,9 +359,6 @@ export default function SigMFEditor() {
     }
 
     function handleGlobalCoreKey(key: string, val: any) {
-        console.log("in handleGlobalCoreKey with key: " + key);
-        console.log("in value: ");
-        console.log(val);
         let htmlEl: HTMLElement|null = document.getElementById(key + "-input");
 
         if (key === 'metadata_only' && htmlEl) {
@@ -379,23 +376,91 @@ export default function SigMFEditor() {
 
         if (htmlEl) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
-            console.log(nativeInputValueSetter);
             nativeInputValueSetter?.call(htmlEl, val);
             const inputEvent = new Event('input', {bubbles: true});
             htmlEl?.dispatchEvent(inputEvent);
         }
     }
 
-    function handleGlobalTraceabilityKey(key: string) {
-
+    function handleGlobalTraceabilityKey(key: string, val: any) {
+        console.log("traceability key: " + key);
+        let element: HTMLElement|null;
+        if (key === 'revision') {
+            element = document.getElementById("trace-global-revision");
+            if (element) {
+                const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                nativeInputValueSetter?.call(element, val);
+                const inputEvent = new Event('input', {bubbles: true});
+                element?.dispatchEvent(inputEvent);
+            }
+        } else if (key === 'origin') {
+            let acctEl: HTMLElement|null = document.getElementById("trace-global-origin-account-input");
+            let contEl: HTMLElement|null = document.getElementById("trace-global-origin-container-input");
+            let fileEl: HTMLElement|null = document.getElementById("trace-global-origin-filepath-input");
+            if (Object.hasOwn(val, "file_path")) {
+                if (fileEl) {
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                    nativeInputValueSetter?.call(fileEl, val['file_path']);
+                    const inputEvent = new Event('input', {bubbles: true});
+                    fileEl?.dispatchEvent(inputEvent);
+                }
+            }
+            if (Object.hasOwn(val, "account")) {
+                if (acctEl) {
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                    nativeInputValueSetter?.call(acctEl, val['account']);
+                    const inputEvent = new Event('input', {bubbles: true});
+                    acctEl?.dispatchEvent(inputEvent);
+                }
+            }
+            if (Object.hasOwn(val, "container")) {
+                if (contEl) {
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                    nativeInputValueSetter?.call(contEl, val['container']);
+                    const inputEvent = new Event('input', {bubbles: true});
+                    contEl?.dispatchEvent(inputEvent);
+                }
+            }
+        } else {
+            let authEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-author-input");
+            let datetimeEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-datetime-input");
+            if (Object.hasOwn(val, "datetime")) {
+                if (datetimeEl) {
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                    nativeInputValueSetter?.call(datetimeEl, val['datetime']);
+                    const inputEvent = new Event('input', {bubbles: true});
+                    datetimeEl?.dispatchEvent(inputEvent);
+                }
+            }
+            if (Object.hasOwn(val, "author")) {
+                if (authEl) {
+                    const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+                    nativeInputValueSetter?.call(authEl, val['author']);
+                    const inputEvent = new Event('input', {bubbles: true});
+                    authEl?.dispatchEvent(inputEvent);
+                }
+            }
+        }
     }
 
-    function handleGlobalAntennaKey(key: string) {
-
+    function handleGlobalAntennaKey(key: string, val: any) {
+        let element: HTMLElement|null = document.getElementById("antenna-global-" + key + "-input");
+        if (element) {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            nativeInputValueSetter?.call(element, val);
+            const inputEvent = new Event('input', {bubbles: true});
+            element?.dispatchEvent(inputEvent);
+        }
     }
 
-    function handleGlobalSpatialKey(key: string) {
-
+    function handleGlobalSpatialKey(key: string, val: any) {
+        let element: HTMLElement|null = document.getElementById("spatial-global-" + key + "-input");
+        if (element) {
+            const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
+            nativeInputValueSetter?.call(element, val);
+            const inputEvent = new Event('input', {bubbles: true});
+            element?.dispatchEvent(inputEvent);
+        }
     }
 
     function handleInGlobal(inGlobal: object) {
@@ -403,20 +468,18 @@ export default function SigMFEditor() {
         Object.keys(inGlobal).forEach(key => {
             const base = key.match(/^[^:]+\s*/gm)?.at(0) || "";
             const subkey = key.match(/:(.*)/gm)?.at(0)?.substring(1) || "";
-            console.log("before colon: " + base);
-            console.log("after colon: " + subkey);
             switch(base) {
                 case 'core':
                     handleGlobalCoreKey(subkey, inGlobal[key as keyof typeof inGlobal]);
                 break;
                 case 'traceability':
-                    handleGlobalTraceabilityKey(subkey);
+                    handleGlobalTraceabilityKey(subkey, inGlobal[key as keyof typeof inGlobal]);
                 break;
                 case 'antenna':
-                    handleGlobalAntennaKey(subkey);
+                    handleGlobalAntennaKey(subkey, inGlobal[key as keyof typeof inGlobal]);
                 break;
                 case 'spatial':
-                    handleGlobalSpatialKey(subkey);
+                    handleGlobalSpatialKey(subkey, inGlobal[key as keyof typeof inGlobal]);
                 break;
                 default:
                     console.log("unknown base found: " + base);
