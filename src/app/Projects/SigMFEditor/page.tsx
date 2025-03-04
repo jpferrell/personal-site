@@ -490,8 +490,8 @@ export default function SigMFEditor() {
         let element: HTMLElement|null = document.getElementById("antenna-global-" + key + "-input");
         if (element) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
-            nativeInputValueSetter?.call(element, val);
-            const inputEvent = new Event('input', {bubbles: true});
+            key === 'steerable' || key === 'mobile' ? (element as HTMLInputElement).checked = val : nativeInputValueSetter?.call(element, val);
+            const inputEvent = key === 'steerable' || key === 'mobile' ? new Event('change', {bubbles: true}) : new Event('input', {bubbles: true});
             element?.dispatchEvent(inputEvent);
         }
     }
