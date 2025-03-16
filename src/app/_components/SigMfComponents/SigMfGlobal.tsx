@@ -13,7 +13,9 @@ import { TraceabilityGlobal } from "./Extensions/Traceability";
 import { AntennaGlobal } from "./Extensions/Antenna";
 import { SpatialGlobal } from "./Extensions/Spatial";
 
-export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: Function} ) {
+type TransferFunction = (a: object) => void;
+
+export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: TransferFunction} ) {
 
     const [realCplx, setRealCplx] = useState<string>("");
     const [leBe, setLeBe] = useState<string>("");
@@ -47,7 +49,12 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
     });
 
     useEffect(() => {
-        (realCplx !== "" && datatype !== "" && leBe !== "") ? setSigmfDatatype(realCplx + datatype + "_" + leBe): setSigmfDatatype("");
+        /*(realCplx !== "" && datatype !== "" && leBe !== "") ? setSigmfDatatype(realCplx + datatype + "_" + leBe): setSigmfDatatype("");*/
+        if (realCplx !== "" && datatype !== "" && leBe !== "") {
+            setSigmfDatatype(realCplx + datatype + "_" + leBe);
+        } else {
+            setSigmfDatatype("");
+        }
     }, [realCplx, leBe, datatype]);
 
     useEffect(() => {

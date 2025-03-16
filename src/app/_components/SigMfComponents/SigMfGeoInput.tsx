@@ -7,7 +7,9 @@ import SigMfCheckboxInput from "./Inputs/SigMfCheckboxInput";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
 import { SigMfGeoType } from "./SigMfInterfaces";
 
-export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {idPart: string, isHidden: boolean, changeFunction: Function} ) {
+type ChangeFunction = (a: object) => void;
+
+export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {idPart: string, isHidden: boolean, changeFunction: ChangeFunction} ) {
 
     const [isGeoEnabled, setIsGeoEnabled] = useState<boolean>(false);
     const [geoType, setGeoType] = useState<string>('Point');
@@ -34,7 +36,7 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
     }, [isGeoEnabled, geoType, lat, lon, alt]);
 
     useEffect(() => {
-        let retVal = {};
+        let retVal: object = {};
         if (geoData.enabled && geoData.type !== "" && geoData.lat !== "" && geoData.lon !== "") {
             if (geoData.alt === "") {
                 retVal = {

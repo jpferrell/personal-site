@@ -1,8 +1,10 @@
+/*
 import { Game } from "phaser";
 import { Boot } from "./_scenes/Boot";
 import { Preloader } from "./_scenes/Preloader";
 import { MainMenu } from "./_scenes/MainMenu";
 import dynamic from "next/dynamic";
+*/
 
 //const AppWithoutSSR = dynamic(() => import("@/app/resume/_PhaserApp"), { ssr: false });
 

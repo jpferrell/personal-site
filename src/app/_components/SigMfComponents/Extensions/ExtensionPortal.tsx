@@ -96,7 +96,7 @@ function ModalContent({ onClose, extensions, moveData }: { onClose: Function, ex
                                         <label id={`${ext}-name-label`} key={`${ext}-name-label`} className="text-right">Name</label><p>{ext}</p>
                                         <label id={`${ext}-version-label`} key={`${ext}-version-label`} className="text-right">Version </label><input type="text" id={`${ext}-version-input`} onChange={
                                             (e) => {
-                                                let tmp = output;
+                                                const tmp = output;
                                                 setOutput({
                                                     ...tmp,
                                                     [ext]: {
@@ -109,7 +109,7 @@ function ModalContent({ onClose, extensions, moveData }: { onClose: Function, ex
                                         } placeholder="e.g. 1.2.3" className="text-black dark:bg-white bg-slate-200"></input>
                                         <label id={`${ext}-optional-label`} key={`${ext}-optional-label`} className="text-right">Optional? </label><input type="checkbox" id={`${ext}-optional-input`} onChange={
                                             (e) => {
-                                                let tmp = output;
+                                                const tmp = output;
                                                 setOutput({
                                                     ...tmp,
                                                     [ext]: {

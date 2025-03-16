@@ -2,7 +2,9 @@
 
 import { SigMfGeoType } from "./SigMfInterfaces";
 
-export function changeStateInput<T extends Object, U extends Object>(obj: T, variable: U|SigMfGeoType|number|boolean|string, keyName: keyof typeof obj, fn: Function) {
+type retFunction = (a: object) => void;
+
+export function changeStateInput<T extends object, U extends object>(obj: T, variable: U|SigMfGeoType|number|boolean|string, keyName: keyof typeof obj, fn: retFunction) {
     if (variable !== null && variable !== "") {
         fn({...obj, [keyName]: variable});
     } else if (Object.hasOwn(obj, keyName)) {

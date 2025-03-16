@@ -2,7 +2,7 @@
 
 import { SigMfSelectInputProps } from "../SigMfInterfaces"
 
-export default function SigMfSelectInput({ label, id, changeFunction, placeholder, required, hidden, values }: SigMfSelectInputProps) {
+export default function SigMfSelectInput({ label, id, changeFunction, required, hidden, values }: SigMfSelectInputProps) {
 
     const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         let retVal = "";

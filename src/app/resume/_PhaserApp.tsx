@@ -1,3 +1,4 @@
+/*
 import { useRef, useState } from 'react';
 import { IRefPhaserGame, PhaserGame } from '@/app/resume/_PhaserGame'
 import { MainMenu } from '@/app/resume/_scenes/MainMenu';
@@ -34,13 +35,11 @@ export default function PhaserApp()
             if (scene && scene.scene.key === 'MainMenu')
             {
                 // Get the update logo position
-                /*
                 scene.moveLogo(({ x, y }) => {
 
                     setSpritePosition({ x, y });
 
                 });
-                */
             }
         }
 
@@ -102,3 +101,4 @@ export default function PhaserApp()
         </div>
     )
 }
+*/

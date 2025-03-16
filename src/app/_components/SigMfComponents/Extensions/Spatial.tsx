@@ -68,7 +68,7 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
     const [apBear, setApBear] = useState<SigMfBearingType|object>({});
     const [apRot, setApRot] = useState<number|string>("");
     const [emitBear, setEmitBear] = useState<SigMfBearingType|object>({});
-    const [elGeo, setElGeo] = useState<SigMfCartesianPointType[]|object>({});
+    const [elGeo, ] = useState<SigMfCartesianPointType[]|object>({});
     const [phaseOff, setPhaseOff] = useState<number|string>("");
     const [cal, setCal] = useState<SigMfCalibrationType|object>({});
 

@@ -29,6 +29,7 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
         changeStateInput(sig, sigEmit, 'signal:emitter', setSig);
     }, [sigEmit]);
 
+    /*
     function isObjectEmpty(obj: object) {
         for (const prop in obj) {
             if (Object.hasOwn(obj, prop)) {
@@ -38,6 +39,7 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
 
         return true;
     }
+    */
 
     useEffect(() => {
        if (sig.enabled) {

@@ -1,3 +1,4 @@
+/*
 import { forwardRef, useEffect, useLayoutEffect, useRef } from 'react';
 import { EventBus } from './_EventBus';
 
@@ -16,3 +17,4 @@ export const PhaserGame = forwardRef<IRefPhaserGame, IProps>(function PhaserGame
 {
 
 });
+*/

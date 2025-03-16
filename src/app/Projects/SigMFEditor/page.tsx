@@ -1,12 +1,12 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import sigmflogo from '../../../../public/logo-color.svg'
+//import Image from "next/image";
+//import sigmflogo from '../../../../public/logo-color.svg'
 import SigMfGlobal from "@/app/_components/SigMfComponents/SigMfGlobal";
 import SigMfCapture from "@/app/_components/SigMfComponents/SigMfCapture";
 import SigMfAnnotation from "@/app/_components/SigMfComponents/SigMfAnnotation";
-import { SigMfAnnotationType, SigMfCaptureType, SigMfGlobalType, SigMfMetaInterface } from "@/app/_components/SigMfComponents/SigMfInterfaces";
+import { SigMfAnnotationType, SigMfCaptureType, SigMfMetaInterface } from "@/app/_components/SigMfComponents/SigMfInterfaces";
 import SigMfTextInput from "@/app/_components/SigMfComponents/Inputs/SigMfTextInput";
 import ExtensionPortal from "@/app/_components/SigMfComponents/Extensions/ExtensionPortal";
 import SigMfArrayDisplay from "@/app/_components/SigMfComponents/SigMfArrayDisplay";
@@ -219,7 +219,7 @@ export default function SigMFEditor() {
             console.log("File extension: " + inFileExt);
             if (inFileExt === 'sigmf-meta') {
                 console.log("in file is a sigmf-meta file");
-                let fr: FileReader = new FileReader();
+                const fr: FileReader = new FileReader();
                 fr.onload = rxJson;
                 fr.readAsText(file);
             }
@@ -247,8 +247,8 @@ export default function SigMFEditor() {
         }
 
         function rxJson(e: ProgressEvent<FileReader>) {
-            let lines = e.target?.result as string || "";
-            let inMetaJson: SigMfMetaInterface = JSON.parse(lines);
+            const lines = e.target?.result as string || "";
+            const inMetaJson: SigMfMetaInterface = JSON.parse(lines);
             console.log(inMetaJson);
             handleInAnnotations(inMetaJson.annotations);
             handleInCaptures(inMetaJson.captures);
@@ -338,13 +338,13 @@ export default function SigMFEditor() {
     }
 
     function handleDatatypeKey(inVal: string) {
-        let realCplx: string = inVal.substring(0, 1);
+        const realCplx: string = inVal.substring(0, 1);
         const rcElement: HTMLElement|null = document.getElementById("real-cplx-input");
         if (rcElement) {
             (rcElement as HTMLInputElement).value = realCplx;
             rcElement.dispatchEvent(new Event('change', {bubbles: true}));
         }
-        let bigLittle: string = inVal.match(/_(.*)/gm)?.at(0)?.substring(1) || "";
+        const bigLittle: string = inVal.match(/_(.*)/gm)?.at(0)?.substring(1) || "";
         const blElement: HTMLElement|null = document.getElementById("le-be-input");
         if (blElement) {
             (blElement as HTMLInputElement).value = bigLittle;
@@ -359,7 +359,7 @@ export default function SigMFEditor() {
     }
 
     function handleGlobalCoreKey(key: string, val: any) {
-        let htmlEl: HTMLElement|null = document.getElementById(key + "-input");
+        const htmlEl: HTMLElement|null = document.getElementById(key + "-input");
 
         if (key === 'metadata_only' && htmlEl) {
             (htmlEl as HTMLInputElement).checked = val;
@@ -383,7 +383,7 @@ export default function SigMFEditor() {
     }
 
     function handleGlobalTraceabilityKey(key: string, val: any) {
-        let checkboxEl: HTMLElement|null = document.getElementById("trace-global-enabled-input");
+        const checkboxEl: HTMLElement|null = document.getElementById("trace-global-enabled-input");
         if (checkboxEl) {
             if (!(checkboxEl as HTMLInputElement).checked) {
                 (checkboxEl as HTMLInputElement).checked = true;
@@ -404,7 +404,7 @@ export default function SigMFEditor() {
                 element?.dispatchEvent(inputEvent);
             }
         } else if (key === 'origin') {
-            let originCheckEl: HTMLElement|null = document.getElementById("trace-global-origin-enabled-input");
+            const originCheckEl: HTMLElement|null = document.getElementById("trace-global-origin-enabled-input");
             if (originCheckEl) {
                 if (!(originCheckEl as HTMLInputElement).checked) {
                     (originCheckEl as HTMLInputElement).checked = true;
@@ -415,9 +415,9 @@ export default function SigMFEditor() {
                     originCheckEl?.dispatchEvent(event);
                 }
             }
-            let acctEl: HTMLElement|null = document.getElementById("trace-global-origin-account-input");
-            let contEl: HTMLElement|null = document.getElementById("trace-global-origin-container-input");
-            let fileEl: HTMLElement|null = document.getElementById("trace-global-origin-filepath-input");
+            const acctEl: HTMLElement|null = document.getElementById("trace-global-origin-account-input");
+            const contEl: HTMLElement|null = document.getElementById("trace-global-origin-container-input");
+            const fileEl: HTMLElement|null = document.getElementById("trace-global-origin-filepath-input");
             if (Object.hasOwn(val, "file_path")) {
                 if (fileEl) {
                     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
@@ -443,7 +443,7 @@ export default function SigMFEditor() {
                 }
             }
         } else {
-            let dataCheckEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-enabled-input");
+            const dataCheckEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-enabled-input");
             if (dataCheckEl) {
                 if (!(dataCheckEl as HTMLInputElement).checked) {
                     (dataCheckEl as HTMLInputElement).checked = true;
@@ -454,8 +454,8 @@ export default function SigMFEditor() {
                     dataCheckEl?.dispatchEvent(event);
                 }
             }
-            let authEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-author-input");
-            let datetimeEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-datetime-input");
+            const authEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-author-input");
+            const datetimeEl: HTMLElement|null = document.getElementById("trace-global-" + key + "-data-change-datetime-input");
             if (Object.hasOwn(val, "datetime")) {
                 if (datetimeEl) {
                     const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
@@ -476,7 +476,7 @@ export default function SigMFEditor() {
     }
 
     function handleGlobalAntennaKey(key: string, val: any) {
-        let checkboxEl: HTMLElement|null = document.getElementById("antenna-global-enabled-input");
+        const checkboxEl: HTMLElement|null = document.getElementById("antenna-global-enabled-input");
         if (checkboxEl) {
             if (!(checkboxEl as HTMLInputElement).checked) {
                 (checkboxEl as HTMLInputElement).checked = true;
@@ -487,17 +487,22 @@ export default function SigMFEditor() {
                 checkboxEl?.dispatchEvent(event);
             }
         }
-        let element: HTMLElement|null = document.getElementById("antenna-global-" + key + "-input");
+        const element: HTMLElement|null = document.getElementById("antenna-global-" + key + "-input");
         if (element) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
-            key === 'steerable' || key === 'mobile' ? (element as HTMLInputElement).checked = val : nativeInputValueSetter?.call(element, val);
+            /*key === 'steerable' || key === 'mobile' ? (element as HTMLInputElement).checked = val : nativeInputValueSetter?.call(element, val);*/
+            if (key === 'steerable' || key === 'mobile') {
+                (element as HTMLInputElement).checked = val
+            } else {
+                nativeInputValueSetter?.call(element, val)
+            }
             const inputEvent = key === 'steerable' || key === 'mobile' ? new Event('change', {bubbles: true}) : new Event('input', {bubbles: true});
             element?.dispatchEvent(inputEvent);
         }
     }
 
     function handleGlobalSpatialKey(key: string, val: any) {
-        let checkboxEl: HTMLElement|null = document.getElementById("spatial-global-enabled-input");
+        const checkboxEl: HTMLElement|null = document.getElementById("spatial-global-enabled-input");
         if (checkboxEl) {
             if (!(checkboxEl as HTMLInputElement).checked) {
                 (checkboxEl as HTMLInputElement).checked = true;
@@ -508,7 +513,7 @@ export default function SigMFEditor() {
                 checkboxEl?.dispatchEvent(event);
             }
         }
-        let element: HTMLElement|null = document.getElementById("spatial-global-" + key + "-input");
+        const element: HTMLElement|null = document.getElementById("spatial-global-" + key + "-input");
         if (element) {
             const nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value')?.set;
             nativeInputValueSetter?.call(element, val);

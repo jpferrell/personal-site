@@ -7,7 +7,9 @@ import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 import SigMfNumberInput from "../Inputs/SigMfNumberInput";
 import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
-export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function })
+type ChangeFunction = (a: object) => void;
+
+export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: ChangeFunction })
 {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -16,8 +18,8 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
     const [lowFreq, setLowFreq] = useState<number|string>("");
     const [highFreq, setHighFreq] = useState<number|string>("");
     const [gain, setGain] = useState<number|string>("");
-    const [hGainPattern, setHGainPattern] = useState<number[]>([]);
-    const [vGainPattern, setVGainPattern] = useState<number[]>([]);
+    //const [hGainPattern, setHGainPattern] = useState<number[]>([]);
+    //const [vGainPattern, setVGainPattern] = useState<number[]>([]);
     const [hBeamWidth, setHBeamWidth] = useState<number|string>("");
     const [vBeamWidth, setVBeamWidth] = useState<number|string>("");
     const [xPolar, setXPolar] = useState<number|string>("");

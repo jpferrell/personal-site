@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import { SigMfCartesianPointType } from "../SigMfInterfaces";
 import SigMfCheckboxInput from "./SigMfCheckboxInput";
-import { changeStateInput } from "../SigMfFunctions";
+//import { changeStateInput } from "../SigMfFunctions";
 import SigMfNumberInput from "./SigMfNumberInput";
 
 export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function })
