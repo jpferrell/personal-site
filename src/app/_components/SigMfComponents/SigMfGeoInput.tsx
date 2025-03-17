@@ -9,7 +9,7 @@ import { SigMfGeoType } from "./SigMfInterfaces";
 
 type ChangeFunction = (a: object) => void;
 
-export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {idPart: string, isHidden: boolean, changeFunction: ChangeFunction} ) {
+export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {idPart: string, isHidden: boolean, changeFunction: Function } ) {
 
     const [isGeoEnabled, setIsGeoEnabled] = useState<boolean>(false);
     const [geoType, setGeoType] = useState<string>('Point');
@@ -51,7 +51,7 @@ export default function SigMfGeoInput( { idPart, isHidden, changeFunction }: {id
             }
         }
         changeFunction(retVal);
-    }, [geoData])
+    }, [geoData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div hidden={isHidden} className="border-dotted border-2 rounded-lg m-2">

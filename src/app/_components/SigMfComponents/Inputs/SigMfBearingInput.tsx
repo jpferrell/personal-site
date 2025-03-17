@@ -6,7 +6,9 @@ import SigMfCheckboxInput from "./SigMfCheckboxInput";
 import SigMfNumberInput from "./SigMfNumberInput";
 import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
-export default function SigMfBearingInput( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function}) {
+type ChangeFunction = (a: object) => void;
+
+export default function SigMfBearingInput( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function }) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
     const [azimuth, setAzimuth] = useState<number|string>("");
@@ -24,39 +26,39 @@ export default function SigMfBearingInput( { idPart, labelPart, isHidden, change
 
     useEffect(() => {
         setBearing({...bearing, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, azimuth, 'azimuth', setBearing);
-    }, [azimuth]);
+    }, [azimuth]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, el, 'elevation', setBearing);
-    }, [el]);
+    }, [el]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, range, 'range', setBearing);
-    }, [range]);
+    }, [range]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, rangeRate, 'range_rate', setBearing);
-    }, [rangeRate]);
+    }, [rangeRate]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, azErr, 'az_error', setBearing);
-    }, [azErr]);
+    }, [azErr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, elErr, 'el_error', setBearing);
-    }, [elErr]);
+    }, [elErr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, rangeErr, 'range_error', setBearing);
-    }, [rangeErr]);
+    }, [rangeErr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(bearing, rangeRateErr, 'range_rate_error', setBearing);
-    }, [rangeRateErr]);
+    }, [rangeRateErr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (bearing.enabled) {
@@ -67,7 +69,7 @@ export default function SigMfBearingInput( { idPart, labelPart, isHidden, change
         } else {
             changeFunction({});
         }
-    }, [bearing]);
+    }, [bearing]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id={`${idPart}-bearing-container`} hidden={isHidden} className="border-dotted border-2 border-slate-200 rounded-lg m-2">

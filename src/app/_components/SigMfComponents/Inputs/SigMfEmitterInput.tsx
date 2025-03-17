@@ -8,7 +8,9 @@ import SigMfGeoInput from "../SigMfGeoInput"
 import { SigMfGeoType, SigMfSignalEmitterType } from "../SigMfInterfaces"
 import { changeStateInput } from "../SigMfFunctions"
 
-export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function})
+type ChangeFunction = (a: object|string) => void;
+
+export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [seid, setSeid] = useState<number|string>("");
     const [manu, setManu] = useState<string>("");
@@ -20,27 +22,27 @@ export default function SigMfEmitterInput( { idPart, isHidden, changeFunction }:
 
     useEffect(() => {
         changeStateInput(sigEmit, seid, 'seid', setSigEmit);
-    }, [seid]);
+    }, [seid]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigEmit, manu, 'manufacturer', setSigEmit);
-    }, [manu]);
+    }, [manu]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigEmit, txPwr, 'power_tx', setSigEmit);
-    }, [txPwr]);
+    }, [txPwr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigEmit, eirpPwr, 'power_eirp', setSigEmit);
-    }, [eirpPwr]);
+    }, [eirpPwr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigEmit, geo, 'geolocation', setSigEmit);
-    }, [geo]);
+    }, [geo]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeFunction(sigEmit);
-    }, [sigEmit])
+    }, [sigEmit]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id={`${idPart}-sig-emitter-inputs-container`}>

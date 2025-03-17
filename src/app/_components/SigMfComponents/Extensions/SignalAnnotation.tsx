@@ -7,6 +7,8 @@ import SigMfDetailInput from "../Inputs/SigMfDetailInput";
 import { SigMfSignalDetailType, SigMfSignalEmitterType, SigMfSignalType } from "../SigMfInterfaces";
 import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
+type ChangeFunction = (a: object) => void;
+
 export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
 
@@ -19,15 +21,15 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
 
     useEffect(() => {
         setSig({...sig, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sig, sigDet, 'signal:detail', setSig);
-    }, [sigDet]);
+    }, [sigDet]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sig, sigEmit, 'signal:emitter', setSig);
-    }, [sigEmit]);
+    }, [sigEmit]); // eslint-disable-line react-hooks/exhaustive-deps
 
     /*
     function isObjectEmpty(obj: object) {
@@ -50,7 +52,7 @@ export function SignalAnnotation( { idPart, isHidden, changeFunction }: { idPart
        } else {
             changeFunction({});
        }
-    }, [sig]);
+    }, [sig]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="annotation-sig-ext-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">

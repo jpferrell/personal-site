@@ -15,7 +15,7 @@ import { SpatialGlobal } from "./Extensions/Spatial";
 
 type TransferFunction = (a: object) => void;
 
-export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: TransferFunction} ) {
+export default function SigMfGlobal( { isHidden, transferData }: {isHidden: boolean, transferData: Function } ) {
 
     const [realCplx, setRealCplx] = useState<string>("");
     const [leBe, setLeBe] = useState<string>("");
@@ -59,87 +59,87 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
 
     useEffect(() => {
         setGlobalData({...globalData, 'core:datatype': sigmfDatatype});
-    }, [sigmfDatatype]);
+    }, [sigmfDatatype]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, sr, 'core:sample_rate', setGlobalData);
-    }, [sr]);
+    }, [sr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, author, 'core:author', setGlobalData);
-    }, [author]);
+    }, [author]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, collection, 'core:collection', setGlobalData);
-    }, [collection]);
+    }, [collection]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, dataset, 'core:dataset', setGlobalData);
-    }, [dataset]);
+    }, [dataset]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, dataDoi, 'core:data_doi', setGlobalData);
-    }, [dataDoi]);
+    }, [dataDoi]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, desc, 'core:description', setGlobalData);
-    }, [desc]);
+    }, [desc]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, hw, 'core:hw', setGlobalData);
-    }, [hw]);
+    }, [hw]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, license, 'core:license', setGlobalData);
-    }, [license]);
+    }, [license]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, isMetaOnly, 'core:metadata_only', setGlobalData);
-    }, [isMetaOnly]);
+    }, [isMetaOnly]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, metaDoi, 'core:meta_doi', setGlobalData);
-    }, [metaDoi]);
+    }, [metaDoi]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, numChans, 'core:num_channels', setGlobalData);
-    }, [numChans]);
+    }, [numChans]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, offset, 'core:offset', setGlobalData);
-    }, [offset]);
+    }, [offset]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, recorder, 'core:recorder', setGlobalData);
-    }, [recorder]);
+    }, [recorder]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, sha, 'core:sha512', setGlobalData);
-    }, [sha]);
+    }, [sha]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, trailBytes, 'core:trailing_bytes', setGlobalData);
-    }, [trailBytes]);
+    }, [trailBytes]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, version, 'core:version', setGlobalData);
-    }, [version]);
+    }, [version]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, geo, 'core:geolocation', setGlobalData);
-    }, [geo]);
+    }, [geo]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, trace, 'traceability', setGlobalData);
-    }, [trace]);
+    }, [trace]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, ant, 'antenna', setGlobalData);
-    }, [ant]);
+    }, [ant]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(globalData, space, 'spatial', setGlobalData);
-    }, [space]);
+    }, [space]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         const tmpObj: object = cleanObject(globalData);
@@ -168,7 +168,7 @@ export default function SigMfGlobal( { isHidden, transferData }: {isHidden: bool
             }
         }
         transferData(retObj);
-    }, [globalData])
+    }, [globalData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="mx-auto">

@@ -10,6 +10,8 @@ import SigMfGeoInput from "../SigMfGeoInput";
 import SigMfCalibrationInput from "../Inputs/SigMfCalibrationInput";
 import { cleanObject } from "../SigMfFunctions";
 
+type ChangeFunction = (a: object|string) => void;
+
 export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -24,15 +26,15 @@ export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: s
 
     useEffect(() => {
         setSpatial({...spatial, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setSpatial({...spatial, 'spatial:num_elements': numEl});
-    }, [numEl]);
+    }, [numEl]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setSpatial({...spatial, 'spatial:channel_index': chanIdx});
-    }, [chanIdx]);
+    }, [chanIdx]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
        if (spatial.enabled) {
@@ -50,7 +52,7 @@ export function SpatialGlobal( { idPart, isHidden, changeFunction }: { idPart: s
        } else {
         changeFunction("");
        }
-    }, [spatial]);
+    }, [spatial]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="spatial-global-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">
@@ -78,35 +80,35 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
 
     useEffect(() => {
         setSpace({...space, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, apAz, 'spatial:aperture_azimuth', setSpace);
-    }, [apAz]);
+    }, [apAz]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, apBear, 'spatial:aperture_bearing', setSpace);
-    }, [apBear]);
+    }, [apBear]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, apRot, 'spatial:aperture_rotation', setSpace);
-    }, [apRot]);
+    }, [apRot]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, emitBear, 'spatial:emitter_bearing', setSpace);
-    }, [emitBear]);
+    }, [emitBear]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, elGeo, 'spatial:element_geometry', setSpace);
-    }, [elGeo]);
+    }, [elGeo]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, phaseOff, 'spatial:phase_offset', setSpace);
-    }, [phaseOff]);
+    }, [phaseOff]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, cal, 'spatial:calibration', setSpace);
-    }, [cal]);
+    }, [cal]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (space.enabled) {
@@ -117,7 +119,7 @@ export function SpatialCapture( { idPart, isHidden, changeFunction }: { idPart: 
         } else {
             changeFunction({});
         }
-    }, [space])
+    }, [space]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="spatial-annotation-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">
@@ -146,19 +148,19 @@ export function SpatialAnnotation( { idPart, isHidden, changeFunction }: { idPar
 
     useEffect(() => {
         setSpace({...space, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, az, 'spatial:signal_azimuth', setSpace);
-    }, [az]);
+    }, [az]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, bearing, 'spatial:bearing', setSpace);
-    }, [bearing]);
+    }, [bearing]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(space, loc, 'spatial:emitter_location', setSpace);
-    }, [loc]);
+    }, [loc]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (space.enabled) {
@@ -169,7 +171,7 @@ export function SpatialAnnotation( { idPart, isHidden, changeFunction }: { idPar
         } else {
             changeFunction({});
         }
-    }, [space]);
+    }, [space]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="spatial-annotation-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">

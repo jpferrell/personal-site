@@ -4,6 +4,8 @@ import { SigMfDataChangeType } from '../SigMfInterfaces';
 import { changeStateInput, cleanObject } from '../SigMfFunctions';
 import SigMfCheckboxInput from './SigMfCheckboxInput';
 
+type ChangeFunction = (a: object|string) => void;
+
 export default function SigMfDataChangeInput ( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function } ) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -17,15 +19,15 @@ export default function SigMfDataChangeInput ( { idPart, labelPart, isHidden, ch
 
     useEffect(() => {
         setDataChange({...dataChange, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(dataChange, author, 'author', setDataChange);
-    }, [author]);
+    }, [author]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setDataChange({...dataChange, datetime: datetime});
-    }, [datetime]);
+    }, [datetime]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (dataChange.enabled) {
@@ -40,7 +42,7 @@ export default function SigMfDataChangeInput ( { idPart, labelPart, isHidden, ch
         } else {
             changeFunction({});
         }
-    }, [dataChange]);
+    }, [dataChange]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id={`${idPart}-data-change-input`} hidden={isHidden} className='border-2 m-2 border-dotted rounded-lg'>

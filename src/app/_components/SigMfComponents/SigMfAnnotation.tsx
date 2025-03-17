@@ -36,55 +36,55 @@ export default function SigMfAnnotation( { isHidden, transferData }: { isHidden:
 
     useEffect(() => {
         setAnnotData({...annotData, "core:sample_start": sampStart});
-    }, [sampStart]);
+    }, [sampStart]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, sampCnt, 'core:sample_count', setAnnotData);
-    }, [sampCnt]);
+    }, [sampCnt]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, freqLowEdge, 'core:freq_lower_edge', setAnnotData);
-    }, [freqLowEdge]);
+    }, [freqLowEdge]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, freqHighEdge, 'core:freq_upper_edge', setAnnotData);
-    }, [freqHighEdge]);
+    }, [freqHighEdge]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, label, 'core:label', setAnnotData);
-    }, [label]);
+    }, [label]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, comment, 'core:comment', setAnnotData);
-    }, [comment]);
+    }, [comment]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, generator, 'core:generator', setAnnotData);
-    }, [generator]);
+    }, [generator]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, uuid, 'core:uuid', setAnnotData);
-    }, [uuid]);
+    }, [uuid]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, capDets, 'capture_details', setAnnotData);
-    }, [capDets]);
+    }, [capDets]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, sigAnnot, 'signal', setAnnotData);
-    }, [sigAnnot]);
+    }, [sigAnnot]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, trace, 'traceability', setAnnotData);
-    }, [trace]);
+    }, [trace]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, ant, 'antenna', setAnnotData);
-    }, [ant]);
+    }, [ant]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(annotData, space, 'spatial', setAnnotData);
-    }, [space]);
+    }, [space]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         let btnEnabled: boolean = false;

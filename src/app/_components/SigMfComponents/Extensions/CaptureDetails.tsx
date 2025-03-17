@@ -8,6 +8,8 @@ import SigMfCheckboxInput from "../Inputs/SigMfCheckboxInput";
 import { SigMfCapDetsAnnotType, SigMfCapDetsCapType } from "../SigMfInterfaces";
 import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
+type ChangeFunction = (a: object) => void;
+
 export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function } ) {
 
     const [isCapEnabled, setIsCapEnabled] = useState<boolean>(false);
@@ -31,35 +33,35 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
 
     useEffect(() => {
         setCapDetCapData({...capDetCapData, enabled: isCapEnabled});
-    }, [isCapEnabled]);
+    }, [isCapEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCapDetCapData({...capDetCapData, 'capture_details:acq_scale_factor': acqScaleFactor});
-    }, [acqScaleFactor]);
+    }, [acqScaleFactor]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCapDetCapData({...capDetCapData, 'capture_details:attenuation': attn});
-    }, [attn]);
+    }, [attn]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCapDetCapData({...capDetCapData, 'capture_details:acquisition_bandwidth': acqBw});
-    }, [acqBw]);
+    }, [acqBw]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCapDetCapData({...capDetCapData, 'capture_details:start_capture': startCap});
-    }, [startCap]);
+    }, [startCap]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCapDetCapData({...capDetCapData, 'capture_details:stop_capture': stopCap});
-    }, [stopCap]);
+    }, [stopCap]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCapDetCapData({...capDetCapData, 'capture_details:source_file': srcFile});
-    }, [srcFile]);
+    }, [srcFile]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capDetCapData, gain, 'capture_details:gain', setCapDetCapData);
-    }, [gain]);
+    }, [gain]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
        if (capDetCapData.enabled) {
@@ -81,7 +83,7 @@ export function CaptureDetailsCaptures( { isHidden, changeFunction }: { isHidden
        } else {
         changeFunction({});
        }
-    }, [capDetCapData]);
+    }, [capDetCapData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="cap-dets-capture-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">
@@ -111,15 +113,15 @@ export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidd
 
     useEffect(() => {
         setCapDetsAnnotData({...capDetsAnnotData, enabled: isCapEnabled});
-    }, [isCapEnabled]);
+    }, [isCapEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capDetsAnnotData, snr, 'capture_details:SNRdB', setCapDetsAnnotData);
-    }, [snr]);
+    }, [snr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capDetsAnnotData, sigRefNum, 'capture_details:signal_reference_number', setCapDetsAnnotData);
-    }, [sigRefNum]);
+    }, [sigRefNum]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
        if (capDetsAnnotData.enabled) {
@@ -137,7 +139,7 @@ export function CaptureDetailsAnnotations({ isHidden, changeFunction }: { isHidd
        } else {
         changeFunction({});
        }
-    }, [capDetsAnnotData]);
+    }, [capDetsAnnotData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="cap-dets-annotation-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">

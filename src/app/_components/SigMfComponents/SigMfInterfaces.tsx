@@ -1,3 +1,7 @@
+import { SetStateAction } from "react";
+
+export type SigMfChangeFunction = (a: SetStateAction<any>) => void;
+
 export interface SigMfInputProps {
     label: string,
     id: string,

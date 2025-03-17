@@ -8,7 +8,9 @@ import SigMfCartesianPoint from "./SigMfCartesianPointInput";
 import SigMfSelectInput from "./SigMfSelectInput";
 import SigMfCheckboxInput from "./SigMfCheckboxInput";
 
-export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function})
+type ChangeFunction = (a: object|string) => void;
+
+export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function })
 {
     const calTypes: string[] = ["tone", "xcorr", "ref", "other"];
 
@@ -24,19 +26,19 @@ export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, c
 
     useEffect(() => {
         setCal({...cal, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setCal({...cal, caltype: calType});
-    }, [calType]);
+    }, [calType]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(cal, bearing, 'bearing', setCal);
-    }, [bearing]);
+    }, [bearing]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(cal, calGeo, 'cal_geometry', setCal);
-    }, [calGeo]);
+    }, [calGeo]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (cal.enabled) {
@@ -51,7 +53,7 @@ export default function SigMfCalibrationInput ( { idPart, labelPart, isHidden, c
         } else {
             changeFunction({});
         }
-    }, [cal]);
+    }, [cal]);// eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className="border-dotted border-2 rounded-lg m-2 border-slate-200" id={`${idPart}-calibration-input-container`} hidden={isHidden}>

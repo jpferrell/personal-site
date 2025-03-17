@@ -6,6 +6,8 @@ import SigMfCheckboxInput from "./SigMfCheckboxInput";
 //import { changeStateInput } from "../SigMfFunctions";
 import SigMfNumberInput from "./SigMfNumberInput";
 
+type ChangeFunction = (a: object|string) => void;
+
 export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -20,12 +22,12 @@ export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, chan
 
     useEffect(() => {
         setCartPnt({...cartPnt, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         /** Putting this as a changeStateInput had an exceeded max depth error */
         setCartPnt({...cartPnt, unknown: isUnk});
-    }, [isUnk]);
+    }, [isUnk]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (cartPnt.enabled) {
@@ -41,7 +43,7 @@ export default function SigMfCartesianPoint( { idPart, labelPart, isHidden, chan
         } else {
             changeFunction({});
         }
-    }, [isUnk, xPoint, yPoint, zPoint]);
+    }, [isUnk, xPoint, yPoint, zPoint]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id={`${idPart}-cart-point-container`} hidden={isHidden} className="border-dotted rounded-lg border-2 m-2">

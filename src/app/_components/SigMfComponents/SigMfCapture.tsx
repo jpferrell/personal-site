@@ -9,6 +9,8 @@ import { changeStateInput, cleanObject } from "./SigMfFunctions";
 import { SpatialCapture } from "./Extensions/Spatial";
 import SigMfTextInput from "./Inputs/SigMfTextInput";
 
+type ChangeFunction = (a: object|string) => void;
+
 export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: boolean, transferCapData: Function }) {
 
     const [sampStart, setSampStart] = useState<number|string>("");
@@ -28,35 +30,35 @@ export default function SigMfCapture({ isHidden, transferCapData }: { isHidden: 
 
     useEffect(() => {
         setCapData({...capData, 'core:sample_start': sampStart});
-    }, [sampStart]);
+    }, [sampStart]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capData, datetime, 'core:datetime', setCapData);
-    }, [datetime]);
+    }, [datetime]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capData, freq, 'core:frequency', setCapData);
-    }, [freq]);
+    }, [freq]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capData, globalIdx, 'core:global_index', setCapData);
-    }, [globalIdx]);
+    }, [globalIdx]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capData, headerBytes, 'core:header_bytes', setCapData);
-    }, [headerBytes]);
+    }, [headerBytes]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capData, geo, 'core:geolocation', setCapData);
-    }, [geo]);
+    }, [geo]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capData, capDets, 'capture_details', setCapData);
-    }, [capDets]);
+    }, [capDets]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(capData, space, 'spatial', setCapData);
-    }, [space]);
+    }, [space]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         let btnEnabled: boolean = false;

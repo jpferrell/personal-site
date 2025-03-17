@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AiOutlineClose } from "react-icons/ai";
 
-export default function ExtensionPortal( { extArr, isEnabled, moveExtObj, showPortal }: {extArr: string[], isEnabled: boolean, moveExtObj: Function, showPortal: Function} ) {
+type ShowPortalFn = (a: boolean) => void;
+type MoveExtObjFn = (a: object) => void;
+
+export default function ExtensionPortal( { extArr, isEnabled, moveExtObj, showPortal }: {extArr: string[], isEnabled: boolean, moveExtObj: MoveExtObjFn, showPortal: Function} ) {
 
     const [showModal, setShowModal] = useState<boolean>(false);
 
@@ -32,17 +35,20 @@ export default function ExtensionPortal( { extArr, isEnabled, moveExtObj, showPo
     );
 }
 
-function ModalContent({ onClose, extensions, moveData }: { onClose: Function, extensions: Array<string>, moveData: Function }) {
+interface ExtensionObjectType {
+    name: string,
+    version: string,
+    optional: boolean
+}
 
-    interface ExtensionObjectType {
-        name: string,
-        version: string,
-        optional: boolean
-    }
+interface GlobalExtensionObjectType {
+    extension?: ExtensionObjectType
+}
 
-    interface GlobalExtensionObjectType {
-        extension?: ExtensionObjectType
-    }
+type OnCloseFunction = () => void;
+type MoveFunction = (a: GlobalExtensionObjectType) => void;
+
+function ModalContent({ onClose, extensions, moveData }: { onClose: OnCloseFunction, extensions: Array<string>, moveData: Function }) {
 
     const [output, setOutput] = useState<GlobalExtensionObjectType>(() => {
         const retObj: GlobalExtensionObjectType = {};
@@ -70,7 +76,7 @@ function ModalContent({ onClose, extensions, moveData }: { onClose: Function, ex
     useEffect(() => {
         let validData = true;
         Object.keys(output).forEach(obj => {
-            if (Object.values(output[obj as keyof typeof output]).includes("")) {validData = false};
+            if (Object.values(output[obj as keyof typeof output] || "").includes("")) {validData = false};
         });
         setBtnEnabled(validData);
     }, [output]);

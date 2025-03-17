@@ -1,10 +1,11 @@
 'use client'
 
+import { SetStateAction } from "react";
 import { SigMfGeoType } from "./SigMfInterfaces";
 
-type retFunction = (a: object) => void;
+type retFunction = (a: SetStateAction<any>) => void;
 
-export function changeStateInput<T extends object, U extends object>(obj: T, variable: U|SigMfGeoType|number|boolean|string, keyName: keyof typeof obj, fn: retFunction) {
+export function changeStateInput<T extends object, U extends object>(obj: T, variable: U|SigMfGeoType|number|boolean|string, keyName: keyof typeof obj, fn: Function) {
     if (variable !== null && variable !== "") {
         fn({...obj, [keyName]: variable});
     } else if (Object.hasOwn(obj, keyName)) {

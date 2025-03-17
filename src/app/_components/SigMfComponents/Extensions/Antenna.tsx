@@ -9,7 +9,7 @@ import { changeStateInput, cleanObject } from "../SigMfFunctions";
 
 type ChangeFunction = (a: object) => void;
 
-export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: ChangeFunction })
+export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean, changeFunction: Function })
 {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -36,59 +36,59 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
 
     useEffect(() => {
         setAntData({...antData, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, model, 'antenna:model', setAntData);
-    }, [model]);
+    }, [model]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, type, 'antenna:type', setAntData);
-    }, [type]);
+    }, [type]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, lowFreq, 'antenna:low_frequency', setAntData);
-    }, [lowFreq]);
+    }, [lowFreq]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, highFreq, 'antenna:high_frequency', setAntData);
-    }, [highFreq]);
+    }, [highFreq]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, gain, 'antenna:gain', setAntData);
-    }, [gain]);
+    }, [gain]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, hBeamWidth, 'antenna:horizontal_beam_width', setAntData);
-    }, [hBeamWidth]);
+    }, [hBeamWidth]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, vBeamWidth, 'antenna:vertical_beam_width', setAntData);
-    }, [vBeamWidth]);
+    }, [vBeamWidth]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, xPolar, 'antenna:cross_polar_discrimination', setAntData);
-    }, [xPolar]);
+    }, [xPolar]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, vswr, 'antenna:voltage_standing_wave_ratio', setAntData);
-    }, [vswr]);
+    }, [vswr]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, cableLoss, 'antenna:cable_loss', setAntData);
-    }, [cableLoss]);
+    }, [cableLoss]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, isSteerable, 'antenna:steerable', setAntData);
-    }, [isSteerable]);
+    }, [isSteerable]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, isMobile, 'antenna:mobile', setAntData);
-    }, [isMobile]);
+    }, [isMobile]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, hagl, 'antenna:hagl', setAntData);
-    }, [hagl]);
+    }, [hagl]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (antData.enabled) {
@@ -103,7 +103,7 @@ export function AntennaGlobal({ isHidden, changeFunction }: { isHidden: boolean,
         } else {
             changeFunction({});
         }
-    }, [antData]);
+    }, [antData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="antenna-global-container" className="border-double rounded-lg border-4 border-slate-200 dark:bg-zinc-700 mb-2" hidden={isHidden}>
@@ -139,19 +139,19 @@ export function AntennaAnnotation({ isHidden, changeFunction }: { isHidden: bool
 
     useEffect(() => {
         setAntData({...antData, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, azAngle, 'antenna:azimuth_angle', setAntData);
-    }, [azAngle]);
+    }, [azAngle]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, elAngle, 'antenna:elevation_angle', setAntData);
-    }, [elAngle]);
+    }, [elAngle]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(antData, polar, 'antenna:polarization', setAntData);
-    }, [polar]);
+    }, [polar]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         if (antData.enabled) {
@@ -162,7 +162,7 @@ export function AntennaAnnotation({ isHidden, changeFunction }: { isHidden: bool
         } else {
             changeFunction({});
         }
-    }, [antData]);
+    }, [antData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id="antenna-annotation-container" hidden={isHidden} className="border-double border-4 rounded-lg dark:border-slate-200 dark:bg-zinc-700 mb-2">

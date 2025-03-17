@@ -4,6 +4,8 @@ import React, { ReactNode } from "react";
 import { SigMfCaptureType, SigMfAnnotationType } from "./SigMfInterfaces";
 import { AiOutlineClose } from "react-icons/ai";
 
+type DeleterFn = (a: number) => void;
+
 export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunction }: { inData: SigMfCaptureType|SigMfAnnotationType, inIdx: number, typeStr: string, deleterFunction: Function }) {
 
     function raiseDeleteEvent() {
@@ -30,7 +32,7 @@ export default function SigMfArrayDisplay( { inData, inIdx, typeStr, deleterFunc
                 <ul className="overflow-auto">
                     {Object.keys(inData).map(key => {
                         if (typeof inData[key as keyof typeof inData] === 'object') {
-                            return createObjectList(inData[key as keyof typeof inData], key) as ReactNode;
+                            return createObjectList(inData[key as keyof typeof inData] as object, key) as ReactNode;
                         } else {
                             return (
                                 <li key={`${key}-key`}><em>{key}</em>: {inData[key as keyof typeof inData] as ReactNode}</li>

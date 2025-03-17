@@ -4,6 +4,8 @@ import { SigMfOriginType } from '../SigMfInterfaces';
 import { changeStateInput, cleanObject } from '../SigMfFunctions';
 import SigMfCheckboxInput from './SigMfCheckboxInput';
 
+type ChangeFunction = (a: object|string) => void;
+
 export default function SigMfOriginInput( { idPart, labelPart, isHidden, changeFunction }: { idPart: string, labelPart: string, isHidden: boolean, changeFunction: Function } ) {
 
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
@@ -18,19 +20,19 @@ export default function SigMfOriginInput( { idPart, labelPart, isHidden, changeF
 
     useEffect(() => {
         setOriginData({...originData, enabled: isEnabled});
-    }, [isEnabled]);
+    }, [isEnabled]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(originData, account, 'account', setOriginData);
-    }, [account]);
+    }, [account]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(originData, container, 'container', setOriginData);
-    }, [container]);
+    }, [container]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         setOriginData({...originData, file_path: filePath});
-    }, [filePath]);
+    }, [filePath]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
        if (originData.enabled) {
@@ -41,7 +43,7 @@ export default function SigMfOriginInput( { idPart, labelPart, isHidden, changeF
        } else {
         changeFunction({});
        }
-    }, [originData]);
+    }, [originData]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id={`${idPart}-origin-container`} hidden={isHidden} className='border-dotted border-2 rounded-lg m-2'>

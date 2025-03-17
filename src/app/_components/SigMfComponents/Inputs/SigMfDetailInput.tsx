@@ -8,7 +8,9 @@ import SigMfNumberInput from "./SigMfNumberInput";
 import { SigMfSignalDetailType } from "../SigMfInterfaces";
 import { changeStateInput } from "../SigMfFunctions";
 
-export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function})
+type ChangeFunction = (a: object|string) => void;
+
+export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: { idPart: string, isHidden: boolean, changeFunction: Function })
 {
     const [type, setType] = useState<string>("");
     const [modClass, setModClass] = useState<string>("");
@@ -28,59 +30,59 @@ export default function SigMfDetailInput( { idPart, isHidden, changeFunction }: 
 
     useEffect(() => {
        changeStateInput(sigDet, type, 'type', setSigDet);
-    }, [type]);
+    }, [type]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, modClass, 'mod_class', setSigDet);
-    }, [modClass]);
+    }, [modClass]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, standard, 'standard', setSigDet);
-    }, [standard]);
+    }, [standard]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, carVar, 'carrier_variant', setSigDet);
-    }, [carVar]);
+    }, [carVar]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, symVar, 'symbol_variant', setSigDet);
-    }, [symVar]);
+    }, [symVar]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, order, 'order', setSigDet);
-    }, [order]);
+    }, [order]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, duplex, 'duplexing', setSigDet);
-    }, [duplex]);
+    }, [duplex]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, multiplex, 'multiplexing', setSigDet);
-    }, [multiplex]);
+    }, [multiplex]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, multAcc, 'multiple_access', setSigDet);
-    }, [multAcc]);
+    }, [multAcc]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, spreading, 'spreading', setSigDet);
-    }, [spreading]);
+    }, [spreading]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, bw, 'channel_bw', setSigDet);
-    }, [bw]);
+    }, [bw]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, channel, 'channel', setSigDet);
-    }, [channel]);
+    }, [channel]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeStateInput(sigDet, classVar, 'class_variant', setSigDet);
-    }, [classVar]);
+    }, [classVar]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
         changeFunction(sigDet);
-    }, [sigDet]);
+    }, [sigDet]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div id={`${idPart}-detail-inputs-container`}>

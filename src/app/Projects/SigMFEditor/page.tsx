@@ -153,7 +153,7 @@ export default function SigMFEditor() {
         });
 
         setIsModalObjValid(true);
-    }, [extModalObj]);
+    }, [extModalObj]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function checkForExtensions() {
         let extObj: ExtensionsType = findExtensions(globalObj);
@@ -183,7 +183,7 @@ export default function SigMFEditor() {
             document.body.appendChild(el);
             el.click();
         }
-    }, [isCreateFile, isModalObjValid]);
+    }, [isCreateFile, isModalObjValid]); // eslint-disable-line react-hooks/exhaustive-deps
 
     function createSigMfFile() {
         checkForExtensions();
