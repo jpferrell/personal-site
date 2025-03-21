@@ -3,7 +3,7 @@ import { AiOutlineFile, AiOutlineHome, AiOutlineUser, AiOutlineLaptop } from "re
 
 export default function Navbar() {
     return (
-        <div className="flex row-start-3 items-center justify-center gap-6 min-w-full flex-wrap text-xl">
+        <div className="flex row-start-3 items-center justify-center gap-6 min-w-full flex-wrap text-xl bg-slate-800 text-slate-100">
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineHome></AiOutlineHome>
                 {/* I broke all of the linking stuff :( */}
