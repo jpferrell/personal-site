@@ -20,6 +20,14 @@ export default function Navbar() {
                     Resume
                 </Link>
             </div>
+            <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
+                <AiOutlineLaptop></AiOutlineLaptop>
+                <Link
+                    href="/projects"
+                >
+                    Projects
+                </Link>
+            </div>
             {/*
             <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
                 <AiOutlineUser></AiOutlineUser>
@@ -27,14 +35,6 @@ export default function Navbar() {
                     href="/AboutMe"
                 >
                     About Me
-                </Link>
-            </div>
-            <div className="flex hover:underline hover:underline-offset-4 items-center gap-1">
-                <AiOutlineLaptop></AiOutlineLaptop>
-                <Link
-                    href="/projects"
-                >
-                    Projects
                 </Link>
             </div>
             */}
