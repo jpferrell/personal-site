@@ -17,7 +17,7 @@ export default function Home() {
                 <link rel="icon" href="/favicon.png" /> 
             </Head>
             <main className={`${styles.main} ${inter.className}`}>
-                <h1>
+                <h1 className="text-8xl text-red-600">
                     Site under development!
                 </h1>
             </main>
