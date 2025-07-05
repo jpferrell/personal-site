@@ -14,10 +14,12 @@ export default function Home() {
                 <title>Jack Ferrell's Personal Site</title>
                 <meta name="description" content="The personal site of Jack Ferrell, showcasing his projects and interests" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
-                <link rel="icon" href="/favicon.png" />
+                <link rel="icon" href="/favicon.png" /> 
             </Head>
             <main className={`${styles.main} ${inter.className}`}>
-                <AppWithoutSSR />
+                <h1>
+                    Site under development!
+                </h1>
             </main>
         </>
     );
