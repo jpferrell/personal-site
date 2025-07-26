@@ -1,11 +1,15 @@
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import dynamic from "next/dynamic";
+import Image from "next/image";
+import Link from "next/link";
+import catimage from "/public/assets/catlogoipsum.png"
+import { FaGithub, FaLinkedin, FaStrava } from "react-icons/fa";
+import { IoMdMail } from "react-icons/io";
+
+
 
 const inter = Inter({ subsets: ["latin"] });
-
-const AppWithoutSSR = dynamic(() => import("@/App"), { ssr: false });
 
 export default function Home() {
     return (
@@ -16,10 +20,31 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.png" /> 
             </Head>
-            <main className={`${styles.main} ${inter.className}`}>
-                <h1 className="text-8xl text-red-600">
-                    Site under development!
-                </h1>
+            <main className={`${styles.main} ${inter.className} w-screen border border-blue-300`}>
+                <div className="h-screen w-screen border border-amber-800 flex place-content-center items-center" >
+                    <div className="grid grid-cols-2 border w-3/4 border-slate-300 rounded-2xl justify-items-center items-center h-1/5">
+                        <Image src="/assets/placeholder150x150.png" alt="temp" width={150} height={150} className="border-slate-400 border rounded-full" />
+                        <div className="grid grid-rows-3">
+                            {/*<h1>Jack Ferrell</h1>*/}
+                            <div className="text-4xl">
+                                Jack Ferrell
+                            </div>
+                            <div className="text-xl">
+                                Electrical Engineer, Triathlete
+                            </div>
+                            <div className="grid grid-cols-3">
+                                <Link href="https://github.com/jpferrell" target="_blank"><FaGithub /></Link>
+                                <Link href="https://www.linkedin.com/in/jack-ferrell-9b8b0783" target="_blank"><FaLinkedin /></Link>
+                                {/* Need to figure out how to pop an email */}
+                                <IoMdMail />
+                                {/*<Link href="https://www.strava.com/athletes/37378919" target="_blank"><FaStrava /></Link>*/}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="h-screen w-screen border border-yellow-400">
+
+                </div>
             </main>
         </>
     );
