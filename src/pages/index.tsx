@@ -22,9 +22,9 @@ export default function Home() {
             </Head>
             <main className={`${styles.main} ${inter.className} w-screen border border-blue-300`}>
                 <div className="h-screen w-screen border border-amber-800 flex place-content-center items-center" >
-                    <div className="grid grid-cols-2 border w-3/4 border-slate-300 rounded-2xl justify-items-center items-center h-1/5">
-                        <Image src="/assets/placeholder150x150.png" alt="temp" width={150} height={150} className="border-slate-400 border rounded-full" />
-                        <div className="grid grid-rows-3">
+                    <div className="grid grid-cols-2 border w-fit h-fit border-slate-300 rounded-2xl justify-items-center items-center">
+                        <Image src="/assets/weddingPicHeadshot.JPEG" alt="Wedding headshot" width={150} height={150} className="border-slate-400 border rounded-full" />
+                        <div className="grid grid-rows-3 p-2 justify-items-center">
                             {/*<h1>Jack Ferrell</h1>*/}
                             <div className="text-4xl">
                                 Jack Ferrell
@@ -32,7 +32,7 @@ export default function Home() {
                             <div className="text-xl">
                                 Electrical Engineer, Triathlete
                             </div>
-                            <div className="grid grid-cols-3">
+                            <div className="grid grid-cols-3 gap-x-8">
                                 <Link href="https://github.com/jpferrell" target="_blank"><FaGithub /></Link>
                                 <Link href="https://www.linkedin.com/in/jack-ferrell-9b8b0783" target="_blank"><FaLinkedin /></Link>
                                 {/* Need to figure out how to pop an email */}
