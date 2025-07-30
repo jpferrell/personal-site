@@ -38,9 +38,7 @@ export default function Home() {
                             <div className="grid grid-cols-3 gap-x-8">
                                 <Link href="https://github.com/jpferrell" target="_blank"><FaGithub /></Link>
                                 <Link href="https://www.linkedin.com/in/jack-ferrell-9b8b0783" target="_blank"><FaLinkedin /></Link>
-                                {/* Need to figure out how to pop an email */}
                                 <Link href={`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}><IoMdMail /></Link>
-                                {/*<Link href="https://www.strava.com/athletes/37378919" target="_blank"><FaStrava /></Link>*/}
                             </div>
                         </div>
                     </div>
