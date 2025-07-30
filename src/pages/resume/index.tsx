@@ -18,7 +18,10 @@ export default function Resume() {
         </Head>
         <main className={`${styles.main} ${inter.className}`}>
             <div className="min-h-screen min-w-full justify-items-center text-center p-4 text-2xl">
-                <AppWithoutSSR />
+                {/*<AppWithoutSSR />*/}
+                <div className="text-4xl justify-center">
+                    Resume coming soon!
+                </div>
             </div>
         </main>
     </>
