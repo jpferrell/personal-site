@@ -10,6 +10,9 @@ import { IoMdMail } from "react-icons/io";
 
 
 const inter = Inter({ subsets: ["latin"] });
+const email = "ferrell.jack20@gmail.com";
+const subject = "";
+const body = ""
 
 export default function Home() {
     return (
@@ -36,7 +39,7 @@ export default function Home() {
                                 <Link href="https://github.com/jpferrell" target="_blank"><FaGithub /></Link>
                                 <Link href="https://www.linkedin.com/in/jack-ferrell-9b8b0783" target="_blank"><FaLinkedin /></Link>
                                 {/* Need to figure out how to pop an email */}
-                                <IoMdMail />
+                                <Link href={`mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`}><IoMdMail /></Link>
                                 {/*<Link href="https://www.strava.com/athletes/37378919" target="_blank"><FaStrava /></Link>*/}
                             </div>
                         </div>
