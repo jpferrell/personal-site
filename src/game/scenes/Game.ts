@@ -43,7 +43,8 @@ export class Game extends Scene
             if (buildingExtLayer) buildingExtLayer.setDepth(4);
         }
 
-        this.mainChar = this.physics.add.sprite(100, 100, 'jack');
+        this.mainChar = this.physics.add.sprite(100, 100, 'jack') as Phaser.Types.Physics.Arcade.SpriteWithDynamicBody;
+        console.log('mainChar type: ', this.mainChar.type)
         this.mainChar.setCollideWorldBounds(true);
         this.mainChar.setDepth(1);
 
